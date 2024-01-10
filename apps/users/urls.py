@@ -4,5 +4,5 @@ from . import views
 
 
 urlpatterns = [
-    path('',views.panelControl,name='dashboard_producer'),
+    path('producer_dashboard/',views.panelControl,name='dashboard_producer'),
 ]

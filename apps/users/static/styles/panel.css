@@ -1,5 +1,17 @@
 
+a{
+    text-decoration: none;
+    color: #ffffff;
+    font-size: medium;
+}
 
+a i{
+    font-size: xx-large;
+}
+
+a:hover{
+    color: #cfcfcf;
+}
 /* navbar*/
 .nav{
     background-color: #212529
@@ -13,9 +25,11 @@
 }
 
 .searchInput{
-    border-radius: 50rem;
+    border-radius: 8px;
+    width: 20rem;
 }
-.icon{
+
+.bi{
     color: #ffffff;
 }
 
@@ -40,6 +54,7 @@
 }
 
 .card{
+    border-radius: 10px;
     margin-top: 10%;
     max-width: 40%;
 }
@@ -49,10 +64,13 @@
 }
 
 .card-img{
-    filter: blur(3px);
+    filter: saturate(0.3) blur(3px);
+    opacity: 0.6;
 }
 
 .card-title{
-    font-size: x-large;
+    font-size: 46px;
     font-weight: bolder;
+    padding: 10px; 
 }
+
