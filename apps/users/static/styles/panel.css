@@ -1,0 +1,58 @@
+
+
+/* navbar*/
+.nav{
+    background-color: #212529
+}
+
+.btn{
+    border-radius:50% ;
+}
+.btn:active{
+    transform: scale(0.9);
+}
+
+.searchInput{
+    border-radius: 50rem;
+}
+.icon{
+    color: #ffffff;
+}
+
+/* body */
+
+.producerData{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.producerData img{
+    max-width: 20%;
+}
+
+.main{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    place-items: center;
+    border-top: solid 5px #212529;;
+}
+
+.card{
+    margin-top: 10%;
+    max-width: 40%;
+}
+
+.card:active{
+    transform: scale(98%);
+}
+
+.card-img{
+    filter: blur(3px);
+}
+
+.card-title{
+    font-size: x-large;
+    font-weight: bolder;
+}
