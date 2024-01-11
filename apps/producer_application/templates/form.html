@@ -1,0 +1,85 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  
+    <link rel="stylesheet" type="text/css" href="{% static 'estilo.css' %}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+  <nav class="navbar nav">
+    <div class="container-fluid">
+      <a class="navbar-brand " href="#">
+        <img src="{% static 'logo.png' %}" alt="" width="80" >
+      </a> 
+      <form class="d-flex ms-auto me-5">
+        <input class="form-control me-1 searchInput" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-dark" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+
+      <div class="d-flex">
+        <a href="" class="d-flex flex-column align-items-center me-5">
+          <div><i class="bi bi-basket2 bi-lg icon"></i></div>
+          <div>Productos</div>
+        </a>
+
+        <a href="" class="d-flex flex-column align-items-center">
+          <div><i class="bi bi-person-circle icon"></i></div>
+          <div>Juanito Perez</div>
+        </a>
+      </div>
+      
+    </div>
+  </nav>
+    <br>
+    <center><h2>Formulario de postulación</h2></center>
+    <br>
+        <form id="formularioId">
+            <label for="rut">RUT Postulante:</label>
+            <input type="text" id="rut" name="rut" required>
+    
+            <label for="dv">DV RUT:</label>
+            <input type="text" id="dv" name="dv" required>
+
+            <label for="Edad">Edad:</label>
+            <input type="number" id="edad" name="edad" required>
+    
+            <label for="primer-nombre">Primer Nombre:</label>
+            <input type="text" id="Pnombre" name="primer-nombre" required>
+
+            <label for="apellido-paterno">Apellido Paterno:</label>
+            <input type="text" id="apellido-paterno" name="apellido-paterno" required>
+    
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" name="correo" required>
+    
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" id="telefono" name="telefono" required>
+    
+            <label for="razon-social">Razón Social:</label>
+            <input type="text" id="razon-social" name="razon-social" required>
+    
+            <label for="tipo-productor">Tipo de Productor:</label>
+            <select id="tipo-productor" name="tipo-productor" required>
+                <option value="Agricola">Verduras</option>
+                <option value="Agricola">Frutas</option>
+                <option value="Agricola">Tuberculos</option>
+                <option value="Agricola">Legumbres</option>
+                <option value="Agricola">Hortalizas</option>
+            </select>
+            <center><button type="submit">Enviar</button></center>
+        </form>
+   
+        <br>
+      <script src="{% static 'validaciones.js' %}"></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
+
