@@ -1,0 +1,54 @@
+
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: black;
+    
+    
+    
+}
+
+form {
+    max-width: 700px; /* Ajusta el ancho máximo según tus necesidades */
+    margin: 0 auto;
+    border: 2px solid #0a0101;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: white;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: black;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+    
+    
+}
+
+button {
+    
+    background-color: #287528;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    width: 150px; /* Ajusta el ancho del botón según tus necesidades */
+
+}
+
+form label,
+form input {
+    display: inline-block;
+    margin-right: 10px; /* Ajusta el margen según tus necesidades */
+}
