@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0 auto;
+  background: #212529;
+  font-family: "Montserrat", sans-serif;
+}
+
+.img-bg {
+  background-image: url("../img/harvest.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+.logo {
+  width: 30%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3rem;
+}
+
+.input-text {
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border: none;
+  height: 3rem;
+  width: 100%;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  outline: none;
+  color: #212529;
+}
+
+.btn-custom {
+  background: #00c67c;
+  border-radius: 8px;
+  border: none;
+  height: 3rem;
+  width: 95%;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  outline: none;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  letter-spacing: -1px;
+}
+
+form {
+  width: 50%;
+  color: white;
+}
+
+.span {
+  font-size: 16px;
+}
+
+.span a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #00c67c;
+}
+
+.span a:hover {
+  color: #00ffa2;
+}
+
+.span a:active {
+  color: #6dcaa8;
+}
