@@ -1,0 +1,51 @@
+.products-container{
+    border: 2px solid #212529;;
+    border-radius: 7px;
+    margin-top: 3%;
+    min-height: 52rem;
+}
+
+.pTitle{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 75%;
+    margin: 20px;
+    text-align: center;
+}
+
+.pTitle h2{
+    font-weight: 700;
+}
+
+.addBtn{
+    background-color: #01AA95;
+    font-size: xx-large;
+    border-radius: 50%;
+}
+
+.products-info{
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(4,2fr);
+    background-color: #E1F3F0;
+    border-radius: 7px;
+    min-height:120px ;
+    margin: 20px;
+}
+
+.imgDiv img{
+    border-radius: 10px;
+    max-width: 100px;
+    margin: 10px;
+}
+
+.btnDiv{
+    display: flex;
+    flex-direction: column;
+}
+
+.btnDiv button{
+    margin: 3px 10px 5px 10px;
+    border-radius: none;
+}

@@ -5,3 +5,9 @@ from django.http import HttpResponse
 
 def panelControl(request):
     return render(request, 'dashboard_producer.html')
+
+
+
+def myProducts(request):
+    return render(request, 'my_products.html')
+

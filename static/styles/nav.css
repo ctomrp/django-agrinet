@@ -17,10 +17,10 @@ a:hover{
     background-color: #212529
 }
 
-.btn{
+.bt{
     border-radius:50% ;
 }
-.btn:active{
+.bt:active{
     transform: scale(0.9);
 }
 

@@ -1,0 +1,45 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'styles/myProducts.css' %}">
+{% endblock extra_css %}
+
+
+  
+    {% block main %}
+  
+        <div class="container">
+            <div class="products-container">
+                <div class="pTitle">
+                    <h2>Mis Productos</h2>
+                    <a href="">
+                        <button class="btn btn-success addBtn" ><i class="bi bi-plus-lg"></i></button>
+                    </a>
+                </div>
+                
+                <div class="products-info">
+                    
+                    <div class="imgDiv">
+                        <img src="{% static 'img/fv.png' %}" alt="">
+                    </div>
+                    
+                    <div class="dataDiv">
+                        <h6>Papas</h6>
+                        <h6>Proveedor: Juanito Perez</h6>
+                        <h6>Precio: $2600</h6>
+                    </div>
+
+                    <div></div>
+
+                    <div class="btnDiv">
+                        <button type="button" class="btn btn-dark btn-sm">Actualizar</button>
+                        <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>    
+    {% endblock main %}
+
