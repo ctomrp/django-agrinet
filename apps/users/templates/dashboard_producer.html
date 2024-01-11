@@ -1,0 +1,35 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'styles/panel.css' %}">
+{% endblock extra_css %}
+
+
+  
+  {% block main %}
+  
+    <div>
+          <div class="producerData">
+            <img src="{% static 'img/Icon.png' %}" alt="producer icon">
+            <h2>Juanito Perez</h2>
+          </div>
+
+          <div class="main">
+            <div class="card bg-dark text-white">
+              <img src="{% static 'img/fv.png' %}" class="card-img" alt="frutas y verduras" >
+              <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                 <h1 class="card-title">Mis Productos</h1>
+              </div>
+            </div>
+
+            <div class="card bg-dark text-white">
+              <img src="{% static 'img/reports.jpg' %}" class="card-img" alt="frutas y verduras" >
+              <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                 <h1 class="card-title">Reportes</h1>
+              </div>
+            </div>
+          </div>
+     </div>    
+    {% endblock main %}
+

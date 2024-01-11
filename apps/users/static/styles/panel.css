@@ -1,0 +1,41 @@
+/* body */
+
+.producerData{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.producerData img{
+    max-width: 20%;
+}
+
+.main{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    place-items: center;
+    border-top: solid 5px #212529;;
+}
+
+.card{
+    border-radius: 10px;
+    margin-top: 10%;
+    max-width: 40%;
+}
+
+.card:active{
+    transform: scale(98%);
+}
+
+.card-img{
+    filter: saturate(0.3) blur(3px);
+    opacity: 0.6;
+}
+
+.card-title{
+    font-size: 46px;
+    font-weight: bolder;
+    padding: 10px; 
+}
+
