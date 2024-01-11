@@ -11,4 +11,13 @@ class UserProducerForm(forms.ModelForm):
 class UserClientForm(forms.ModelForm):
     class Meta:
         model = UserClient
-        fields = ["first_name", "last_name", "email", "address", "dni"]
+        fields = ["first_name", "last_name", "email", "password", "phonenumber","address", "dni"]
+        labels = {
+            'first_name': 'Primer Nombre',
+            'last_name': 'Apellido Paterno',
+            'email': 'Correo Electrónico',
+            'password': 'Contraseña',
+            'phonenumber': "Teléfono",
+            'address': 'Dirección',
+            'dni': 'RUN'
+        }
