@@ -1,6 +1,6 @@
+
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
-from .models import formulario
 from .forms import ApplicationForm
 
 
@@ -8,16 +8,17 @@ def application_form_view(request):
     return render(request, 'form.html')
 
 
-class formularioView(HttpRequest):
 
-    def index (request):
-        formulario = formulario()
-        return render(request,"form.html", {"form": formulario})
-    
-    def guardar_formulario(request):
-        formulario = formulario()
-        if formulario.is_valid():
-            formulario.save()
-            formulario = formulario()
+def guardar_formulario(request):
+    if request.method == 'POST':
+        form = ApplicationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            print('Información guardada correctamente.')
+            redirect(request, 'form.html', {'form': form})
+        else:
+            print('Error al guardar la información. Por favor, verifica el formulario.')
+    else:
+        form = ApplicationForm()
 
-            return render(request, "form.html", {"form": formulario, "mensaje": 'Ok'})
+    return render(request, 'form.html', {'form': form})

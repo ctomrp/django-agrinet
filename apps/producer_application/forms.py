@@ -1,7 +1,7 @@
 from django import forms
-from .models import Formulario
+from .models import formulario
 
 class ApplicationForm(forms.ModelForm):
     class Meta:
-        model = Formulario
+        model = formulario
         fields = '__all__'

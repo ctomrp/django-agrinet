@@ -172,3 +172,16 @@ $(document).keyup(function () {
 
 
 
+$(document).ready(function () {
+  $('#tipoid').change(function () {
+      var producto = $("#tipoid");
+
+      if (producto.val() === "") {
+          document.getElementById("result").innerHTML = "<b>Seleccione una opción</b>";
+          document.getElementById("result").style.color = "red";
+      } else {
+          document.getElementById("result").innerHTML = "La opción seleccionada es: <b>" + producto.val() + "</b>";
+          document.getElementById("result").style.color = "green";
+      }
+  });
+});
