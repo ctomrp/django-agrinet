@@ -7,7 +7,7 @@ from .forms import UserClientForm
 
 
 def panelControl(request):
-    return render(request, 'dashboard_producer.html')
+    return render(request, 'producer_dashboard.html')
 
 def userRegistration(request):
     if request.method == "POST":

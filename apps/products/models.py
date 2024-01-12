@@ -19,8 +19,7 @@ class Product(models.Model):
     picture = models.ImageField(upload_to="", null=True,blank=True, verbose_name=_("Picture"))
     category = models.ForeignKey(
         "ProductCategory",
-        on_delete=models.SET_DEFAULT,
-        default="no category",
+        on_delete=models.CASCADE,
         verbose_name=_("Category"),
     )
     producer = models.ForeignKey(
