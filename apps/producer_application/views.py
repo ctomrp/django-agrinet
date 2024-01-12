@@ -1,40 +1,24 @@
+
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from .models import formulario
+from django.http import HttpRequest
+from .forms import ApplicationForm
 
 
-# Create your views here.
-def mostrar_formulario(request):
+def application_form_view(request):
     return render(request, 'form.html')
 
 
-def productor(request):
+
+def guardar_formulario(request):
     if request.method == 'POST':
-        # Obtener datos del formulario
-        rut = request.POST['rut']
-        dv_rut = request.POST['dv']
-        nombre = request.POST['primer-nombre']
-        apellido = request.POST['apellido-paterno']
-        edad = request.POST['edad']
-        correo = request.POST['correo']
-        telefono = request.POST['telefono']
-        razon_social = request.POST['razon-social']
-        tipo_productor = request.POST['tipo-productor']
+        form = ApplicationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            print('Información guardada correctamente.')
+            redirect(request, 'form.html', {'form': form})
+        else:
+            print('Error al guardar la información. Por favor, verifica el formulario.')
+    else:
+        form = ApplicationForm()
 
-        # Crear instancia del modelo y guardar en la base de datos
-        formulario = formulario(
-            rut=rut,
-            dv_rut=dv_rut,
-            nombre=nombre,
-            apellido=apellido,
-            edad=edad,
-            correo=correo,
-            telefono=telefono,
-            razon_social=razon_social,
-            tipo_productor=tipo_productor
-        )
-        formulario.save()
-
-        return redirect('formulario')  # Puedes redirigir a donde desees después de guardar
-
-    return render(request, 'producer_application/form.html')
+    return render(request, 'form.html', {'form': form})

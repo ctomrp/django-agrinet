@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import mostrar_formulario
+from .views import application_form_view
 
 urlpatterns = [
-    path('', mostrar_formulario, name='form'),
+    path('', application_form_view, name='application'),
     # Otras rutas si las tienes
 ]

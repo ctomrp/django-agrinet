@@ -4,7 +4,6 @@ from django.db import models
 
 class formulario(models.Model):
     rut = models.CharField(max_length=12)
-    dv_rut = models.CharField(max_length=1)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     edad = models.PositiveIntegerField()
