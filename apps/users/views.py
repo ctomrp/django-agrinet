@@ -1,36 +1,26 @@
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
+from .forms import UserClientForm
 
-from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
-from django.shortcuts import render
-
-from django.http import HttpResponseForbidden
-
-from .models import UserProducer
-from .forms import CustomAuthenticationForm
+# Create your views here.
 
 
-class CustomLoginView(LoginView):
-    template_name = "login.html"
-    authentication_form = CustomAuthenticationForm
+def panelControl(request):
+    return render(request, 'dashboard_producer.html')
 
-    def form_valid(self, form):
-        user = form.get_user()
-
-        if hasattr(user, "userproducer"):
-            return redirect("producer_dashboard")
-        elif hasattr(user, "userclient"):
-            return redirect("client_dashboard")
-
-        return super().form_valid(form)
-
-
-def producer_dashboard(request):
-    ###if request.user.is_authenticated and isinstance(request.user, UserProducer):
-     ##   return render(request, "producer_dashboard.html")
-   ## else:
-     ##   return HttpResponseForbidden("Acceso denegado")
-    return render(request, "producer_dashboard.html")
-
-def client_dashboard(request):
-    return render(request, "client_dashboard.html")
-
+def userRegistration(request):
+    if request.method == "POST":
+        form = UserClientForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Autenticar al usuario después de registrarse
+            login(request, user)
+            return redirect(
+                "register_form"
+            )  # Redirige a la página de inicio después del registro
+    else:
+        form = UserClientForm()
+    return render(request, 'register_form.html', {
+        'form': UserClientForm
+    })

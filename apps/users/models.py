@@ -65,9 +65,9 @@ class UserProducer(User):
     address = models.CharField(max_length=255, verbose_name=_("Address"))
     birthdate = models.DateField(verbose_name=_("Birthdate"))
     dni = models.CharField(max_length=10, verbose_name=_("DNI"), unique=True)
-    ###is_producer = models.BooleanField(default=True)
-    
-        
+    businessname = models.CharField(max_length = 100, verbose_name=("Business Name"))
+    phonenumber = models.IntegerField(null = False)
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -76,9 +76,7 @@ class UserProducer(User):
 class UserClient(User):
     address = models.CharField(max_length=255, verbose_name=_("Address"))
     dni = models.CharField(max_length=10, verbose_name=_("DNI"), unique=True)
+    phonenumber = models.IntegerField(null = False)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
-
-    
-    
