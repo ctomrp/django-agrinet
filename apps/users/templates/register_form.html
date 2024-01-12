@@ -74,14 +74,14 @@
                             <div class="row lineBreak">
                                 <div class="form-group">
                                     {{form.password.label_tag}}
-                                    {{form.password}}
+                                    <input type="password" id="{{ form.password.id_for_label }}" name="{{ form.password.name }}">
                                     <p id="id_password_alert" style="font-size: 12px;"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="container-fluid">
-                        <button id="id_register_button" class="btn btnRegister w-100"><b>Registrarse</b></button>
+                        <button id="id_register_button" type="submit" class="btn btnRegister w-100"><b>Registrarse</b></button>
                     </div>
                 </form>
             </div>
