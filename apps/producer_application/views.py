@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from .models import formulario
+from .forms import ApplicationForm
 
 
 def application_form_view(request):
