@@ -7,7 +7,7 @@ class CreatePrd(forms.ModelForm):
         model = Product
         fields = ['name', 'price', 'stock', 'description', 'category', 'producer', 'picture']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'name': forms.Select(attrs={'class': 'form-select'}),
             'price': forms.TextInput(attrs={'class': 'form-control'}),
             'stock': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
