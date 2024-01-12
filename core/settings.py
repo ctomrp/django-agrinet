@@ -115,9 +115,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-STATICFILES_DIRS = [BASE_DIR / "static","static", ]
-
-STATICFILES_DIRS = [BASE_DIR / "static", "apps/users/static/"]
+STATICFILES_DIRS = [BASE_DIR / "static", "apps/producer_application/static/"]
 
 
 # Default primary key field type
