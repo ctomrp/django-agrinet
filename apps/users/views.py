@@ -27,5 +27,3 @@ def producer_dashboard(request):
 def client_dashboard(request):
     return render(request, "client_dashboard.html")
 
-def myProducts(request):
-    return render(request, 'my_products.html')

@@ -1,17 +1,28 @@
-{% extends 'base_template.html' %} {% block main %}
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <h1>{{ titulo }}</h1>
-      <a href="{% url 'favoritos:index' %}"><p>Atrás</p></a>
-      <form method="POST">
+{% extends 'base_template.html' %} 
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'styles/addProducts.css' %}">
+{% endblock extra_css %}
+
+{% block main %}
+
+  <div class="container">
+    <div class="formContainer">
+      <form action="/products/create_products/" method="POST" class="card card-body" enctype="multipart/form-data">
+        <h1>Añadir producto</h1>
         {% csrf_token %}
-        <table class="table">
-          {{ form.as_table }}
-        </table>
-        <input type="submit" class="btn btn-outline-primary" />
-      </form>
+        {{error}}
+        {{form}}
+        
+        <button class="btn-custom">
+          enviar
+        </button>
+     </form>
     </div>
   </div>
-</div>
+  
+      
+  
+
 {% endblock main %}

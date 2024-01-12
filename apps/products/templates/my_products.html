@@ -13,21 +13,23 @@
             <div class="products-container">
                 <div class="pTitle">
                     <h2>Mis Productos</h2>
-                    <a href="">
+                    <a href="{% url 'create_products' %}">
                         <button class="btn btn-success addBtn" ><i class="bi bi-plus-lg"></i></button>
                     </a>
                 </div>
                 
+                {% for product in products %}
                 <div class="products-info">
-                    
+
                     <div class="imgDiv">
-                        <img src="{% static 'img/fv.png' %}" alt="">
+                        <img src="{{product.picture.url}}" alt="">
                     </div>
                     
                     <div class="dataDiv">
-                        <h6>Papas</h6>
-                        <h6>Proveedor: Juanito Perez</h6>
-                        <h6>Precio: $2600</h6>
+                        <h6>{{product.name}}</h6>
+                        <h6>Proveedor: {{product.producer}}</h6>
+                        <h6>Precio: ${{product.price}}</h6>
+                        <h6>Stock: {{product.stock}}</h6>
                     </div>
 
                     <div></div>
@@ -38,7 +40,7 @@
                     </div>
                     
                 </div>
-
+                {% endfor %}
             </div>
         </div>    
     {% endblock main %}

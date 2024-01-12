@@ -16,7 +16,7 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name=_("Price"))
     stock = models.IntegerField(verbose_name=_("Products in stock"))
     description = models.TextField(verbose_name=_("Description"))
-    picture = models.ImageField(upload_to="", verbose_name=_("Picture"))
+    picture = models.ImageField(upload_to="", null=True,blank=True, verbose_name=_("Picture"))
     category = models.ForeignKey(
         "ProductCategory",
         on_delete=models.SET_DEFAULT,
