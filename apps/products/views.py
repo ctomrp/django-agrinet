@@ -1,7 +1,9 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CreatePrd
+
 from .models import Product
-# Create your views here.
+
 def myProducts(request):
     products = Product.objects.all()
     return render(request, 'my_products.html', {'products': products})
@@ -26,6 +28,7 @@ def deleteProduct(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     product.delete()
     return redirect('my_products')
+
 
 def createProducts(request):
 

@@ -1,7 +1,11 @@
+
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.shortcuts import render
 
+from django.http import HttpResponseForbidden
+
+from .models import UserProducer
 from .forms import CustomAuthenticationForm
 
 
@@ -21,8 +25,11 @@ class CustomLoginView(LoginView):
 
 
 def producer_dashboard(request):
+    ###if request.user.is_authenticated and isinstance(request.user, UserProducer):
+     ##   return render(request, "producer_dashboard.html")
+   ## else:
+     ##   return HttpResponseForbidden("Acceso denegado")
     return render(request, "producer_dashboard.html")
-
 
 def client_dashboard(request):
     return render(request, "client_dashboard.html")
