@@ -37,6 +37,7 @@
 .imgDiv img{
     border-radius: 10px;
     max-width: 100px;
+    max-height: 100px;
     margin: 10px;
 }
 
@@ -45,7 +46,7 @@
     flex-direction: column;
 }
 
-.btnDiv button{
+.btnUpd{
     margin: 3px 10px 5px 10px;
-    border-radius: none;
 }
+

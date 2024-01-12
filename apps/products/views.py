@@ -1,10 +1,31 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CreatePrd
 from .models import Product
 # Create your views here.
 def myProducts(request):
     products = Product.objects.all()
     return render(request, 'my_products.html', {'products': products})
+
+def productDetail(request, product_id):
+     product = get_object_or_404(Product, pk=product_id)
+   
+     data = {
+            'form': CreatePrd(instance=product)
+     }
+     
+     if request.method == 'POST':
+          formulario = CreatePrd(data=request.POST, instance=product, files=request.FILES)
+          if formulario.is_valid():
+               formulario.save()
+               return redirect('my_products')
+          
+     return render(request, 'update_product.html', data) 
+
+
+def deleteProduct(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    product.delete()
+    return redirect('my_products')
 
 def createProducts(request):
 
