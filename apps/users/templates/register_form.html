@@ -8,14 +8,22 @@
 
 {% block main %}
 
-    <div class="fondoCuadroRegistro justify-content-center">
+    <div class="registerFrameBackground justify-content-center">
         <div class="row">
             <div class="col-md-6">
-                <p style="color: white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint vel voluptatum mollitia voluptas voluptatibus, quo, consequuntur, ab pariatur voluptates id perferendis at! Autem alias id earum adipisci? Tempore, temporibus earum.</p>
+                <div class="d-flex justify-content-center">
+                    <img src="{% static 'img/logo.png' %}" alt="icono_agrinet" width="210px" height="277px">
+                </div>
+                <div class="row text-center lineBreak">
+                    <h1 style="color: white">Agrinet</h1>
+                </div>
+                <div class="row text-center">
+                    <h4 style="color: white">Sé parte de la red N°1 de pequeños agricultores y productores de Chile</h4>
+                </div>
             </div>
-            <div class="col-md-6 fondoFormularioRegistro">
+            <div class="col-md-6 registerFormBackground">
                 <h1 class="registerFormTitle"><b>Formulario de Registro</b></h1>
-                <form method="POST" class="w-75 container justify-content-center>
+                <form method="POST" class="w-75 container justify-content-center validate-form">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-6 d-flex flex-column">
@@ -23,49 +31,58 @@
                                 <div class="form-group">
                                     {{form.first_name.label_tag}}
                                     {{form.first_name}}
+                                    <p id="id_fn_alert" style="font-size: 12px;"></p>
                                 </div>
                             </div>
                             <div class="row lineBreak">
-                                {{form.dni.label_tag}}
                                 <div class="form-group">
+                                    {{form.last_name.label_tag}}
+                                    {{form.last_name}}
+                                    <p id="id_ln_alert" style="font-size: 12px;"></p>
+                                </div>
+                            </div>
+                            <div class="row lineBreak">
+                                <div class="form-group">
+                                    {{form.dni.label_tag}}
                                     {{form.dni}}
+                                    <p id="id_dni_alert" style="font-size: 12px;"></p>
+                                </div>
+                            </div>
+                            <div class="row lineBreak">
+                                <div class="form-group">
+                                    {{form.phonenumber.label_tag}}
+                                    {{form.phonenumber}}
+                                    <p id="id_phone_alert" style="font-size: 12px;"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex flex-column gx-5">
+                            <div class="row lineBreak">
+                                <div class="form-group">
+                                    {{form.address.label_tag}}
+                                    {{form.address}}
+                                    <p id="id_address_alert" style="font-size: 12px;"></p>
                                 </div>
                             </div>
                             <div class="row lineBreak">
                                 <div class="form-group">
                                     {{form.email.label_tag}}
                                     {{form.email}}
+                                    <p id="id_email_alert" style="font-size: 12px;"></p>
                                 </div>
                             </div>
                             <div class="row lineBreak">
-                                {{form.phonenumber.label_tag}}
                                 <div class="form-group">
-                                    {{form.phonenumber}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex flex-column text-center">
-                            <div class="row lineBreak">
-                                <div class="form-group">
-                                    {{form.last_name.label_tag}}
-                                    {{form.last_name}}
-                                </div>
-                            </div>
-                            <div class="row lineBreak">
-                                {{form.address.label_tag}}
-                                <div class="form-group">
-                                    {{form.address}}
-                                </div>
-                            </div>
-                            <div class="row lineBreak">
-                                {{form.password.label_tag}}
-                                <div class="form-group">
+                                    {{form.password.label_tag}}
                                     {{form.password}}
+                                    <p id="id_password_alert" style="font-size: 12px;"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                        <button class="btn btnRegister w-100"><b>Registrarse</b></button>
+                    <div class="container-fluid">
+                        <button id="id_register_button" class="btn btnRegister w-100"><b>Registrarse</b></button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -73,52 +90,6 @@
 
 {% endblock %}
 
-
-<!--
-
-<div class="row lineBreak">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {{form.first_name.label_tag}}
-                                {{form.first_name}}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {{form.last_name.label_tag}}
-                                {{form.last_name}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row lineBreak">
-                        <div class="col-md-6">
-                            {{form.dni.label_tag}}
-                            <div class="col-md-6">
-                                {{form.dni}}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            {{form.address.label_tag}}
-                            {{form.address}}
-                        </div>
-                    </div>
-                    <div class="row lineBreak">
-                        <div class="col-md-6">
-                            
-                        </div>
-                        <div class="col-md-6">
-                            {{form.password.label_tag}}
-                            {{form.password}}
-                        </div>
-                    </div>
-                    <div class="row lineBreak">
-                        <div class="col-md-6">
-                            {{form.phonenumber.label_tag}}
-                            {{form.phonenumber}}
-                        </div>
-                        <div class="col-md-6">
-                            
-                        </div>                        
-                    </div>
-
--->
+{% block extra_js %} 
+    <script src="{% static 'script/javascript.js' %}"></script>
+{% endblock %}

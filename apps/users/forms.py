@@ -9,6 +9,11 @@ class UserProducerForm(forms.ModelForm):
 
 
 class UserClientForm(forms.ModelForm):
+    password = forms.CharField(
+        label='Contraseña',
+        widget=forms.PasswordInput()
+    )
+
     class Meta:
         model = UserClient
         fields = ["first_name", "last_name", "email", "password", "phonenumber","address", "dni"]
@@ -16,7 +21,6 @@ class UserClientForm(forms.ModelForm):
             'first_name': 'Primer Nombre',
             'last_name': 'Apellido Paterno',
             'email': 'Correo Electrónico',
-            'password': 'Contraseña',
             'phonenumber': "Teléfono",
             'address': 'Dirección',
             'dni': 'RUN'
