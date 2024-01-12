@@ -115,9 +115,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
-<<<<<<<<< Temporary merge branch 1
+
 STATICFILES_DIRS = [BASE_DIR / "static", "apps/users/static/", "apps/producer_application/static/" ]
-=========
+
 
 
 # Default primary key field type

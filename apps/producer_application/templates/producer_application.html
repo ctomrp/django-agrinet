@@ -1,0 +1,27 @@
+
+
+{% extends 'base_template.html' %}
+
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'estilo.css'%}">
+{% endblock extra_css%}
+{% block main %}
+
+        <br>
+        <center><h2>Formulario de postulación</h2></center>
+        <br>
+            <form action="/" method="POST">
+              {% csrf_token %}
+                {{error}}
+                {{form}}
+                <center><button type="submit" id="btnRegistrarId">Enviar</button></center>
+            </form>
+            <br>
+        <br>
+       
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'validaciones.js' %}"></script>
+{% endblock %}
