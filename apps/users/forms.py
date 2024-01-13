@@ -64,8 +64,7 @@ class UserClientForm(forms.ModelForm):
             'address': 'Dirección'
         }
         
-        
-        
+                
 # login form
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(
@@ -81,3 +80,5 @@ class CustomAuthenticationForm(AuthenticationForm):
             attrs={"placeholder": "Contraseña", "class": "input-text"}
         ),
     )
+    
+

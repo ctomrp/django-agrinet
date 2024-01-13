@@ -132,3 +132,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'apps/products/static/media/')
 
 #URL PARA ACCEDER A ARCHIVOS GUARDADOS
 MEDIA_URL = '/media/'
+
+# REDIRECCION A HOME SI INTENTA VER URLS SIN LOGEARSE
+LOGIN_REDIRECT_URL = 'unauthorized_access'
+LOGIN_URL = 'unauthorized_access'
+
