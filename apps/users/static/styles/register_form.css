@@ -48,3 +48,20 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
 }
+
+.dateInput{
+    height: 500px;
+    width: 500px;
+}
+
+.btnProducerTypeList{
+    margin-top: 1rem;
+    border-radius: 8px;
+    border: none;
+    width: 95%;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    outline: none;
+    color: white;
+    font-weight: bold;
+    letter-spacing: -1px;
+}
