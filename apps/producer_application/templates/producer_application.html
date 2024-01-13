@@ -5,22 +5,99 @@
 {% load static %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'estilo.css'%}">
+<link rel="stylesheet" href="{% static 'styles/register_form.css'%}">
 {% endblock extra_css%}
 {% block main %}
 
-        <br>
-        <center><h2>Formulario de postulación</h2></center>
-        <br>
-            <form method="POST">
+          
+          <center><h1 class="registerFormTitle"><b>Formulario de Postulación</b></h1></center>
+          <form method="POST" class="w-75 container justify-content-center validate-form">
               {% csrf_token %}
-                {{error}}
-                {{form}}
-                <center><button type="submit" id="btnRegistrarId">Enviar</button></center>
-            </form>
-            <br>
-        <br>
-       
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+              <div class="row">
+                  <div class="col-md-6 d-flex flex-column">
+                      <div class="row lineBreak">
+                          <div class="form-group">
+                              {{form.nombre.label_tag}}
+                              {{form.nombre}}
+                              <p id="id_fn_alert" style="font-size: 12px;"></p>
+                          </div>
+                      </div>
+                      <div class="row lineBreak">
+                          <div class="form-group">
+                              {{form.apellido.label_tag}}
+                              {{form.apellido}}
+                              <p id="id_ln_alert" style="font-size: 12px;"></p>
+                          </div>
+                      </div>
+                      <div class="row lineBreak">
+                          <div class="form-group">
+                              {{form.rut.label_tag}}
+                              {{form.rut}}
+                              <p id="id_dni_alert" style="font-size: 12px;"></p>
+                          </div>
+                      </div>
+                      <div class="row lineBreak">
+                          <div class="form-group">
+                              {{form.telefono.label_tag}}
+                              {{form.telefono}}
+                              <p id="id_phone_alert" style="font-size: 12px;"></p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6 d-flex flex-column gx-5">
+                      <div class="row lineBreak">
+                          <div class="form-group">
+                              {{form.correo.label_tag}}
+                              {{form.correo}}
+                              <p id="id_email_alert" style="font-size: 12px;"></p>
+                          </div>
+                      </div>
+                      <div class="row lineBreak">
+                          <div class="form-group">
+                              {{form.edad.label_tag}}
+                              {{form.edad}}
+                              <p id="id_edad_alert" style="font-size: 12px;"></p>
+                          </div>
+                      </div>
+                      <div class="row lineBreak">
+                        <div class="form-group">
+                            {{form.razon_social.label_tag}}
+                            {{form.razon_social}}
+                            <p id="id_razon_alert" style="font-size: 12px;"></p>
+                        </div>
+                      </div>
+                      <div class="row lineBreak">
+                        <div class="form-group">
+                            {{form.tipo_productor.label_tag}}
+                            {{form.tipo_productor}}
+                            <p id="id_tipo_alert" style="font-size: 12px;"></p>
+                        </div>
+                      </div>
+
+                      <div class="row lineBreak">
+                        <div class="form-group">
+                            {{form.fecha_nac.label_tag}}
+                            {{form.fecha_nac}}
+                            <p id="id_fecha_alert" style="font-size: 12px;"></p>
+                        </div>
+                      </div>
+
+                      
+                      
+                  </div>
+              </div>
+              <div class="container-fluid">
+                  <button id="id_register_button" type="submit" class="btn btnRegister w-100"><b>Postular</b></button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+<script
+src="https://code.jquery.com/jquery-3.7.1.js"
+integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+crossorigin="anonymous"></script>
 {% endblock %}
 {% block extra_js %}
 <script src="{% static 'validaciones.js' %}"></script>
