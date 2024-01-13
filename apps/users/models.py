@@ -60,14 +60,6 @@ class User(AbstractUser):
         return f"{self.first_name} {self.last_name}"
     
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.set_password(self.password)
-        super().save(*args, **kwargs)
-    
-    
-
-
 # modelo de usuario productor
 class UserProducer(User):
     address = models.CharField(max_length=255, verbose_name=_("Address"))
@@ -93,3 +85,8 @@ class UserClient(User):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.set_password(self.password)
+        super().save(*args, **kwargs)
