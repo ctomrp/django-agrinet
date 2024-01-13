@@ -3,9 +3,35 @@ from .models import UserProducer, UserClient
 
 
 class UserProducerForm(forms.ModelForm):
+    password = forms.CharField(
+        label = 'Contraseña',
+        widget = forms.PasswordInput(attrs={'placeholder': 'Pass "_@,.#$%&()*-+!"'})
+    )
+    email = forms.EmailField(
+        label = 'Correo Electrónico',
+        widget = forms.EmailInput(attrs={'placeholder': 'example@mail.com"'})
+    )
+    dni = forms.CharField(
+        label = 'RUT',
+        widget = forms.TextInput(attrs={'placeholder': 'Ej: 11111111-K'})
+    )
+    phonenumber = forms.IntegerField(
+        label = 'Teléfono',
+        widget = forms.NumberInput(attrs={'placeholder': 'Ej: 956800147'})
+    )
+    bussinessname = forms.CharField(
+        label = 'Razón Social',
+        widget = forms.TextInput()
+    )
     class Meta:
         model = UserProducer
-        fields = ["first_name", "last_name", "email", "address", "birthdate", "dni"]
+        fields = ["first_name", "last_name", "email", "password", "phonenumber", "bussinessname", "address", "birthdate", "dni"]
+        labels = {
+            'first_name': 'Primer Nombre',
+            'last_name': 'Apellido Paterno',
+            'address': 'Dirección',
+            'birthdate': 'Fecha de Nacimiento'
+        }
 
 
 class UserClientForm(forms.ModelForm):

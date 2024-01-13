@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
-from .forms import UserClientForm
-from .models import UserClient
+from .forms import UserClientForm, UserProducerForm
+from .models import UserClient, UserProducer
 
 # Create your views here.
 
@@ -25,4 +25,9 @@ def userClientRegistration(request):
     return render(request, 'client_register_form.html', {'form': form, 'user_already_exists': False})
 
 def userProducerRegistration(request):
-    return render(request, 'producer_register_form.html')
+    if request.method == "POST":
+        form = UserProducerForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            return redirect("producer_register_form")
+    return render(request, 'producer_register_form.html', {'form': UserProducerForm})

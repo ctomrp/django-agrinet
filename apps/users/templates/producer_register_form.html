@@ -1,0 +1,117 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'styles/panel.css'%}">
+    <link rel="stylesheet" href="{% static 'styles/register_form.css'%}">
+{% endblock %}
+
+{% block main %}
+
+<div class="registerFrameBackground justify-content-center">
+    <div class="row">
+        <div class="col-md-6">
+            <p style="color: white;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi minus nisi dolor, eius incidunt necessitatibus ipsum ducimus, ut blanditiis, quam sapiente optio praesentium et autem iure nemo nesciunt vitae quas!</p>
+        </div>
+        <div class="col-md-6 registerFormBackground">
+            <h1 class="registerFormTitle"><b>Formulario de Registro</b></h1>
+            <form method="POST" class="w-75 container justify-content-center validate-form">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6 d-flex flex-column">
+                        <div class="row lineBreak">
+                            <div class="form-group">
+                                {{form.first_name.label_tag}}
+                                {{form.first_name}}
+                                <p id="id_fn_alert" style="font-size: 12px;"></p>
+                            </div>
+                        </div>
+                        <div class="row lineBreak">
+                            <div class="form-group">
+                                {{form.last_name.label_tag}}
+                                {{form.last_name}}
+                                <p id="id_ln_alert" style="font-size: 12px;"></p>
+                            </div>
+                        </div>
+                        <div class="row lineBreak">
+                            <div class="form-group">
+                                {{form.dni.label_tag}}
+                                {{form.dni}}
+                                <p id="id_dni_alert" style="font-size: 12px;"></p>
+                            </div>
+                        </div>
+                        <div class="row lineBreak">
+                            <div class="form-group">
+                                {{form.bussinessname.label_tag}}
+                                {{form.bussinessname}}
+                                <p id="id_bussinessname_alert" style="font-size: 12px;"></p>
+                            </div>
+                        </div>
+                        <div class="row lineBreak">
+                            <div class="form-group">
+                                {{form.birthdate.label_tag}}
+                                {{form.birthdate}}
+                                <p id="id_birthdate_alert" style="font-size: 12px;"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex flex-column gx-5">
+                        <div class="row lineBreak">
+                            <div class="form-group">
+                                {{form.phonenumber.label_tag}}
+                                {{form.phonenumber}}
+                                <p id="id_phone_alert" style="font-size: 12px;"></p>
+                            </div>
+                        </div>
+                        <div class="row lineBreak">
+                            <div class="form-group">
+                                {{form.address.label_tag}}
+                                {{form.address}}
+                                <p id="id_address_alert" style="font-size: 12px;"></p>
+                            </div>
+                        </div>
+                        <div class="row lineBreak">
+                            <div class="form-group">
+                                {{form.email.label_tag}}
+                                {{form.email}}
+                                <p id="id_email_alert" style="font-size: 12px;"></p>
+                            </div>
+                        </div>
+                        <div class="row lineBreak">
+                            <div class="form-group">
+                                {{form.password.label_tag}}
+                                {{form.password}}
+                                <p id="id_password_alert" style="font-size: 12px;"></p>
+                            </div>
+                        </div>
+                        <!--
+                            <div class="row lineBreak">
+                            <div class="form-group">
+                                <label for="id_repeat_password">Repetir Contraseña:</label>
+                                <input type="password" id="id_repeat_password" name="repeat_password">
+                                <p id="id_repeat_password_alert" style="font-size: 12px;"></p>
+                            </div>
+                        </div>
+                        -->
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    {% if user_already_exists %}
+                        <p style="color: red; font-size: 12px;">El usuario ya está registrado. Por favor, ingrese su RUN. En caso de que su RUN haya sido registrado y no es usted, contactarse con el Administrador.</p>
+                    {% endif %}
+                </div>
+                <div class="container-fluid">
+                    <button id="id_register_button" type="submit" class="btn btnRegister w-100"><b>Registrar Productor</b></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+<!--
+{% block extra_js %} 
+    <script src="{% static 'script/producer_register_form.js' %}"></script>
+{% endblock %}
+-->
