@@ -1,0 +1,11 @@
+<!-- register_user_producer.html -->
+{% extends 'base_template.html' %}
+
+{% block main %}
+  <h2>Register as a Producer</h2>
+  <form method="post" action="{% url 'register_user_producer' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+  </form>
+{% endblock %}
