@@ -1,0 +1,17 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'styles/unauth.css' %}">
+{% endblock extra_css %}
+
+
+  
+    {% block main %}
+    <div class="d-flex flex-column mt-5">
+
+      <img src="{% static 'assets/unauth.jpg' %}" alt="" class="rounded mx-auto d-block shadow">
+      <h1 class="fs-1 mt-5 text-center">Acceso no autorizado, por favor <a href="{% url 'login' %}" class="fs-1">inicie sesión</a></h1>
+    </div>
+    {% endblock main %}
+
