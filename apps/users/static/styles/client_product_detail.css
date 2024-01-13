@@ -1,0 +1,33 @@
+.container{
+    display: grid;
+    align-content: center;
+}
+
+.formContainer{
+    border: 2px solid;
+    margin-top: 20px;
+    border-radius: 10px;
+    max-width: 100%;
+
+}
+.formContainer h1{
+    text-align: center;
+}
+
+.btn-custom {
+    background: #00c67c;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+    height: 3rem;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    outline: none;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    letter-spacing: -1px;
+  }
+  
+
+
+  

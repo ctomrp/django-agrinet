@@ -9,14 +9,13 @@
 
   <div class="container">
     <div class="formContainer">
-      <form action="/products/create_products/" method="POST" class="card card-body" enctype="multipart/form-data">
-        <h1>Añadir producto</h1>
+      <form  method="POST" class="card card-body" enctype="multipart/form-data">
+        <h1>Editar producto</h1>
         {% csrf_token %}
         {{error}}
-        {{form}}
-        
+        {{form}}        
         <button class="btn-custom">
-          enviar
+          Actualizar
         </button>
      </form>
     </div>
