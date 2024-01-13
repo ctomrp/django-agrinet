@@ -27,6 +27,7 @@ def userClientRegistration(request):
         form = UserClientForm()
     return render(request, 'client_register_form.html', {'form': form, 'user_already_exists': False})
 
+
 def userProducerRegistration(request):
     if request.method == "POST":
         form = UserProducerForm(request.POST)
@@ -76,3 +77,5 @@ def client_product_detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)   
     return render(request, 'client_product_detail.html', {'product': product})
 
+def unauthorized_access(request):
+    return render(request, "unauthorized_access.html")
