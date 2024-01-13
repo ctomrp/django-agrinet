@@ -1,0 +1,8 @@
+<!-- logout.html -->
+{% extends 'base_template.html' %}
+
+{% block main%}
+  <h2>Logout Successful</h2>
+  <p>You have been successfully logged out.</p>
+  <a href="{% url 'login' %}">Login</a>
+{% endblock %}
