@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from .forms import UserClientForm, UserProducerForm
 from .models import UserClient, UserProducer
 
+
 # Create your views here.
-
-
+@login_required
 def panelControl(request):
     return render(request, 'producer_dashboard.html')
 
@@ -24,6 +25,7 @@ def userClientRegistration(request):
         form = UserClientForm()
     return render(request, 'client_register_form.html', {'form': form, 'user_already_exists': False})
 
+@login_required
 def userProducerRegistration(request):
     if request.method == "POST":
         form = UserProducerForm(request.POST)
