@@ -5,28 +5,12 @@ from .forms import ApplicationForm
 
 
 
-def result_form_view(request):
-    return render(request, 'producer_application.html')
-
-
-def result_form_view(request):
-    return render(request, 'resultado.html')
-
-def guardar_formulario(request):
-    if request.method == 'POST':
-        form = ApplicationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            print('Información guardada correctamente.')
-            return redirect('results')
-        else:
-            print('Error al guardar la información. Por favor, verifica el formulario.')
+def application_form_view(request):
 
     if request.method == 'GET':
             return render(request, 'producer_application.html',{
                 'form': ApplicationForm
             }) 
-
     else:
         try:
             form = ApplicationForm(request.POST)
@@ -39,4 +23,3 @@ def guardar_formulario(request):
                 'error': e
 
                 })
-    
