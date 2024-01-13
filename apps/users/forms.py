@@ -81,3 +81,8 @@ class CustomAuthenticationForm(AuthenticationForm):
             attrs={"placeholder": "Contraseña", "class": "input-text"}
         ),
     )
+    
+
+# password reset
+class PasswordResetRequestForm(forms.Form):
+    email = forms.EmailField(label='Correo electrónico')

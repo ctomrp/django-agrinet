@@ -132,3 +132,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'apps/products/static/media/')
 
 #URL PARA ACCEDER A ARCHIVOS GUARDADOS
 MEDIA_URL = '/media/'
+
+# settings.py (entorno de desarrollo local)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'tucorreo@gmail.com'
+EMAIL_HOST_PASSWORD = 'tucontraseña'
