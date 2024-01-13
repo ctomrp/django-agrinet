@@ -1,25 +1,45 @@
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.shortcuts import render
-
-from .forms import CustomAuthenticationForm
-
-
-class CustomLoginView(LoginView):
-    template_name = "login.html"
-    authentication_form = CustomAuthenticationForm
-
-    def form_valid(self, form):
-        user = form.get_user()
-
-        if hasattr(user, "userproducer"):
-            return redirect("producer_dashboard")
-        elif hasattr(user, "userclient"):
-            return redirect("client_dashboard")
-
-        return super().form_valid(form)
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import User
 
 
+# class CustomLoginView(LoginView):
+#     template_name = "login.html"
+#     authentication_form = CustomAuthenticationForm
+
+#     def form_valid(self, form):
+#         user = form.get_user()
+#         return redirect("producer_dashboard.html")
+#         # if hasattr(user, "userproducer"):
+#         #     return redirect("producer_dashboard")
+#         # elif hasattr(user, "userclient"):
+#         #     return redirect("client_dashboard")
+
+#         # return super().form_valid(form)
+
+def custom_login(request):
+    if request.method == 'POST':
+        email = request.POST.get('mail')
+        passw = request.POST.get('passw')
+        try:
+            usuario = User.objects.get(email=email)
+            if usuario.password == passw:
+                
+                print('logeaddo')
+                request.user = usuario
+                return redirect('/')
+            else:
+
+                messages.error(request, 'Contraseña incorrecta')
+        except User.DoesNotExist:
+
+            messages.error(request, 'Correo no encontrado')
+    return render(request, 'login.html', {'Usuario': User})
+
+@login_required
 def producer_dashboard(request):
     return render(request, "producer_dashboard.html")
 
@@ -30,6 +50,8 @@ def client_dashboard(request):
 from django.shortcuts import render, redirect
 from .forms import UserProducerForm, UserClientForm
 from django.contrib.auth import authenticate, login
+
+
 
 
 def register_user_producer(request):

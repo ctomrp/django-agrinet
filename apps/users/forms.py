@@ -7,13 +7,13 @@ from .models import UserProducer, UserClient
 class UserProducerForm(forms.ModelForm):
     class Meta:
         model = UserProducer
-        fields = ["first_name", "last_name", "email", "address", "birthdate", "dni"]
+        fields = ["first_name", "last_name", "email", "address", "birthdate", "dni" , "password"]
 
 
 class UserClientForm(forms.ModelForm):
     class Meta:
         model = UserClient
-        fields = ["first_name", "last_name", "email", "address", "dni"]
+        fields = ["first_name", "last_name", "email", "address", "dni","password"]
         
 
 # login form
