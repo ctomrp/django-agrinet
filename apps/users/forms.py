@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-
-from .models import UserProducer, UserClient
+from .models import UserProducer, UserClient, ProducerType
 
 
 class UserProducerForm(forms.ModelForm):
@@ -25,14 +24,28 @@ class UserProducerForm(forms.ModelForm):
         label = 'Razón Social',
         widget = forms.TextInput()
     )
+    birthdate = forms.DateField(
+        label = 'Fecha de Nacimiento',
+        widget = forms.DateInput(attrs={'type':'date', 'style': 'width: 190px; height: 30px;'})
+    )
+    producertypes = forms.ModelChoiceField(
+        queryset = ProducerType.objects.all(),
+        to_field_name = 'id',
+        label = 'Seleccione tipo/s productor',
+        widget = forms.Select()
+    )
+    selectedproducertypes = forms.CharField(
+        widget = forms.HiddenInput(),
+        required = True
+    )
+
     class Meta:
         model = UserProducer
-        fields = ["first_name", "last_name", "email", "password", "phonenumber", "bussinessname", "address", "birthdate", "dni"]
+        fields = ["first_name", "last_name", "email", "password", "phonenumber", "bussinessname", "address", "birthdate", "dni", "producertypes", "selectedproducertypes"]
         labels = {
             'first_name': 'Primer Nombre',
             'last_name': 'Apellido Paterno',
-            'address': 'Dirección',
-            'birthdate': 'Fecha de Nacimiento'
+            'address': 'Dirección'
         }
 
 

@@ -1,9 +1,10 @@
-/*
-var vdni = false, vfirstname = false, vlastname = false, vaddress = false, vphone = false, vemail = false, vpassword = false, vreppass = false;
+var vdni = false, vfirstname = false, vlastname = false, vaddress = false, vphone = false, vemail = false, vpassword = false, vreppass = false,  vproType = false, vbussinessname = false;
 
-$(document).ready(function () {
-    $("#id_register_button").attr('disabled', true)
-});
+producerTypes = [];
+
+function updateHiddenSelectedProducerTypes() {
+    $("#id_selectedproducertypes").val(producerTypes.join(","));
+}
 
 $("#id_dni").on("keyup", function() {
     var run = $(this).val().replace(/\./g, '').replace('-', '').trim();  // Elimina espacios al principio y al final
@@ -47,7 +48,7 @@ $("#id_dni").on("keyup", function() {
         return 0;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -55,15 +56,15 @@ $("#id_dni").on("keyup", function() {
 });
 
 $("#id_first_name").keyup(function (){
-    var characters = $("#id_first_name").val();
-    var namePattern = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
-    var nameLength = $("#id_first_name").val().length;
+    var firstname = $("#id_first_name").val();
+    var firstNamePattern = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+    var firstNameLength = $("#id_first_name").val().length;
 
-    if (nameLength < 3 || nameLength > 30) {
+    if (firstNameLength < 3 || firstNameLength > 30) {
         $("#id_fn_alert").text("Nombre inválido (mín. 3 caracteres, máx. 30 caracteres)");
         $("#id_fn_alert").css('color', 'red');
         vfirstname = false;
-    } else if (!namePattern.test(characters)) {
+    } else if (!firstNamePattern.test(firstname)) {
         $("#id_fn_alert").text("Sólo puede ingresar letras");
         $("#id_fn_alert").css('color', 'red');
         vfirstname = false;
@@ -73,15 +74,15 @@ $("#id_first_name").keyup(function (){
         vfirstname = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass){
-        $("#id_register_button").attr('disabled', false)
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+        $("#id_register_button").attr('disabled', false);
     } else {
-        $("#id_register_button").attr('disabled', true)
+        $("#id_register_button").attr('disabled', true);
     }
 });
 
 $("#id_last_name").keyup(function (){
-    var characters = $("#id_last_name").val();
+    var lastname = $("#id_last_name").val();
     var lastnamePattern = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
     var lastnameLenght = $("#id_last_name").val().length;
 
@@ -89,7 +90,7 @@ $("#id_last_name").keyup(function (){
         $("#id_ln_alert").text("Apellido inválido (mín. 3 caracteres, máx. 30 caracteres)");
         $("#id_ln_alert").css('color', 'red');
         vlastname = false;
-    } else if (!lastnamePattern.test(characters)) {
+    } else if (!lastnamePattern.test(lastname)) {
         $("#id_ln_alert").text("Sólo puede ingresar letras");
         $("#id_ln_alert").css('color', 'red');
         vlastname = false;
@@ -99,15 +100,15 @@ $("#id_last_name").keyup(function (){
         vlastname = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass){
-        $("#id_register_button").attr('disabled', false)
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+        $("#id_register_button").attr('disabled', false);
     } else {
-        $("#id_register_button").attr('disabled', true)
+        $("#id_register_button").attr('disabled', true);
     }
 });
 
 $("#id_address").keyup(function (){
-    var characters = $("#id_address").val();
+    var address = $("#id_address").val();
     var addressPattern = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.,-]*$/;
     var addressLenght = $("#id_address").val().length;
 
@@ -115,7 +116,7 @@ $("#id_address").keyup(function (){
         $("#id_address_alert").text("Dirección inválida (mín. 3 caracteres, máx. 100 caracteres)");
         $("#id_address_alert").css('color', 'red');
         vaddress = false;
-    } else if (!addressPattern.test(characters)) {
+    } else if (!addressPattern.test(address)) {
         $("#id_address_alert").text("No puede ingresar caracteres especiales");
         $("#id_address_alert").css('color', 'red');
         vaddress = false;
@@ -125,7 +126,7 @@ $("#id_address").keyup(function (){
         vaddress = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
         $("#id_register_button").attr('disabled', false)
     } else {
         $("#id_register_button").attr('disabled', true)
@@ -152,10 +153,10 @@ $("#id_phonenumber").keyup(function (){
         }
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass){
-        $("#id_register_button").attr('disabled', false)
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+        $("#id_register_button").attr('disabled', false);
     } else {
-        $("#id_register_button").attr('disabled', true)
+        $("#id_register_button").attr('disabled', true);
     }
 });
 
@@ -177,10 +178,10 @@ $("#id_email").keyup(function (){
         vemail = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass){
-        $("#id_register_button").attr('disabled', false)
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+        $("#id_register_button").attr('disabled', false);
     } else {
-        $("#id_register_button").attr('disabled', true)
+        $("#id_register_button").attr('disabled', true);
     }
 });
 
@@ -203,10 +204,10 @@ $("#id_password").keyup(function (){
         vpassword = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass){
-        $("#id_register_button").attr('disabled', false)
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+        $("#id_register_button").attr('disabled', false);
     } else {
-        $("#id_register_button").attr('disabled', true)
+        $("#id_register_button").attr('disabled', true);
     }
 });
 
@@ -224,10 +225,111 @@ $("#id_repeat_password").keyup(function (){
         vreppass = false;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass){
-        $("#id_register_button").attr('disabled', false)
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+        $("#id_register_button").attr('disabled', false);
     } else {
-        $("#id_register_button").attr('disabled', true)
+        $("#id_register_button").attr('disabled', true);
     }
 });
-*/
+
+$("#id_bussinessname").keyup(function (){
+    var bussinessNamePattern = /^[a-zA-Z0-9'!@#$%^&*()-_+=?<>]+$/
+    var bussinessName = $("#id_bussinessname").val()
+    var bussinessNameLength = $("#id_bussinessname").val().length
+
+    if(bussinessNameLength < 3 || bussinessNameLength > 200 ){
+        $("#id_bussinessname_alert").text("Razón social inválida (mín. 3 caracteres, máx. 200 caracteres)");
+        $("#id_bussinessname_alert").css("color", "red");
+    } else if (!bussinessNamePattern.test(bussinessName)){
+        $("#id_bussinessname_alert").text("Ayuda no se");
+        $("#id_bussinessname_alert").css("color", "red");
+    } else {
+        $("#id_bussinessname_alert").text("Ingreso correcto");
+        $("#id_bussinessname_alert").css("color", "green");
+    }
+});
+
+$("#id_birthdate").change(function (){
+    var birthdate = new Date($("#id_birthdate").val());
+    var today = new Date();
+    var age = today.getFullYear() - birthdate.getFullYear()
+
+    if (birthdate.getFullYear() < 1900 || birthdate.getFullYear() > today.getFullYear() ) {
+        $("#id_birthdate_alert").text("Seleccione un año válido");
+        $("#id_birthdate_alert").css("color", "red");
+        return;
+    }
+
+    if (
+        age > 18 ||
+        (age === 18 && today.getMonth() > birthdate.getMonth()) ||
+        (age === 18 && today.getMonth() === birthdate.getMonth() && today.getDate() >= birthdate.getDate())
+    ) {
+        $("#id_birthdate_alert").text("Ingreso correcto")
+        $("#id_birthdate_alert").css("color", "green");
+    } else {
+        $("#id_birthdate_alert").text("Debe ser mayor a 18 años")
+        $("#id_birthdate_alert").css("color", "red");
+    }
+});
+
+$(document).ready(function () {
+    $("#id_register_button").attr('disabled', true)
+
+    $("#id_add_producertype").click(function (){
+        var selectedOption = $("#id_producertypes :selected");
+        var selectedValue = $(selectedOption).val()
+        
+        if(selectedValue == ""){
+            vproType = false
+        } else {
+            var selectedValueText = $(selectedOption).text()
+            $("#id_selected_types").append('<option value="' + selectedValue + '">' + selectedValueText + '</option>');
+            producerTypes.push(selectedValue)
+            updateHiddenSelectedProducerTypes()
+            $(selectedOption).remove()
+            vproType = true
+        }
+
+        if(producerTypes.length == 0){
+            vproType = false
+        } else {
+            vproType = true
+        }
+
+        if(vproType){
+            $("#id_register_button").attr('disabled', false)
+        } else {
+            $("#id_register_button").attr('disabled', true)
+        }
+    });
+
+    $("#id_delete_producertype").click(function (){
+        var selectedOption = $("#id_list_of_selected_materials :selected");
+        var selectedValue = $(selectedOption).val()
+        var selectedValueText = $(selectedOption).text()
+        if (producerTypes.length == 0){
+            console.log("No ha seleccionado nada para que pueda ser borrado")   
+        } else {
+            $("#id_producertypes").append('<option value="' + selectedValue + '">' + selectedValueText + '</option>');
+            var index = producerTypes.indexOf(selectedValue);
+            if (index > -1) {
+                producerTypes.splice(index, 1);
+            }
+            updateHiddenSelectedProducerTypes()
+            $(selectedOption).remove();
+            if(producerTypes.length == 0){
+                vproType = false
+            } else {
+                vproType = true
+            }
+        }
+
+        if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+            $("#id_register_button").attr('disabled', false);
+        } else {
+            $("#id_register_button").attr('disabled', true);
+        }
+    });
+
+});

@@ -22,16 +22,18 @@ def userClientRegistration(request):
         
         if form.is_valid():
             user = form.save()
-            return redirect("client_register_form")
+            return redirect("login")
     else:
         form = UserClientForm()
     return render(request, 'client_register_form.html', {'form': form, 'user_already_exists': False})
 
+
 def userProducerRegistration(request):
     if request.method == "POST":
         form = UserProducerForm(request.POST)
+        print(form['selectedproducertypes'].value())
         if form.is_valid():
-            user = form.save()
+            #user = form.save()
             return redirect("producer_register_form")
     return render(request, 'producer_register_form.html', {'form': UserProducerForm})
 

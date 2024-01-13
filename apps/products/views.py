@@ -6,12 +6,14 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import CreatePrd
 from .models import Product
 from apps.users.views import is_userproducer
-
+from apps.users.models import UserProducer
 @login_required
 @user_passes_test(is_userproducer)
 def myProducts(request):
-    products = Product.objects.all()
+    user_id = request.user.id
+    products = Product.objects.filter(producer=user_id)
     return render(request, 'my_products.html', {'products': products})
+
 
 @login_required
 @user_passes_test(is_userproducer)
@@ -51,7 +53,8 @@ def createProducts(request):
         try:
             form = CreatePrd(request.POST, request.FILES)
             new_product = form.save(commit=False)
-            ##new_product.producer = request.user  Quitar el producer del archivo fomrs y agregar esta linea para que extraiga el producer correspondiente a la sesion iniciada
+            user_id = request.user.id
+            new_product.producer = UserProducer.objects.get(id=user_id)
             new_product.save()
             return redirect('my_products')
         except Exception as e:
@@ -63,3 +66,4 @@ def createProducts(request):
 
                 })
     
+

@@ -54,6 +54,14 @@
                                 <p id="id_birthdate_alert" style="font-size: 12px;"></p>
                             </div>
                         </div>
+                        <div class="row lineBreak">
+                            <div class="form-group">
+                                {{form.producertypes.label_tag}}
+                                {{form.producertypes}}
+                                <button type="button" class="btn btn-dark btnProducerTypeList" id="id_add_producertype">Añadir Tipo Productor</button>
+                                <!--<p id="id_phone_alert" style="font-size: 12px;"></p>-->
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6 d-flex flex-column gx-5">
                         <div class="row lineBreak">
@@ -84,15 +92,21 @@
                                 <p id="id_password_alert" style="font-size: 12px;"></p>
                             </div>
                         </div>
-                        <!--
-                            <div class="row lineBreak">
+                        <div class="row lineBreak">
                             <div class="form-group">
                                 <label for="id_repeat_password">Repetir Contraseña:</label>
                                 <input type="password" id="id_repeat_password" name="repeat_password">
                                 <p id="id_repeat_password_alert" style="font-size: 12px;"></p>
                             </div>
                         </div>
-                        -->
+                        <div class="row lineBreak">
+                            <label for="id_list_of_selected_materials">Listado de Tipos:</label>
+                            <select name="list_of_selected_materials" id="id_list_of_selected_materials">
+                                <optgroup label="Tipo/s Seleccionado/s" id="id_selected_types"></optgroup>
+                            </select>
+                            {{form.selectedproducertypes}}
+                            <button type="button" class="btn btn-danger btnProducerTypeList" id="id_delete_producertype">Quitar Tipo Productor</button>
+                        </div>
                     </div>
                 </div>
                 <div class="container-fluid">
@@ -110,8 +124,7 @@
 
 {% endblock %}
 
-<!--
+
 {% block extra_js %} 
     <script src="{% static 'script/producer_register_form.js' %}"></script>
 {% endblock %}
--->
