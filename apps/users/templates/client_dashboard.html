@@ -1,1 +1,41 @@
-cliente
+{% extends 'base_template.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'styles/client.css' %}">
+{% endblock extra_css %}
+
+
+  
+    {% block main %}
+  
+        <div class="container">
+            <div class="products-container">
+                <div class="pTitle">
+                    <h2>Productos</h2>
+
+                </div>
+                
+                {% for product in products %}
+                <a type="button" href="{% url 'client_product_detail' product.id %}" class="btnUpd btn btn-dark btn-sm">
+                <div class="products-info">
+
+                    <div class="imgDiv">
+                        <img src="{{product.picture.url}}" alt="">
+                    </div>
+                    
+                    <div class="dataDiv">
+                        <h6>{{product.name}}</h6>
+                        <h6>Proveedor: {{product.producer}}</h6>
+                        <h6>Precio: ${{product.price}}</h6>
+                        <h6>Stock: {{product.stock}}</h6>
+                    </div>
+
+                        
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>    
+    {% endblock main %}
+

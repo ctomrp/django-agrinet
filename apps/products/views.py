@@ -1,17 +1,20 @@
 
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+
 
 from .forms import CreatePrd
-
 from .models import Product
+from apps.users.views import is_userproducer
 
 @login_required
+@user_passes_test(is_userproducer)
 def myProducts(request):
     products = Product.objects.all()
     return render(request, 'my_products.html', {'products': products})
 
 @login_required
+@user_passes_test(is_userproducer)
 def productDetail(request, product_id):
      product = get_object_or_404(Product, pk=product_id)
    
@@ -29,6 +32,7 @@ def productDetail(request, product_id):
 
 
 @login_required
+@user_passes_test(is_userproducer)
 def deleteProduct(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     product.delete()
@@ -36,6 +40,7 @@ def deleteProduct(request, product_id):
 
 
 @login_required
+@user_passes_test(is_userproducer)
 def createProducts(request):
 
     if request.method == 'GET':

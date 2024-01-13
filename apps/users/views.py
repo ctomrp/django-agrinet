@@ -1,11 +1,17 @@
 from django.contrib.auth import logout, login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import UserClientForm, UserProducerForm, CustomAuthenticationForm
 from .models import UserClient
+from apps.products.models import Product
 
+def is_userproducer(user):
+    return hasattr(user, 'userproducer')
+
+def is_userclient(user):
+    return hasattr(user, 'userclient')
 
 def userClientRegistration(request):
     if request.method == "POST":
@@ -47,14 +53,25 @@ class CustomLoginView(LoginView):
         return super().form_valid(form)
 
 @login_required
+@user_passes_test(is_userproducer)
 def producer_dashboard(request):
     return render(request, "producer_dashboard.html")
 
 @login_required
+@user_passes_test(is_userclient)
 def client_dashboard(request):
-    return render(request, "client_dashboard.html")
+    products = Product.objects.all()
+    return render(request, "client_dashboard.html", {'products': products})
 
 @login_required
 def custom_logout(request):
     logout(request)
     return redirect("login")
+
+
+@login_required
+@user_passes_test(is_userclient)
+def client_product_detail(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)   
+    return render(request, 'client_product_detail.html', {'product': product})
+
