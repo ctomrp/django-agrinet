@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from .forms import UserClientForm
+from .models import UserClient
 
 # Create your views here.
 
@@ -9,18 +10,19 @@ from .forms import UserClientForm
 def panelControl(request):
     return render(request, 'producer_dashboard.html')
 
-def userRegistration(request):
+def userClientRegistration(request):
     if request.method == "POST":
         form = UserClientForm(request.POST)
+        dni = form['dni'].value()
+        if UserClient.objects.filter(dni=dni).exists():
+            return render(request, 'client_register_form.html', {'form': form, 'user_already_exists': True})
+        
         if form.is_valid():
             user = form.save()
-            # Autenticar al usuario después de registrarse
-            login(request, user)
-            return redirect(
-                "register_form"
-            )  # Redirige a la página de inicio después del registro
+            return redirect("client_register_form")
     else:
         form = UserClientForm()
-    return render(request, 'register_form.html', {
-        'form': UserClientForm
-    })
+    return render(request, 'client_register_form.html', {'form': form, 'user_already_exists': False})
+
+def userProducerRegistration(request):
+    return render(request, 'producer_register_form.html')
