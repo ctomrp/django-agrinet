@@ -19,31 +19,33 @@
     {% block extra_css %} {% endblock %}
   </head>
   <body>
+      {% if user.is_authenticated %}
+        <nav class="navbar nav">
+            <div class="container-fluid">
+              <a class="navbar-brand " href="#">
+                <img src="{% static 'img/logotext.png' %}" alt="" width="80" >
+              </a> 
+              <form class="d-flex ms-auto me-5">
+                <input class="form-control me-1 searchInput" type="search" placeholder="Buscar Productos" aria-label="Buscar">
+                <button class="bt btn btn-outline-dark" type="submit"><i class="bi bi-search"></i></button>
+              </form>
 
-    <nav class="navbar nav">
-        <div class="container-fluid">
-          <a class="navbar-brand " href="#">
-            <img src="{% static 'img/logotext.png' %}" alt="" width="80" >
-          </a> 
-          <form class="d-flex ms-auto me-5">
-            <input class="form-control me-1 searchInput" type="search" placeholder="Buscar Productos" aria-label="Buscar">
-            <button class="bt btn btn-outline-dark" type="submit"><i class="bi bi-search"></i></button>
-          </form>
+              <div class="d-flex">
+                <a href="" class="d-flex flex-column align-items-center me-5">
+                  <div><i class="bi bi-basket2 bi-lg icon"></i></div>
+                  <div>Productos</div>
+                </a>
 
-          <div class="d-flex">
-            <a href="" class="d-flex flex-column align-items-center me-5">
-              <div><i class="bi bi-basket2 bi-lg icon"></i></div>
-              <div>Productos</div>
-            </a>
-
-            <a href="" class="d-flex flex-column align-items-center">
-              <div><i class="bi bi-person-circle icon"></i></div>
-              <div>Juanito Perez</div>
-            </a>
-          </div>
-          
-        </div>
-    </nav>
+                <a href="" class="d-flex flex-column align-items-center">
+                  <div><i class="bi bi-person-circle icon"></i></div>
+                  <div>Juanito Perez</div>
+                </a>
+              </div>
+              
+            </div>
+        </nav>
+      {% else %}
+      {% endif %}
 
     {% block main %} {% endblock %}
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
