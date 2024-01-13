@@ -7,7 +7,8 @@ from .forms import ApplicationForm
 def application_form_view(request):
     return render(request, 'form.html')
 
-
+def result_form_view(request):
+    return render(request, 'resultado.html')
 
 def guardar_formulario(request):
     if request.method == 'POST':
@@ -15,7 +16,7 @@ def guardar_formulario(request):
         if form.is_valid():
             form.save()
             print('Información guardada correctamente.')
-            redirect(request, 'form.html', {'form': form})
+            return redirect('results')
         else:
             print('Error al guardar la información. Por favor, verifica el formulario.')
     else:

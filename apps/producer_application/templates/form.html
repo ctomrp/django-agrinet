@@ -13,6 +13,9 @@
         <br>
             <form action="" method="post" id="form" name="form">
               {% csrf_token %}
+                {{form}}
+
+                <!--
                 <label for="rut">RUT Postulante:</label>
                 <input type="text" id="Idrut" name="rut" required>
                 <div id="rutid"></div>
@@ -50,7 +53,7 @@
                     <option value="Legumbres">Legumbres</option>
                     <option value="Hortalizas">Hortalizas</option>
                 </select>
-                <label id="result"></label>
+                <label id="result"></label>-->
                 
 
                 <center><button type="submit" id="btnRegistrarId">Enviar</button></center>
