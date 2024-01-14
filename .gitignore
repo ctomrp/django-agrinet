@@ -4,4 +4,4 @@ venv
 db.sqlite3
 poetry.lock
 media
-migrations/*_initial.py
+*_initial.py
