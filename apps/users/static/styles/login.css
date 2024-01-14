@@ -96,3 +96,9 @@ form {
   margin-bottom: 1rem;
 }
 
+.custom-error {
+  font-size: 12px;
+  margin-top: 5px;
+  width: 50%;
+  /* Puedes personalizar otros estilos según tus necesidades */
+}

@@ -1,16 +1,24 @@
 from django.contrib.auth import logout, login
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect, get_object_or_404
+
 from .forms import UserClientForm, UserProducerForm, CustomAuthenticationForm
+from .models import UserClient
+
 from .models import UserClient, ProducerType, Producer_ProducerType
 from apps.products.models import Product
 
 def is_userproducer(user):
     return hasattr(user, 'userproducer')
 
+
 def is_userclient(user):
     return hasattr(user, 'userclient')
+
 
 def userClientRegistration(request):
     if request.method == "POST":
@@ -59,19 +67,21 @@ class CustomLoginView(LoginView):
         elif hasattr(user, "userclient"):
             login(self.request, user)
             return redirect("client_dashboard")
+        return super().form_invalid(form)
 
-        return super().form_valid(form)
 
 @login_required
 @user_passes_test(is_userproducer)
 def producer_dashboard(request):
     return render(request, "producer_dashboard.html")
 
+
 @login_required
 @user_passes_test(is_userclient)
 def client_dashboard(request):
     products = Product.objects.all()
     return render(request, "client_dashboard.html", {'products': products})
+
 
 @login_required
 def custom_logout(request):
@@ -85,8 +95,29 @@ def client_product_detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)   
     return render(request, 'client_product_detail.html', {'product': product})
 
+
 def unauthorized_access(request):
     return render(request, "unauthorized_access.html")
 
+
+# formulario modal
+def password_reset_request(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        if email:
+            try:
+                user = User.objects.get(email=email)
+                return render(request, "password_reset_done.html", {'email': email})
+            except User.DoesNotExist:
+                pass
+
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            return auth_views.password_reset()
+
+    else:
+        form = PasswordResetForm()
+
+    return render(request, "password_reset.html", {'form': form})
 
 
