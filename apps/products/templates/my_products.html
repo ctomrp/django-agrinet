@@ -3,6 +3,7 @@
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'styles/myProducts.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/review_styles.css' %}">
 {% endblock extra_css %}
 
 
@@ -14,29 +15,30 @@
                 <div class="pTitle">
                     <h2>Mis Productos</h2>
                     <a href="{% url 'create_products' %}">
-                        <button class="btn btn-success addBtn" ><i class="bi bi-plus-lg"></i></button>
+                        <button class="btn btn-success addBtn shadow" ><i class="bi bi-plus-lg"></i></button>
                     </a>
                 </div>
                 
                 {% for product in products %}
                 <div class="products-info">
 
-                    <div class="imgDiv">
-                        <img src="{{product.picture.url}}" alt="">
+                    <div class="p-3">
+                        <img src="{{product.picture.url}}" alt="" class="img-thumbnail">
                     </div>
                     
                     <div class="dataDiv">
-                        <h6>{{product.name}}</h6>
-                        <h6>Proveedor: {{product.producer}}</h6>
-                        <h6>Precio: ${{product.price}}</h6>
-                        <h6>Stock: {{product.stock}}</h6>
+                        <h6 class="d-flex"><div class="fw-bold">Producto:&nbsp;</div>{{product.name}}</h6>
+                        <h6 class="d-flex"><div class="fw-bold">Proveedor:&nbsp;</div>{{product.producer}}</h6>
+                        <h6 class="d-flex"><div class="fw-bold">Tipo de producto:&nbsp;</div>{{product.category}}</h6>
+                        <h6 class="d-flex"><div class="fw-bold">Precio:&nbsp;</div>${{product.price}}</h6>
+                        <h6 class="d-flex"><div class="fw-bold">Stock:&nbsp;</div>{{product.stock}}</h6>
                     </div>
 
                     <div></div>
 
                     <div class="btnDiv">
-                        <a type="button" href="{% url 'update_product' product.id %}" class="btnUpd btn btn-dark btn-sm">Actualizar</a>
-                        <a type="button" href="{% url 'delete_product' product.id %}" class="btnUpd btn btn-danger btn-sm">Eliminar</a>
+                        <a type="button" href="{% url 'update_product' product.id %}" class="btnUpd btn btn-dark btn-sm fw-bold fs-5 rounded-4 p-2">Actualizar</a>
+                        <a type="button" href="{% url 'delete_product' product.id %}" class="btnUpd btn btn-danger btn-sm fw-bold fs-5 fw-bold rounded-4 p-2">Eliminar</a>
                     </div>
 
                     

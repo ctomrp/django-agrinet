@@ -1,0 +1,19 @@
+.products-info{
+    background-color: white;
+    padding: 1rem;
+}
+
+.products-info:hover{
+    cursor: pointer;
+    background-color: #e1f3f0;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.8);
+}
+
+.thumbnail-container{
+    width: 350px;
+}
+
+.thumbnail-img{
+    border-radius: 10px;
+    width: 350px;
+}

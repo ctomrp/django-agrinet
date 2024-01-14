@@ -19,7 +19,7 @@ class UserProducerForm(forms.ModelForm):
     )
     phonenumber = forms.IntegerField(
         label = 'Teléfono',
-        widget = forms.NumberInput(attrs={'placeholder': 'Ej: 956800147'})
+        widget = forms.NumberInput(attrs={'placeholder': 'Ej: 956800147', 'type': 'tel'})
     )
     bussinessname = forms.CharField(
         label = 'Razón Social',
@@ -56,7 +56,7 @@ class UserClientForm(forms.ModelForm):
     )
     phonenumber = forms.IntegerField(
         label = 'Teléfono',
-        widget = forms.NumberInput(attrs={'placeholder': 'Ej: 956800147'})
+        widget = forms.NumberInput(attrs={'placeholder': 'Ej: 956800147', 'type': 'tel'})
     )
     class Meta:
         model = UserClient

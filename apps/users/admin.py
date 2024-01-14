@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Producer_ProducerType, ProducerType
+from .models import ProducerType
 
 admin.site.register(ProducerType)

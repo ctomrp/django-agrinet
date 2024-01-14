@@ -31,10 +31,12 @@
               </form>
 
               <div class="d-flex">
-                <a href="{% url 'client_dashboard' %}" class="d-flex flex-column align-items-center me-5">
+                {% if user.is_authenticated %}
+                <a href="{% url 'search_results' %}" class="d-flex flex-column align-items-center me-5">
                   <div><i class="bi bi-basket2 bi-lg icon"></i></div>
                   <div>Productos</div>
                 </a>
+                {% endif %}
 
                 {% if user.is_userproducer %}
                   <li class="nav-item dropdown">
