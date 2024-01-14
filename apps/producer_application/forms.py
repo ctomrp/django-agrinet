@@ -1,21 +1,18 @@
 from django import forms
-from .models import formulario
+from .models import applicationForm
 
 class ApplicationForm(forms.ModelForm):
     class Meta:
-        model = formulario
-        fields = ['rut','nombre','apellido','correo','telefono','razon_social','tipo_productor','fecha_nac']
-
-
+        model = applicationForm
+        fields = ["nombre", "apellido", "correo", "telefono", "razon_social", "direccion", "fecha_nac", "rut"]
 
     nombre = forms.CharField(
         label = 'Nombre',
-        widget = forms.PasswordInput(attrs={'placeholder': 'Pass "_@,.#$%&()*-+!"'})
+        widget = forms.TextInput(attrs={'required': 'false'})
     )
 
     apellido = forms.CharField(
-        label = 'Apellido',
-        widget = forms.PasswordInput(attrs={'placeholder': 'Pass "_@,.#$%&()*-+!"'})
+        label = 'Apellido'
     )
     correo = forms.EmailField(
         label = 'Correo Electrónico',
@@ -25,17 +22,18 @@ class ApplicationForm(forms.ModelForm):
         label = 'RUT',
         widget = forms.TextInput(attrs={'placeholder': 'Ej: 11111111-K'})
     )
+    direccion = forms.CharField(
+        label='Dirección'
+    )
     telefono = forms.IntegerField(
         label = 'Teléfono',
         widget = forms.NumberInput(attrs={'placeholder': 'Ej: 956800147'})
     )
     razon_social = forms.CharField(
         label = 'Razón Social',
-        widget = forms.TextInput(attrs={'placeholder': 'AgricultoraPerez.LTDA'})
+        widget = forms.TextInput(attrs={'placeholder': 'Agricultora Perez LTDA'})
     )
     fecha_nac = forms.DateField(
         label = 'Fecha de Nacimiento',
         widget = forms.DateInput(attrs={'type':'date', 'style': 'width: 190px; height: 30px;'})
     )
-  
-   

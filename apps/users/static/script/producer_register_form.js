@@ -4,6 +4,7 @@ producerTypes = [];
 
 function updateHiddenSelectedProducerTypes() {
     $("#id_selectedproducertypes").val(producerTypes.join(","));
+    console.log($("#id_selectedproducertypes").val())
 }
 
 $("#id_dni").on("keyup", function() {

@@ -9,76 +9,69 @@
 {% endblock extra_css%}
 {% block main %}
 
-          
-          <center><h1 class="registerFormTitle"><b>Formulario de Postulación</b></h1></center>
           <form method="POST" class="w-75 container justify-content-center validate-form">
+              <center><h1 class="registerFormTitle"><b>Formulario de Postulación</b></h1></center>
               {% csrf_token %}
-              <div class="row">
-                  <div class="col-md-6 d-flex flex-column">
-                      <div class="row lineBreak">
-                          <div class="form-group">
-                              {{form.nombre.label_tag}}
-                              {{form.nombre}}
-                              <p id="id_fn_alert" style="font-size: 12px;"></p>
-                          </div>
-                      </div>
-                      <div class="row lineBreak">
-                          <div class="form-group">
-                              {{form.apellido.label_tag}}
-                              {{form.apellido}}
-                              <p id="id_ln_alert" style="font-size: 12px;"></p>
-                          </div>
-                      </div>
-                      <div class="row lineBreak">
-                          <div class="form-group">
-                              {{form.rut.label_tag}}
-                              {{form.rut}}
-                              <p id="id_dni_alert" style="font-size: 12px;"></p>
-                          </div>
-                      </div>
-                      <div class="row lineBreak">
-                          <div class="form-group">
-                              {{form.telefono.label_tag}}
-                              {{form.telefono}}
-                              <p id="id_phone_alert" style="font-size: 12px;"></p>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md-6 d-flex flex-column gx-5">
-                      <div class="row lineBreak">
-                          <div class="form-group">
-                              {{form.correo.label_tag}}
-                              {{form.correo}}
-                              <p id="id_email_alert" style="font-size: 12px;"></p>
-                          </div>
-                      </div>
-                      
-                      <div class="row lineBreak">
-                        <div class="form-group">
-                            {{form.razon_social.label_tag}}
-                            {{form.razon_social}}
-                            <p id="id_razon_alert" style="font-size: 12px;"></p>
-                        </div>
-                      </div>
-                      <div class="row lineBreak">
-                        <div class="form-group">
-                            {{form.tipo_productor.label_tag}}
-                            {{form.tipo_productor}}
-                            <p id="id_tipo_alert" style="font-size: 12px;"></p>
-                        </div>
-                      </div>
-
-                      <div class="row lineBreak">
-                        <div class="form-group">
-                            {{form.fecha_nac.label_tag}}
-                            {{form.fecha_nac}}
-                            <p id="id_fecha_alert" style="font-size: 12px;"></p>
-                        </div>
-                      </div>
-
-                      
-                      
-                  </div>
+              <div class="rowGrid">
+                    <div class="form-group">
+                        {{form.nombre.label_tag}}
+                        {{form.nombre}}
+                        <p id="id_fn_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        {{form.apellido.label_tag}}
+                        {{form.apellido}}
+                        <p id="id_ln_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        {{form.rut.label_tag}}
+                        {{form.rut}}
+                        <p id="id_dni_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        {{form.telefono.label_tag}}
+                        {{form.telefono}}
+                        <p id="id_phone_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        {{form.correo.label_tag}}
+                        {{form.correo}}
+                        <p id="id_email_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        {{form.direccion.label_tag}}
+                        {{form.direccion}}
+                        <p id="id_address_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        {{form.razon_social.label_tag}}
+                        {{form.razon_social}}
+                        <p id="id_razon_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        {{form.fecha_nac.label_tag}}
+                        {{form.fecha_nac}}
+                        <p id="id_fecha_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_producertypes">Seleccione tipo/s productor:</label>
+                        <select name="producertypes" id="id_producertypes">
+                            <optgroup label="Tipo Productor" id="id_producertypeslist">
+                                {% for i in producerType %}
+                                    <option value="{{i.producerTypeName}}">{{i.producerTypeName}}</option>
+                                {% endfor %}
+                            </optgroup>
+                        </select>
+                        <button type="button" class="btn btn-dark btnProducerTypeList" id="id_add_producertype">Añadir Tipo Productor</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_list_of_selected_materials">Listado de Tipos:</label>
+                        <select name="list_of_selected_materials" id="id_list_of_selected_materials">
+                            <optgroup label="Tipo/s Seleccionado/s" id="id_selected_types"></optgroup>
+                        </select>
+                        <textarea name="selectedproducertypes" hidden id="id_selectedproducertypes" cols="30" rows="10"></textarea>
+                        <button type="button" class="btn btn-danger btnProducerTypeList" id="id_delete_producertype">Quitar Tipo Productor</button>
+                    </div>
               </div>
               <div class="container-fluid">
                   <button id="id_register_button" type="submit" class="btn btnRegister w-100"><b>Postular</b></button>
@@ -88,10 +81,6 @@
   </div>
 </div>
 
-<script
-src="https://code.jquery.com/jquery-3.7.1.js"
-integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-crossorigin="anonymous"></script>
 {% endblock %}
 {% block extra_js %}
 <script src="{% static 'validaciones.js' %}"></script>
