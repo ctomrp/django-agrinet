@@ -1,4 +1,4 @@
-var vdni = false, vfirstname = false, vlastname = false, vaddress = false, vphone = false, vemail = false, vpassword = false, vreppass = false,  vproType = false, vbussinessname = false;
+var vdni = false, vfirstname = false, vlastname = false, vaddress = false, vphone = false, vemail = false, vpassword = false, vreppass = false,  vproType = false, vbussinessname = false, vbirthdate = false;
 
 producerTypes = [];
 
@@ -48,7 +48,7 @@ $("#id_dni").on("keyup", function() {
         return 0;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -74,7 +74,7 @@ $("#id_first_name").keyup(function (){
         vfirstname = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -100,7 +100,7 @@ $("#id_last_name").keyup(function (){
         vlastname = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -126,7 +126,7 @@ $("#id_address").keyup(function (){
         vaddress = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false)
     } else {
         $("#id_register_button").attr('disabled', true)
@@ -153,7 +153,7 @@ $("#id_phonenumber").keyup(function (){
         }
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -178,7 +178,7 @@ $("#id_email").keyup(function (){
         vemail = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -204,7 +204,7 @@ $("#id_password").keyup(function (){
         vpassword = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -225,7 +225,7 @@ $("#id_repeat_password").keyup(function (){
         vreppass = false;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -233,19 +233,28 @@ $("#id_repeat_password").keyup(function (){
 });
 
 $("#id_bussinessname").keyup(function (){
-    var bussinessNamePattern = /^[a-zA-Z0-9'!@#$%^&*()-_+=?<>]+$/
+    var bussinessNamePattern = /^[a-zA-Z0-9'!@#$%^&*()-_+=?<> ]+$/
     var bussinessName = $("#id_bussinessname").val()
     var bussinessNameLength = $("#id_bussinessname").val().length
 
     if(bussinessNameLength < 3 || bussinessNameLength > 200 ){
         $("#id_bussinessname_alert").text("Razón social inválida (mín. 3 caracteres, máx. 200 caracteres)");
         $("#id_bussinessname_alert").css("color", "red");
+        vbussinessname = false;
     } else if (!bussinessNamePattern.test(bussinessName)){
-        $("#id_bussinessname_alert").text("Ayuda no se");
+        $("#id_bussinessname_alert").text("Caracteres NO permitidos: ({, }, ´, ¨, |, °, ¬, `)");
         $("#id_bussinessname_alert").css("color", "red");
+        vbussinessname = false;
     } else {
         $("#id_bussinessname_alert").text("Ingreso correcto");
         $("#id_bussinessname_alert").css("color", "green");
+        vbussinessname = true;
+    }
+
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
+        $("#id_register_button").attr('disabled', false);
+    } else {
+        $("#id_register_button").attr('disabled', true);
     }
 });
 
@@ -257,19 +266,27 @@ $("#id_birthdate").change(function (){
     if (birthdate.getFullYear() < 1900 || birthdate.getFullYear() > today.getFullYear() ) {
         $("#id_birthdate_alert").text("Seleccione un año válido");
         $("#id_birthdate_alert").css("color", "red");
-        return;
-    }
-
-    if (
+        vbirthdate = false
+    } else if (
         age > 18 ||
         (age === 18 && today.getMonth() > birthdate.getMonth()) ||
         (age === 18 && today.getMonth() === birthdate.getMonth() && today.getDate() >= birthdate.getDate())
     ) {
         $("#id_birthdate_alert").text("Ingreso correcto")
         $("#id_birthdate_alert").css("color", "green");
+        vbirthdate = true
     } else {
         $("#id_birthdate_alert").text("Debe ser mayor a 18 años")
         $("#id_birthdate_alert").css("color", "red");
+        vbirthdate = false
+    }
+
+    
+
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
+        $("#id_register_button").attr('disabled', false);
+    } else {
+        $("#id_register_button").attr('disabled', true);
     }
 });
 
@@ -297,10 +314,10 @@ $(document).ready(function () {
             vproType = true
         }
 
-        if(vproType){
-            $("#id_register_button").attr('disabled', false)
+        if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
+            $("#id_register_button").attr('disabled', false);
         } else {
-            $("#id_register_button").attr('disabled', true)
+            $("#id_register_button").attr('disabled', true);
         }
     });
 
