@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .models import UserProducer, UserClient, ProducerType
+
+from .models import UserProducer, UserClient
 
 
 class UserProducerForm(forms.ModelForm):
@@ -35,7 +36,8 @@ class UserProducerForm(forms.ModelForm):
         labels = {
             'first_name': 'Primer Nombre',
             'last_name': 'Apellido Paterno',
-            'address': 'Dirección'
+            'address': 'Dirección',
+            'birthdate': 'Fecha de Nacimiento'
         }
 
 
@@ -56,8 +58,6 @@ class UserClientForm(forms.ModelForm):
         label = 'Teléfono',
         widget = forms.NumberInput(attrs={'placeholder': 'Ej: 956800147'})
     )
-    
-
     class Meta:
         model = UserClient
         fields = ["first_name", "last_name", "email", "password", "phonenumber","address", "dni"]
@@ -66,9 +66,8 @@ class UserClientForm(forms.ModelForm):
             'last_name': 'Apellido Paterno',
             'address': 'Dirección'
         }
-        
-                
-# login form
+
+
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(
         widget=forms.TextInput(
@@ -83,5 +82,5 @@ class CustomAuthenticationForm(AuthenticationForm):
             attrs={"placeholder": "Contraseña", "class": "input-text"}
         ),
     )
-    
+
 

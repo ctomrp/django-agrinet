@@ -137,3 +137,16 @@ MEDIA_URL = '/media/'
 LOGIN_REDIRECT_URL = 'unauthorized_access'
 LOGIN_URL = 'unauthorized_access'
 
+# EMAIL
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'agrinetgap@gmail.com'
+EMAIL_HOST_PASSWORD = 'jihfxdvdbeqrcary'
+EMAIL_USE_TLS = True
+
+
+EMAIL_TEMPLATE_DIR = 'users/templates/registration/'
+
+PASSWORD_RESET_EMAIL_SUBJECT_TEMPLATE = f'{EMAIL_TEMPLATE_DIR}password_reset_email_subject.txt'
+PASSWORD_RESET_EMAIL_BODY_TEMPLATE = f'{EMAIL_TEMPLATE_DIR}password_reset_email_body.txt'
