@@ -28,20 +28,10 @@ class UserProducerForm(forms.ModelForm):
         label = 'Fecha de Nacimiento',
         widget = forms.DateInput(attrs={'type':'date', 'style': 'width: 190px; height: 30px;'})
     )
-    producertypes = forms.ModelChoiceField(
-        queryset = ProducerType.objects.all(),
-        to_field_name = 'id',
-        label = 'Seleccione tipo/s productor',
-        widget = forms.Select()
-    )
-    selectedproducertypes = forms.CharField(
-        widget = forms.HiddenInput(),
-        required = True
-    )
 
     class Meta:
         model = UserProducer
-        fields = ["first_name", "last_name", "email", "password", "phonenumber", "bussinessname", "address", "birthdate", "dni", "producertypes", "selectedproducertypes"]
+        fields = ["first_name", "last_name", "email", "password", "phonenumber", "bussinessname", "address", "birthdate", "dni"]
         labels = {
             'first_name': 'Primer Nombre',
             'last_name': 'Apellido Paterno',
