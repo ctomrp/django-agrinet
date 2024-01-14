@@ -1,10 +1,13 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.views import LoginView
+from django.views.generic import ListView
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserClientForm, UserProducerForm, CustomAuthenticationForm
 from .models import UserClient, ProducerType, Producer_ProducerType
 from apps.products.models import Product
+from django.db.models import Q
+
 
 def is_userproducer(user):
     return hasattr(user, 'userproducer')
@@ -90,3 +93,25 @@ def unauthorized_access(request):
 
 
 
+
+
+class SearchResultsView(ListView):
+    model = Product
+    template_name = 'search_products.html'
+    context_object_name = 'results'
+
+    def get_queryset(self):
+        query = self.request.GET.get('search_query')
+        print(query)
+        if query:
+            print(query)
+            queryset = Product.objects.filter(
+            Q(description__icontains=query)
+            ) 
+            return queryset
+        else:
+            return Product.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context

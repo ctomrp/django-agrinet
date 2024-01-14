@@ -10,6 +10,7 @@ urlpatterns = [
     path("producer/", views.producer_dashboard, name="producer_dashboard"),
     path("client/", views.client_dashboard, name="client_dashboard"),
     path('logout/', views.custom_logout, name='logout'),
+    path('search_results', views.SearchResultsView.as_view(), name='search_results'),
     path('client/<int:product_id>', views.client_product_detail,name='client_product_detail'),
     path("unauthorized_access", views.unauthorized_access, name="unauthorized_access"),
 ]

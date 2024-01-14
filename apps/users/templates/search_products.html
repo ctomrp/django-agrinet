@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-  <link rel="stylesheet" href="{% static 'styles/myProducts.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/client.css' %}">
 {% endblock extra_css %}
 
 
@@ -12,13 +12,12 @@
         <div class="container">
             <div class="products-container">
                 <div class="pTitle">
-                    <h2>Mis Productos</h2>
-                    <a href="{% url 'create_products' %}">
-                        <button class="btn btn-success addBtn" ><i class="bi bi-plus-lg"></i></button>
-                    </a>
+                    <h2>Productos</h2>
+
                 </div>
                 
-                {% for product in products %}
+                {% for product in results %}
+                <a type="button" href="{% url 'client_product_detail' product.id %}" class="btnUpd btn btn-dark btn-sm">
                 <div class="products-info">
 
                     <div class="imgDiv">
@@ -32,16 +31,9 @@
                         <h6>Stock: {{product.stock}}</h6>
                     </div>
 
-                    <div></div>
-
-                    <div class="btnDiv">
-                        <a type="button" href="{% url 'update_product' product.id %}" class="btnUpd btn btn-dark btn-sm">Actualizar</a>
-                        <a type="button" href="{% url 'delete_product' product.id %}" class="btnUpd btn btn-danger btn-sm">Eliminar</a>
+                        
                     </div>
-
-                    
-                    
-                </div>
+                </a>
                 {% endfor %}
             </div>
         </div>    
