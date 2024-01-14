@@ -8,8 +8,8 @@
 {% block main %}
 
   <div class="container">
-    <div class="formContainer">
-      <form  method="POST" class="card card-body" enctype="multipart/form-data">
+    <div class="formContainer border border-dark rounded-5 p-5">
+      <form  method="POST" class="card card-body border-0" enctype="multipart/form-data">
         <h1>Actualizar producto</h1>
         {% csrf_token %}
         {{error}}

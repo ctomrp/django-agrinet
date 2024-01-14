@@ -93,7 +93,7 @@ def custom_logout(request):
 
 
 @login_required
-@user_passes_test(is_userclient)
+# @user_passes_test(is_userclient)
 def client_product_detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)   
     return render(request, 'client_product_detail.html', {'product': product})
@@ -124,8 +124,6 @@ def password_reset_request(request):
     return render(request, "password_reset.html", {'form': form})
 
 
-
-
 class SearchResultsView(ListView):
     model = Product
     template_name = 'search_products.html'
@@ -143,6 +141,6 @@ class SearchResultsView(ListView):
         else:
             return Product.objects.none()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     return context

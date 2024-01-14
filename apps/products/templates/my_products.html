@@ -11,7 +11,7 @@
     {% block main %}
   
         <div class="container">
-            <div class="products-container">
+            <div class="products-container border border-dark rounded-5 p-5">
                 <div class="pTitle">
                     <h2>Mis Productos</h2>
                     <a href="{% url 'create_products' %}">
@@ -28,7 +28,7 @@
                     
                     <div class="dataDiv">
                         <h6 class="d-flex"><div class="fw-bold">Producto:&nbsp;</div>{{product.name}}</h6>
-                        <h6 class="d-flex"><div class="fw-bold">Proveedor:&nbsp;</div>{{product.producer}}</h6>
+                        <!-- <h6 class="d-flex"><div class="fw-bold">Proveedor:&nbsp;</div>{{product.producer}}</h6> -->
                         <h6 class="d-flex"><div class="fw-bold">Tipo de producto:&nbsp;</div>{{product.category}}</h6>
                         <h6 class="d-flex"><div class="fw-bold">Precio:&nbsp;</div>${{product.price}}</h6>
                         <h6 class="d-flex"><div class="fw-bold">Stock:&nbsp;</div>{{product.stock}}</h6>

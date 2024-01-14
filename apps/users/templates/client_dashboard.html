@@ -3,6 +3,7 @@
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'styles/client.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/review_styles.css' %}">
 {% endblock extra_css %}
 
 
@@ -10,30 +11,45 @@
     {% block main %}
   
         <div class="container">
-            <div class="products-container">
+            <div class="products-container border border-dark rounded-5 p-5">
                 <div class="pTitle">
                     <h2>Productos</h2>
-
                 </div>
                 
                 {% for product in products %}
-                <a type="button" href="{% url 'client_product_detail' product.id %}" class="btnUpd btn btn-dark btn-sm">
-                <div class="products-info">
+                <div class="products-info row">
 
-                    <div class="imgDiv">
-                        <img src="{{product.picture.url}}" alt="">
+                    <div class="p-3">
+                        <img src="{{product.picture.url}}" alt="" class="img-thumbnail">
                     </div>
                     
                     <div class="dataDiv">
-                        <h6>{{product.name}}</h6>
-                        <h6>Proveedor: {{product.producer}}</h6>
-                        <h6>Precio: ${{product.price}}</h6>
-                        <h6>Stock: {{product.stock}}</h6>
+                        <h6 class="d-flex"><div class="fw-bold">{{product.name}}</div></h6>
+                        <h6 class="d-flex"><div class="fw-bold">Proveedor:&nbsp;</div>{{product.producer.first_name}}</h6>
+                        <!-- <h6 class="d-flex"><div class="fw-bold">Tipo de producto:&nbsp;</div>{{product.category}}</h6> -->
+                        <h6 class="d-flex"><div class="fw-bold">Stock:&nbsp;</div>{{product.stock}}</h6>
                     </div>
 
-                        
+                    {% if user.is_userproducer %}
+                    <div>
+                        <h6 class="d-flex flex-column align-items-center justify-content-center pt-4 pb-4 rounded-4 fs-5 bg-price"><div>Precio por kilo:</div><div class="fw-bold">${{product.price}}</div></h6>
                     </div>
-                </a>
+                    
+                  {% else %}
+                  <div>
+                      <h6 class="d-flex flex-column align-items-center justify-content-center pt-4 pb-4 rounded-4 fs-5 bg-price"><div>Precio por kilo:</div><div class="fw-bold">${{product.price}}</div></h6>
+                  </div>
+
+                  <div class="btnDiv">
+                      <a type="button" href="{% url 'client_product_detail' product.id %}" class="btnUpd btn btn-dark btn-sm fw-bold fs-5 rounded-4 p-2">Comprar</a>
+                  </div>
+                 
+                  {% endif %}
+
+
+                    
+                    
+                </div>
                 {% endfor %}
             </div>
         </div>    

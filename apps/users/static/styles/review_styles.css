@@ -1,0 +1,51 @@
+.products-info{
+    background-color: white;
+    padding: 1rem;
+}
+
+.products-info:hover{
+    cursor: pointer;
+    background-color: #e1f3f0;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.8);
+}
+
+.thumbnail-container{
+    width: 350px;
+}
+
+.thumbnail-img{
+    border-radius: 10px;
+    width: 350px;
+}
+
+.bg-price{
+    background-color: white;
+}
+
+.btn-color-1 {
+    background: #00c67c;
+    border-radius: 8px;
+    border: none;
+    height: 3rem;
+    width: 100%;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    outline: none;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    letter-spacing: -1px;
+}
+
+.btn-color-2 {
+    background: #212529;
+    border-radius: 8px;
+    border: none;
+    height: 3rem;
+    width: 100%;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    outline: none;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    letter-spacing: -1px;
+}
