@@ -56,8 +56,15 @@
                         </div>
                         <div class="row lineBreak">
                             <div class="form-group">
-                                {{form.producertypes.label_tag}}
-                                {{form.producertypes}}
+                                <label for="id_producertypes">Seleccione tipo/s productor:</label>
+                                <select name="producertypes" id="id_producertypes">
+                                    <optgroup label="Tipo Productor" id="id_producertypeslist">
+                                        {% for i in producerType %}
+                                            <option value="{{i.id}}">{{i.producerTypeName}}</option>
+                                        {% endfor %}
+                                    </optgroup>
+                                </select>
+                                    
                                 <button type="button" class="btn btn-dark btnProducerTypeList" id="id_add_producertype">Añadir Tipo Productor</button>
                                 <!--<p id="id_phone_alert" style="font-size: 12px;"></p>-->
                             </div>
@@ -104,7 +111,7 @@
                             <select name="list_of_selected_materials" id="id_list_of_selected_materials">
                                 <optgroup label="Tipo/s Seleccionado/s" id="id_selected_types"></optgroup>
                             </select>
-                            {{form.selectedproducertypes}}
+                            <textarea name="selectedproducertypes" hidden id="id_selectedproducertypes" cols="30" rows="10"></textarea>
                             <button type="button" class="btn btn-danger btnProducerTypeList" id="id_delete_producertype">Quitar Tipo Productor</button>
                         </div>
                     </div>

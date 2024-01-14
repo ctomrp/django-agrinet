@@ -88,7 +88,7 @@ $("#id_correo").keyup(function () {
 });
 
 
-/*validar edad*/
+/*validar edad
 $(document).ready(function () {
   $("#id_edad").on('input', function () {
     validarEdad();
@@ -114,6 +114,7 @@ $(document).ready(function () {
     }
   }
 });
+*/
 
 
 
@@ -157,17 +158,26 @@ function validarRutChileno(rut) {
 }
 
 /*validar razon social*/
-$(document).keyup(function () {
-  $("#id_razon_social").on('input', function () {
-    var razonSocial = $(this).val();
 
-    if (razonSocial.length > 20) {
-      $("#id_razon_alert").text("La Razón Social no puede tener más de 20 caracteres.");
-      $("#id_razon_alert").css("color", "red");
-    } else {
-      $("#id_razon_alert").text("");
-    }
-  });
+$("#id_razon_social").keyup(function () {
+  var caracteres = $("#id_razon_social").val();
+  var patronNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+  var largo = $("#id_razon_social").val().length;
+
+  if (largo < 3 || largo > 15) {
+    $("#id_razon_alert").text("La razon social no puede ser menor a 3 caractéres o mayor a 15.");
+    $("#id_razon_alert").css("color", "red");
+    vnombre = false;
+  } else if (!patronNombre.test(caracteres)) {
+    $("#id_razon_alert").text("Sólo puede ingresar letras");
+    $("#id_razon_alert").css("color", "red");
+    vnombre = false;
+  } else {
+    $("#id_razon_alert").text("Ingreso correcto");
+    $("#id_razon_alert").css("color", "green");
+    vnombre = true;
+  }
+
 });
 
 
@@ -186,7 +196,7 @@ $(document).ready(function () {
   });
 });*/
 
-
+/*
 $(document).ready(function () {
   $("#id_fecha_nac").on("input", function () {
       // Obtener el valor del campo de fecha de nacimiento
@@ -206,4 +216,30 @@ $(document).ready(function () {
           
           $("#id_fecha_alert").css("color", "green");}
   });
+});
+*/
+
+
+$("#id_fecha_nac").change(function (){
+  var birthdate = new Date($("#id_fecha_nac").val());
+  var today = new Date();
+  var age = today.getFullYear() - birthdate.getFullYear()
+
+  if (birthdate.getFullYear() < 1900 || birthdate.getFullYear() > today.getFullYear() ) {
+      $("#id_fecha_alert").text("Seleccione un año válido");
+      $("#id_fecha_alert").css("color", "red");
+      return;
+  }
+
+  if (
+      age > 18 ||
+      (age === 18 && today.getMonth() > birthdate.getMonth()) ||
+      (age === 18 && today.getMonth() === birthdate.getMonth() && today.getDate() >= birthdate.getDate())
+  ) {
+      $("#id_fecha_alert").text("Ingreso correcto")
+      $("#id_fecha_alert").css("color", "green");
+  } else {
+      $("#id_fecha_alert").text("Debe ser mayor a 18 años")
+      $("#id_fecha_alert").css("color", "red");
+  }
 });

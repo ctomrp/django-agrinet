@@ -51,6 +51,7 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=30, verbose_name=_("First name"))
     last_name = models.CharField(max_length=30, verbose_name=_("Last name"))
     email = models.EmailField(max_length=100, verbose_name=_("Email"), unique=True)
+    is_userproducer = models.BooleanField(null = True)
     username = None
     objects = UserManager()
     USERNAME_FIELD = "email"
@@ -67,11 +68,12 @@ class UserProducer(User):
     dni = models.CharField(max_length=10, verbose_name=_("DNI"), unique=True)
     businessname = models.CharField(max_length = 200, verbose_name=("Business Name"))
     phonenumber = models.IntegerField(null = False)
-
+    
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
     
     def save(self, *args, **kwargs):
+        self.is_userproducer = True
         if not self.pk:
             self.set_password(self.password)
         super().save(*args, **kwargs)

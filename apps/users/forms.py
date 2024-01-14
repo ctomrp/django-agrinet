@@ -25,6 +25,11 @@ class UserProducerForm(forms.ModelForm):
         label = 'Razón Social',
         widget = forms.TextInput()
     )
+    birthdate = forms.DateField(
+        label = 'Fecha de Nacimiento',
+        widget = forms.DateInput(attrs={'type':'date', 'style': 'width: 190px; height: 30px;'})
+    )
+
     class Meta:
         model = UserProducer
         fields = ["first_name", "last_name", "email", "password", "phonenumber", "bussinessname", "address", "birthdate", "dni"]

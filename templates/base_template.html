@@ -36,10 +36,30 @@
                   <div>Productos</div>
                 </a>
 
-                <a href="" class="d-flex flex-column align-items-center">
-                  <div><i class="bi bi-person-circle icon"></i></div>
-                  <div>Juanito Perez</div>
-                </a>
+                {% if user.is_userproducer %}
+                  <li class="nav-item dropdown">
+                    <a class="dropdown-toggle d-flex align-items-center flex-column" href="" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <div><i class="bi bi-person-circle icon"></i></div>
+                      <div style="text-transform: capitalize;"> {{ user.first_name }} {{ user.last_name }}</div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
+                      <li><a class="dropdown-item" href="{% url 'my_products' %}">Mis Productos</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesion</a></li>
+                    </ul>
+                  </li>
+                {% else %}
+
+                <li class="nav-item dropdown">
+                  <a class="dropdown-toggle d-flex align-items-center flex-column" href="" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div><i class="bi bi-person-circle icon"></i></div>
+                    <div style="text-transform: capitalize;"> {{ user.first_name }} {{ user.last_name }}</div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesion</a></li>
+                  </ul>
+                </li>
+                {% endif %}
               </div>
               
             </div>

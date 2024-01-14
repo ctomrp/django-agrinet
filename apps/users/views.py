@@ -6,10 +6,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect, get_object_or_404
 
-from apps.products.models import Product
 from .forms import UserClientForm, UserProducerForm, CustomAuthenticationForm
 from .models import UserClient
 
+from .models import UserClient, ProducerType, Producer_ProducerType
+from apps.products.models import Product
 
 def is_userproducer(user):
     return hasattr(user, 'userproducer')
@@ -35,13 +36,22 @@ def userClientRegistration(request):
 
 
 def userProducerRegistration(request):
+    producerTypes = ProducerType.objects.all()
     if request.method == "POST":
         form = UserProducerForm(request.POST)
-        print(form['selectedproducertypes'].value())
         if form.is_valid():
-            #user = form.save()
+            user = form.save()
+            selectedProducerTypes = request.POST['selectedproducertypes']
+            selectedProducerTypes = selectedProducerTypes.split(sep=',')
+            for i in selectedProducerTypes:
+                objProducerType = ProducerType.objects.get(id = i)
+                objProducer_ProducerType = Producer_ProducerType.objects.create(
+                    producerType = objProducerType,
+                    producer = user
+                )
+                objProducer_ProducerType.save()
             return redirect("producer_register_form")
-    return render(request, 'producer_register_form.html', {'form': UserProducerForm})
+    return render(request, 'producer_register_form.html', {'form': UserProducerForm, 'producerType': producerTypes})
 
 
 class CustomLoginView(LoginView):
