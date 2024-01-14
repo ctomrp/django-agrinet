@@ -9,7 +9,13 @@
 
 {% block main %}
 
-
+    {% if request.user.is_authenticated %}
+    <div class="bg-dark d-flex flex-column">
+    <p class="fs-3 text-light text-center mt-5">
+        Ya hay una sesión iniciada. Cierra la sesión para volver a ingresar. <br class="mt-5 mb-5">
+    </p>
+    </div>
+    {% else %}
     <div class="registerFrameBackground justify-content-center">
         <div class="row">
             <div class="col-md-6">
@@ -76,6 +82,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 
 {% endblock %}
 

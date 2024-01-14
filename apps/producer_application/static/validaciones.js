@@ -1,12 +1,20 @@
 /*validar primer nombre*/
-var vnombre
+
+var vproType = false, vnombre = false, vapellido = false, vtelefono = false, vmail = false, vrut = false, vdireccion = false, vrazonsocial = false, vfechanac = false;
+
+producerTypes = [];
+function updateHiddenSelectedProducerTypes() {
+  $("#id_selectedproducertypes").val(producerTypes.join(", "));
+  console.log($("#id_selectedproducertypes").val())
+}
+
 $("#id_nombre").keyup(function () {
   var caracteres = $("#id_nombre").val();
   var patronNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
   var largo = $("#id_nombre").val().length;
 
-  if (largo < 3 || largo > 15) {
-    $("#id_fn_alert").text("El nombre no puede ser menor a 3 caractéres o mayor a 15.");
+  if (largo < 3 || largo > 30) {
+    $("#id_fn_alert").text("Nombre inválido (mín. 3 caracteres, máx. 30 caracteres)");
     $("#id_fn_alert").css("color", "red");
     vnombre = false;
   } else if (!patronNombre.test(caracteres)) {
@@ -19,33 +27,43 @@ $("#id_nombre").keyup(function () {
     vnombre = true;
   }
 
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vproType && vrazonsocial && vfechanac){
+      $("#id_register_button").attr('disabled', false);
+  } else {
+      $("#id_register_button").attr('disabled', true);
+  }  
 });
 
 /*validar apellido p*/
-var vapellido
+
 $("#id_apellido").keyup(function () {
   var caracteres = $("#id_apellido").val();
   var patronNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
   var largo = $("#id_apellido").val().length;
 
-  if (largo < 3 || largo > 15) {
-    $("#id_ln_alert").text("El nombre no puede ser menor a 3 caractéres o mayor a 15.");
+  if (largo < 3 || largo > 30) {
+    $("#id_ln_alert").text("Apellido inválido (mín. 3 caracteres, máx. 30 caracteres)");
     $("#id_ln_alert").css("color", "red");
-    vnombre = false;
+    vapellido = false;
   } else if (!patronNombre.test(caracteres)) {
     $("#id_ln_alert").text("Sólo puede ingresar letras");
     $("#id_ln_alert").css("color", "red");
-    vnombre = false;
+    vapellido = false;
   } else {
     $("#id_ln_alert").text("Ingreso correcto");
     $("#id_ln_alert").css("color", "green");
-    vnombre = true;
+    vapellido = true;
   }
 
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vproType && vrazonsocial && vfechanac){
+    $("#id_register_button").attr('disabled', false);
+  } else {
+      $("#id_register_button").attr('disabled', true);
+  }  
 });
 
 /*validar telefono*/
-var vtelefono
+
 $("#id_telefono").keyup(function () {
   var telefono = $("#id_telefono").val();
   var regexNumeros = /^[0-9]+$/;
@@ -66,9 +84,13 @@ $("#id_telefono").keyup(function () {
     }
   }
 
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vproType && vrazonsocial && vfechanac){
+    $("#id_register_button").attr('disabled', false);
+  } else {
+      $("#id_register_button").attr('disabled', true);
+  }  
 });
 /*validar correo*/
-vmail = false
 $("#id_correo").keyup(function () {
   var patronCorreo = /^[a-zA-Z0-9.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
   var correo = $.trim($("#id_correo").val());
@@ -85,9 +107,39 @@ $("#id_correo").keyup(function () {
     $("#id_email_alert").css("color", "green");
     vmail = true;
   }
+
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vproType && vrazonsocial && vfechanac){
+    $("#id_register_button").attr('disabled', false);
+  } else {
+      $("#id_register_button").attr('disabled', true);
+  }  
 });
 
+$("#id_direccion").keyup(function (){
+  var address = $("#id_direccion").val();
+  var addressPattern = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.,-]*$/;
+  var addressLenght = $("#id_direccion").val().length;
 
+  if (addressLenght < 3 || addressLenght > 100) {
+      $("#id_address_alert").text("Dirección inválida (mín. 3 caracteres, máx. 100 caracteres)");
+      $("#id_address_alert").css('color', 'red');
+      vdireccion = false;
+  } else if (!addressPattern.test(address)) {
+      $("#id_address_alert").text("No puede ingresar caracteres especiales");
+      $("#id_address_alert").css('color', 'red');
+      vdireccion = false;
+  } else {
+      $("#id_address_alert").text("Ingreso correcto");
+      $("#id_address_alert").css('color', 'green');
+      vdireccion = true;
+  }
+
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vproType && vrazonsocial && vfechanac){
+    $("#id_register_button").attr('disabled', false);
+  } else {
+      $("#id_register_button").attr('disabled', true);
+  }  
+});
 /*validar edad
 $(document).ready(function () {
   $("#id_edad").on('input', function () {
@@ -131,6 +183,12 @@ $("#id_rut").keyup(function () {
     $("#id_dni_alert").css("color", "red");
     vrut = false;
   }
+
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vproType && vrazonsocial && vfechanac){
+    $("#id_register_button").attr('disabled', false);
+  } else {
+      $("#id_register_button").attr('disabled', true);
+  }  
 });
 
 function validarRutChileno(rut) {
@@ -167,58 +225,18 @@ $("#id_razon_social").keyup(function () {
   if (largo < 3 || largo > 15) {
     $("#id_razon_alert").text("La razon social no puede ser menor a 3 caractéres o mayor a 15.");
     $("#id_razon_alert").css("color", "red");
-    vnombre = false;
+    vrazonsocial = false;
   } else if (!patronNombre.test(caracteres)) {
     $("#id_razon_alert").text("Sólo puede ingresar letras");
     $("#id_razon_alert").css("color", "red");
-    vnombre = false;
+    vrazonsocial = false;
   } else {
     $("#id_razon_alert").text("Ingreso correcto");
     $("#id_razon_alert").css("color", "green");
-    vnombre = true;
+    vrazonsocial = true;
   }
 
 });
-
-
-/*
-$(document).ready(function () {
-  $('#tipoid').change(function () {
-      var producto = $("#tipoid");
-
-      if (producto.val() === "") {
-          document.getElementById("result").innerHTML = "<b>Seleccione una opción</b>";
-          document.getElementById("result").style.color = "red";
-      } else {
-          document.getElementById("result").innerHTML = "La opción seleccionada es: <b>" + producto.val() + "</b>";
-          document.getElementById("result").style.color = "green";
-      }
-  });
-});*/
-
-/*
-$(document).ready(function () {
-  $("#id_fecha_nac").on("input", function () {
-      // Obtener el valor del campo de fecha de nacimiento
-      var fechaNacimiento = $(this).val();
-
-      // Expresión regular para validar el formato dd/mm/yyyy
-      var regexFecha = /^\d{2}\/\d{2}\/\d{4}$/;
-
-      // Verificar si la fecha cumple con el formato
-      if (!regexFecha.test(fechaNacimiento)) {
-        
-        $("#id_fecha_alert").text("Formato de fecha incorrecto. Utiliza dd/mm/yyyy");
-          $("#id_fecha_alert").css("color", "red");
-      } else {
-          
-          $("#id_fecha_alert").text("Fecha correcta");
-          
-          $("#id_fecha_alert").css("color", "green");}
-  });
-});
-*/
-
 
 $("#id_fecha_nac").change(function (){
   var birthdate = new Date($("#id_fecha_nac").val());
@@ -228,7 +246,7 @@ $("#id_fecha_nac").change(function (){
   if (birthdate.getFullYear() < 1900 || birthdate.getFullYear() > today.getFullYear() ) {
       $("#id_fecha_alert").text("Seleccione un año válido");
       $("#id_fecha_alert").css("color", "red");
-      return;
+      vfechanac = false;
   }
 
   if (
@@ -238,8 +256,77 @@ $("#id_fecha_nac").change(function (){
   ) {
       $("#id_fecha_alert").text("Ingreso correcto")
       $("#id_fecha_alert").css("color", "green");
+      vfechanac = true;
   } else {
       $("#id_fecha_alert").text("Debe ser mayor a 18 años")
       $("#id_fecha_alert").css("color", "red");
+      vfechanac = false;
   }
+
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vproType && vrazonsocial && vfechanac){
+    $("#id_register_button").attr('disabled', false);
+  } else {
+      $("#id_register_button").attr('disabled', true);
+  }  
+});
+
+$(document).ready(function () {
+
+  $("#id_register_button").attr('disabled', true);
+
+  $("#id_add_producertype").click(function (){
+      var selectedOption = $("#id_producertypes :selected");
+      var selectedValue = $(selectedOption).val()
+      
+      if(selectedValue == ""){
+          vproType = false
+      } else {
+          var selectedValueText = $(selectedOption).text()
+          $("#id_selected_types").append('<option value="' + selectedValue + '">' + selectedValueText + '</option>');
+          producerTypes.push(selectedValue)
+          updateHiddenSelectedProducerTypes()
+          $(selectedOption).remove()
+          vproType = true
+      }
+
+      if(producerTypes.length == 0){
+          vproType = false
+      } else {
+          vproType = true
+      }
+
+      if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vproType && vrazonsocial && vfechanac){
+        $("#id_register_button").attr('disabled', false);
+    } else {
+        $("#id_register_button").attr('disabled', true);
+    }  
+  });
+
+  $("#id_delete_producertype").click(function (){
+      var selectedOption = $("#id_list_of_selected_materials :selected");
+      var selectedValue = $(selectedOption).val()
+      var selectedValueText = $(selectedOption).text()
+      if (producerTypes.length == 0){
+          console.log("No ha seleccionado nada para que pueda ser borrado")   
+      } else {
+          $("#id_producertypes").append('<option value="' + selectedValue + '">' + selectedValueText + '</option>');
+          var index = producerTypes.indexOf(selectedValue);
+          if (index > -1) {
+              producerTypes.splice(index, 1);
+          }
+          updateHiddenSelectedProducerTypes()
+          $(selectedOption).remove();
+          if(producerTypes.length == 0){
+              vproType = false
+          } else {
+              vproType = true
+          }
+      }
+      if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vproType && vrazonsocial && vfechanac){
+        $("#id_register_button").attr('disabled', false);
+      } else {
+          $("#id_register_button").attr('disabled', true);
+      }  
+  });
+
 });
