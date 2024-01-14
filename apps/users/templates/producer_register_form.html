@@ -11,109 +11,86 @@
 <div class="registerFrameBackground justify-content-center">
     <div class="row">
         <div class="col-md-6">
-            <p style="color: white;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi minus nisi dolor, eius incidunt necessitatibus ipsum ducimus, ut blanditiis, quam sapiente optio praesentium et autem iure nemo nesciunt vitae quas!</p>
+            <div class="presentationMessage">
+                <div></div>
+                <div></div>
+                <center><img src="{% static 'assets/logo3.png' %}" alt="icono_agrinet" width="600px"></center>
+            </div>
         </div>
         <div class="col-md-6 registerFormBackground">
             <h1 class="registerFormTitle"><b>Formulario de Registro</b></h1>
             <form method="POST" class="w-75 container justify-content-center validate-form">
                 {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-6 d-flex flex-column">
-                        <div class="row lineBreak">
-                            <div class="form-group">
-                                {{form.first_name.label_tag}}
-                                {{form.first_name}}
-                                <p id="id_fn_alert" style="font-size: 12px;"></p>
-                            </div>
-                        </div>
-                        <div class="row lineBreak">
-                            <div class="form-group">
-                                {{form.last_name.label_tag}}
-                                {{form.last_name}}
-                                <p id="id_ln_alert" style="font-size: 12px;"></p>
-                            </div>
-                        </div>
-                        <div class="row lineBreak">
-                            <div class="form-group">
-                                {{form.dni.label_tag}}
-                                {{form.dni}}
-                                <p id="id_dni_alert" style="font-size: 12px;"></p>
-                            </div>
-                        </div>
-                        <div class="row lineBreak">
-                            <div class="form-group">
-                                {{form.bussinessname.label_tag}}
-                                {{form.bussinessname}}
-                                <p id="id_bussinessname_alert" style="font-size: 12px;"></p>
-                            </div>
-                        </div>
-                        <div class="row lineBreak">
-                            <div class="form-group">
-                                {{form.birthdate.label_tag}}
-                                {{form.birthdate}}
-                                <p id="id_birthdate_alert" style="font-size: 12px;"></p>
-                            </div>
-                        </div>
-                        <div class="row lineBreak">
-                            <div class="form-group">
-                                <label for="id_producertypes">Seleccione tipo/s productor:</label>
-                                <select name="producertypes" id="id_producertypes">
-                                    <optgroup label="Tipo Productor" id="id_producertypeslist">
-                                        {% for i in producerType %}
-                                            <option value="{{i.id}}">{{i.producerTypeName}}</option>
-                                        {% endfor %}
-                                    </optgroup>
-                                </select>
-                                    
-                                <button type="button" class="btn btn-dark btnProducerTypeList" id="id_add_producertype">Añadir Tipo Productor</button>
-                                <!--<p id="id_phone_alert" style="font-size: 12px;"></p>-->
-                            </div>
-                        </div>
+                <div class="rowGrid">
+                    <div class="form-group">
+                        {{form.first_name.label_tag}}
+                        {{form.first_name}}
+                        <p id="id_fn_alert" style="font-size: 12px;"></p>
                     </div>
-                    <div class="col-md-6 d-flex flex-column gx-5">
-                        <div class="row lineBreak">
-                            <div class="form-group">
-                                {{form.phonenumber.label_tag}}
-                                {{form.phonenumber}}
-                                <p id="id_phone_alert" style="font-size: 12px;"></p>
-                            </div>
-                        </div>
-                        <div class="row lineBreak">
-                            <div class="form-group">
-                                {{form.address.label_tag}}
-                                {{form.address}}
-                                <p id="id_address_alert" style="font-size: 12px;"></p>
-                            </div>
-                        </div>
-                        <div class="row lineBreak">
-                            <div class="form-group">
-                                {{form.email.label_tag}}
-                                {{form.email}}
-                                <p id="id_email_alert" style="font-size: 12px;"></p>
-                            </div>
-                        </div>
-                        <div class="row lineBreak">
-                            <div class="form-group">
-                                {{form.password.label_tag}}
-                                {{form.password}}
-                                <p id="id_password_alert" style="font-size: 12px;"></p>
-                            </div>
-                        </div>
-                        <div class="row lineBreak">
-                            <div class="form-group">
-                                <label for="id_repeat_password">Repetir Contraseña:</label>
-                                <input type="password" id="id_repeat_password" name="repeat_password">
-                                <p id="id_repeat_password_alert" style="font-size: 12px;"></p>
-                            </div>
-                        </div>
-                        <div class="row lineBreak">
-                            <label for="id_list_of_selected_materials">Listado de Tipos:</label>
-                            <select name="list_of_selected_materials" id="id_list_of_selected_materials">
-                                <optgroup label="Tipo/s Seleccionado/s" id="id_selected_types"></optgroup>
-                            </select>
-                            <textarea name="selectedproducertypes" hidden id="id_selectedproducertypes" cols="30" rows="10"></textarea>
-                            <button type="button" class="btn btn-danger btnProducerTypeList" id="id_delete_producertype">Quitar Tipo Productor</button>
-                        </div>
+                    <div class="form-group">
+                        {{form.last_name.label_tag}}
+                        {{form.last_name}}
+                        <p id="id_ln_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        {{form.dni.label_tag}}
+                        {{form.dni}}
+                        <p id="id_dni_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        {{form.bussinessname.label_tag}}
+                        {{form.bussinessname}}
+                        <p id="id_bussinessname_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        {{form.birthdate.label_tag}}
+                        {{form.birthdate}}
+                        <p id="id_birthdate_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        {{form.phonenumber.label_tag}}
+                        {{form.phonenumber}}
+                        <p id="id_phone_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        {{form.address.label_tag}}
+                        {{form.address}}
+                        <p id="id_address_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        {{form.email.label_tag}}
+                        {{form.email}}
+                        <p id="id_email_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        {{form.password.label_tag}}
+                        {{form.password}}
+                        <p id="id_password_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_repeat_password">Repetir Contraseña:</label>
+                        <input type="password" id="id_repeat_password" name="repeat_password">
+                        <p id="id_repeat_password_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_producertypes">Seleccione tipo/s productor:</label>
+                        <select name="producertypes" id="id_producertypes">
+                            <optgroup label="Tipo Productor" id="id_producertypeslist">
+                                {% for i in producerType %}
+                                    <option value="{{i.id}}">{{i.producerTypeName}}</option>
+                                {% endfor %}
+                            </optgroup>
+                        </select>
+                        <button type="button" class="btn btn-dark btnProducerTypeList" id="id_add_producertype">Añadir Tipo Productor</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_list_of_selected_materials">Listado de Tipos:</label>
+                        <select name="list_of_selected_materials" id="id_list_of_selected_materials">
+                            <option>--------------------------</option>
+                            <optgroup label="Tipo/s Seleccionado/s" id="id_selected_types"></optgroup>
+                        </select>
+                        <textarea name="selectedproducertypes" hidden id="id_selectedproducertypes" cols="30" rows="10"></textarea>
+                        <button type="button" class="btn btn-danger btnProducerTypeList" id="id_delete_producertype">Quitar Tipo Productor</button>
                     </div>
                 </div>
                 <div class="container-fluid">
@@ -130,7 +107,6 @@
 </div>
 
 {% endblock %}
-
 
 {% block extra_js %} 
     <script src="{% static 'script/producer_register_form.js' %}"></script>

@@ -1,3 +1,7 @@
+body{
+    background-color: #212529;
+}
+
 .registerFrameBackground{
     margin-top: 10rem;
     margin-left: 3rem;
@@ -14,6 +18,20 @@
     background-color: #ffffff;
     border-radius: 10px;
     padding: 3.5rem;
+}
+
+.rowGrid{
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    column-gap: 50px;
+    row-gap: 30px;
+}
+
+.presentationMessage{
+    display: grid;
+    grid-template-rows: repeat(3,2fr);
+    align-items: center;
+    text-align: center;
 }
 
 .btnRegister{
@@ -36,11 +54,6 @@
     color:#ffffff;
 }
 
-
-.lineBreak{
-    margin-bottom: 30px;
-}
-
 .registerFormTitle{
     color: #333333;
     text-align: center;
@@ -56,6 +69,7 @@
 
 .btnProducerTypeList{
     margin-top: 1rem;
+    margin-bottom: 2rem;
     border-radius: 8px;
     border: none;
     width: 95%;
