@@ -1,0 +1,78 @@
+* {
+  box-sizing: border-box;
+  margin: 0 auto;
+  background: #212529;
+  font-family: "Montserrat", sans-serif;
+}
+
+a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #00c67c;
+}
+
+a:hover {
+  color: #00ffa2;
+}
+
+a:active {
+  color: #6dcaa8;
+}
+
+.input-text {
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border: none;
+  height: 3rem;
+  width: 100%;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  outline: none;
+  color: #212529;
+}
+
+.btn-custom {
+  cursor: pointer;
+  background: #00c67c;
+  border-radius: 8px;
+  border: none;
+  height: 3rem;
+  width: 100%;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  outline: none;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  letter-spacing: -1px;
+  margin-bottom: 15px;
+}
+
+.django-form {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #212529;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.django-form label {
+  margin-bottom: 12px;
+}
+
+.django-form input[type="text"],
+.django-form input[type="password"] {
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    border: none;
+    height: 3rem;
+    width: 100%;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    outline: none;
+    color: #212529;
+}
+
+.django-form p {
+    margin-top: 15px;
+}

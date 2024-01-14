@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .models import UserProducer, UserClient, ProducerType
+
+from .models import UserProducer, UserClient
 
 
 class UserProducerForm(forms.ModelForm):
@@ -24,28 +25,14 @@ class UserProducerForm(forms.ModelForm):
         label = 'Razón Social',
         widget = forms.TextInput()
     )
-    birthdate = forms.DateField(
-        label = 'Fecha de Nacimiento',
-        widget = forms.DateInput(attrs={'type':'date', 'style': 'width: 190px; height: 30px;'})
-    )
-    producertypes = forms.ModelChoiceField(
-        queryset = ProducerType.objects.all(),
-        to_field_name = 'id',
-        label = 'Seleccione tipo/s productor',
-        widget = forms.Select()
-    )
-    selectedproducertypes = forms.CharField(
-        widget = forms.HiddenInput(),
-        required = True
-    )
-
     class Meta:
         model = UserProducer
-        fields = ["first_name", "last_name", "email", "password", "phonenumber", "bussinessname", "address", "birthdate", "dni", "producertypes", "selectedproducertypes"]
+        fields = ["first_name", "last_name", "email", "password", "phonenumber", "bussinessname", "address", "birthdate", "dni"]
         labels = {
             'first_name': 'Primer Nombre',
             'last_name': 'Apellido Paterno',
-            'address': 'Dirección'
+            'address': 'Dirección',
+            'birthdate': 'Fecha de Nacimiento'
         }
 
 
@@ -66,8 +53,6 @@ class UserClientForm(forms.ModelForm):
         label = 'Teléfono',
         widget = forms.NumberInput(attrs={'placeholder': 'Ej: 956800147'})
     )
-    
-
     class Meta:
         model = UserClient
         fields = ["first_name", "last_name", "email", "password", "phonenumber","address", "dni"]
@@ -76,9 +61,8 @@ class UserClientForm(forms.ModelForm):
             'last_name': 'Apellido Paterno',
             'address': 'Dirección'
         }
-        
-                
-# login form
+
+
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(
         widget=forms.TextInput(
@@ -93,5 +77,5 @@ class CustomAuthenticationForm(AuthenticationForm):
             attrs={"placeholder": "Contraseña", "class": "input-text"}
         ),
     )
-    
+
 
