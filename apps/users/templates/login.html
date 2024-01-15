@@ -1,22 +1,18 @@
-{% extends 'base_template.html' %}
-{% load static %}
-
-{% block extra_css %}
-  <link rel="stylesheet" href="{% static 'styles/login.css' %}" />
-{% endblock extra_css %}
-
-{% block main %}
-
-{% if request.user.is_authenticated %}
+{% extends 'base_template.html' %} {% load static %} {% block extra_css %}
+<link rel="stylesheet" href="{% static 'styles/login.css' %}" />
+{% endblock extra_css %} {% block main %} {% if request.user.is_authenticated %}
 <div class="bg-dark d-flex flex-column">
   <p class="fs-3 text-light text-center mt-5">
-    Ya hay una sesión iniciada. Cierra la sesión para volver a ingresar. <br class="mt-5 mb-5">
+    Ya hay una sesión iniciada. Cierra la sesión para volver a ingresar.
+    <br class="mt-5 mb-5" />
   </p>
 </div>
 {% else %}
 <div class="style">
   <div class="row">
-    <div class=" col-12 col-lg-5 d-flex flex-column justify-content-center align-items-center login-form-side">
+    <div
+      class="col-12 col-lg-5 d-flex flex-column justify-content-center align-items-center login-form-side"
+    >
       <div class="welcome">
         <img src="{% static 'assets/logo2.png' %}" class="logo" />
       </div>
@@ -24,31 +20,42 @@
       <form method="post" action="{% url 'login' %}" class="d-flex flex-column">
         {% csrf_token %}
         <div class="container-fluid fs-5 mb-4">
-          Email
+          Correo electrónico
           <p></p>
           {{ form.username }}
         </div>
         <div class="container-fluid fs-5 mb-4">
-          Password
+          Contraseña
           <p></p>
           {{ form.password }}
           <p class="text-center span">
-            ¿Olvidaste tu contraseña? Recupérala <a href="#" data-bs-toggle="modal" data-bs-target="#passwordModal">aquí</a>
+            ¿Olvidaste tu contraseña? Recupérala
+            <a href="#" data-bs-toggle="modal" data-bs-target="#passwordModal"
+              >aquí</a
+            >
           </p>
         </div>
         <div class="d-flex justify-content-center w-100">
           <button type="submit" class="btn-custom">Iniciar Sesión</button>
         </div>
         <p class="text-center span">
-          ¿No tienes una cuenta? Regístrate <a href="{% url 'client_register_form' %}">aquí</a>
+          ¿No tienes una cuenta? Regístrate
+          <a href="{% url 'client_register_form' %}">aquí</a>
         </p>
         <p class="text-center span">
-          ¿Quieres ser un productor? Postula <a href="{% url 'application_form' %}">aquí</a>
+          ¿Quieres ser un productor? Postula
+          <a href="{% url 'application_form' %}">aquí</a>
         </p>
       </form>
 
       <!-- Modal -->
-      <div class="modal fade bg-modal" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+      <div
+        class="modal fade bg-modal"
+        id="passwordModal"
+        tabindex="-1"
+        aria-labelledby="passwordModalLabel"
+        aria-hidden="true"
+      >
         <div class="modal-dialog modal-dialog-centered bg-modal">
           <div class="modal-content border-modal bg-modal-inside">
             <div class="modal-header d-flex flex-column border-modal-top">
@@ -57,14 +64,25 @@
             </div>
 
             <!-- Formulario modal -->
-            <form method="post" action="{% url 'password_reset' %}" class="w-75 p-3">
+            <form
+              method="post"
+              action="{% url 'password_reset' %}"
+              class="w-75 p-3"
+            >
               <div class="container-fluid fs-5 mb-4">
-                {% csrf_token %}
-                Ingresa tu correo de usuario
-                <input type="email" name="email" required class="input-text" placeholder="Correo electrónico">
+                {% csrf_token %} Ingresa tu correo de usuario
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  class="input-text"
+                  placeholder="Correo electrónico"
+                />
               </div>
               <div class="d-flex justify-content-center">
-                <button type="submit" class="btn-custom mb-5">Reestablecer</button>
+                <button type="submit" class="btn-custom mb-5">
+                  Reestablecer
+                </button>
               </div>
             </form>
           </div>
@@ -72,12 +90,10 @@
       </div>
       <!-- Fin Modal -->
       {% if form.non_field_errors %}
-      <div class="alert alert-danger custom-error" >
-        {% for error in form.non_field_errors %}
-          {{ error }}
-        {% endfor %}
+      <div class="alert alert-danger custom-error">
+        {% for error in form.non_field_errors %} {{ error }} {% endfor %}
       </div>
-    {% endif %}
+      {% endif %}
 
       <div class="text-light copyright">
         © Agrinet, 2024. Todos los derechos reservados.
@@ -87,6 +103,4 @@
     <div class="d-none d-lg-block col-7 img-bg img-side"></div>
   </div>
 </div>
-{% endif %}
-
-{% endblock main %}
+{% endif %} {% endblock main %}
