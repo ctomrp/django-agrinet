@@ -135,34 +135,6 @@ $("#id_address").keyup(function (){
       $("#id_register_button").attr('disabled', true);
   }  
 });
-/*validar edad
-$(document).ready(function () {
-  $("#id_edad").on('input', function () {
-    validarEdad();
-  });
-  function validarEdad() {
-    var edadInput = $("#id_edad").val();
-    var edadError = $("#id_edad_alert");
-    var btnRegistrar = $("#id_register_button");
-
-    if (edadInput !== "" && !isNaN(edadInput)) {
-      if (parseInt(edadInput) > 17) {
-        edadError.text("").removeClass("error-message").addClass("success-message");
-        btnRegistrar.prop('disabled', false);
-      } else {
-        edadError.text("La edad debe ser mayor a 18 años.").removeClass("success-message").addClass("error-message");
-        $("#id_edad_alert").css("color", "red");
-        btnRegistrar.prop('disabled', true);
-      }
-    } else {
-      edadError.text("Ingrese una edad válida.").removeClass("success-message").addClass("error-message");
-      $("#edadId").css("color", "red");
-      btnRegistrar.prop('disabled', true);
-    }
-  }
-});
-*/
-
 
 
 /*validar rut*/
@@ -217,8 +189,8 @@ $("#id_bussiness_name").keyup(function () {
   var patronNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
   var largo = $("#id_bussiness_name").val().length;
 
-  if (largo < 3 || largo > 15) {
-    $("#id_razon_alert").text("La razon social no puede ser menor a 3 caractéres o mayor a 15.");
+  if (largo < 3 || largo > 25) {
+    $("#id_razon_alert").text("La razon social no puede ser menor a 3 caractéres o mayor a 25.");
     $("#id_razon_alert").css("color", "red");
     vrazonsocial = false;
   } else if (!patronNombre.test(caracteres)) {
@@ -232,6 +204,9 @@ $("#id_bussiness_name").keyup(function () {
   }
 
 });
+
+/*validar fecha cumpleaños*/
+
 
 $("#id_birth_date").change(function (){
     var birthdate = new Date($("#id_birth_date").val());
@@ -263,6 +238,37 @@ $("#id_birth_date").change(function (){
   }  
 });
 
-$(document).ready(function () {
-  $("#id_register_button").attr('disabled', true);
+
+
+
+$(document).ready(function() {
+  // ... (tu código de validación existente)
+
+  $("#id_register_button").click(function() {
+      // Realizar validación antes de mostrar el mensaje
+      if (validarCampos()) {
+          var mensaje = "¡Postulación enviada correctamentes!";
+          mostrarMensaje(mensaje);
+      } else {
+          // Cambiar el mensaje de error de console.log a alert
+          var mensajeError = "Error en la validación de campos. Por favor, complete todos los campos correctamente.";
+          alert(mensajeError);
+      }
+  });
 });
+
+function validarCampos() {
+  // Utilizando las variables de validación existentes
+  if (vnombre && vapellido && vtelefono && vmail && vrut && vdireccion && vrazonsocial && vfechanac) {
+      return true;  // Todos los campos son válidos
+  } else {
+      // Muestra un mensaje de error o realiza otra acción si algún campo no es válido
+      alert("Por favor, complete todos los campos correctamente.");
+      return false;
+  }
+}
+
+function mostrarMensaje(mensaje) {
+  // Mostrar el mensaje utilizando alert
+  alert(mensaje);
+}
