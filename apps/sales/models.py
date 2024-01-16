@@ -21,22 +21,31 @@ class ReceiptType(models.Model):
 
     def __str__(self):
         return self.receipt_type_name
+    
+
 
 class Sales(models.Model):
+    client = models.ForeignKey(UserClient, on_delete=models.CASCADE, verbose_name="Client")
     date_sale = models.DateField(auto_now_add=True, verbose_name="Date Sale")
-    total_sale = models.FloatField(verbose_name="Total Sale")
     payment = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE, verbose_name="Payment")
     shipping = models.ForeignKey(ShippingMethod, on_delete=models.CASCADE, verbose_name="Shipping")
     receipt = models.ForeignKey(ReceiptType, on_delete=models.CASCADE, verbose_name="Receipt")
-    client = models.ForeignKey(UserClient, on_delete=models.CASCADE, verbose_name="Client")
-
+    
     def __str__(self):
-        return self.date_sale
+        return str(self.id)
+
+
     
 class SalesProducts(models.Model):
-    units_number = models.IntegerField(verbose_name="Units")
-    sale = models.ForeignKey(Sales, on_delete=models.CASCADE, verbose_name="Sale")
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Product")
+    sale = models.ForeignKey(Sales, on_delete=models.CASCADE,verbose_name="Sale")
+    quantity = models.IntegerField(verbose_name="Units")
+    
+    @property
+    def get_total(self):
+        total = self.product.price * self.quantity
+        return total
+
 
     def __str__(self):
-        return f"{self.sale.id} {self.product.id} {self.units}"
+        return f"{self.sale.id} - Product: {self.product.name} - Quantity: {self.quantity}"
