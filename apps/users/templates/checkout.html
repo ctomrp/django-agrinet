@@ -16,10 +16,53 @@
             <h1>Total de productos </h1>
             <h1>{{total_items}}</h1>
             
-            <button class="btn-custom">PAGAR</button>
+            <button id="make-payment" class="btn-custom">PAGAR :p</button>
           </div>
      </div>    
 
      
+
+     <script>
+        var total = '{{total_cart}}'
+
+        document.getElementById('make-payment').addEventListener('click', function(e){
+          submitFormData()
+        })
+
+        function submitFormData(){
+          console.log('payment btn clicked :oo')
+
+          var userFormData = {
+            'name':null,
+            'address':null,
+            'total':total,
+          }
+
+          userFormData.name = "{{sales.client.name}}" //pasar info con un form
+          userFormData.address = "{{sales.client.address}}"
+          
+
+          var url = 'process_order/'
+          fetch(url, {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'X-CSRFToken':csrftoken,
+            },
+            body:JSON.stringify({'form':userFormData})
+
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('Succes:',data);
+            alert('Transaction Completed');
+            window.location.href = "{% url 'client_dashboard' %}"
+        
+          })
+        }
+
+     </script>
+
+
     {% endblock main %}
 
