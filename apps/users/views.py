@@ -130,3 +130,95 @@ class SearchResultsView(ListView):
             return queryset
         else:
             return Product.objects.none()
+
+
+def cart(request):
+    items = []
+    sales = []  
+
+    if request.user.is_authenticated:
+        client = request.user.id
+        sales = Sales.objects.filter(client=client)
+        items = []
+
+        for sale in sales:
+            items.extend(sale.salesproducts_set.all())
+            
+    else:
+        items = []
+        sales = []  
+
+    total_cart = sum([item.get_total for item in items])
+
+    context = {'items': items, 'sales': sales, 'total_cart': total_cart}
+    return render(request, 'cart.html', context)
+
+def checkout(request):
+    if request.user.is_authenticated:
+        client = request.user.id
+        sales = Sales.objects.filter(client=client)
+        items = []
+
+        for sale in sales:
+            items.extend(sale.salesproducts_set.all())
+    else:
+        items = []
+        sales = []  
+
+    total_cart = sum([item.get_total for item in items])
+    total_items = sum([item.quantity for item in items])
+
+    context = {'items': items, 'sales': sales, 'total_cart': total_cart, 'total_items': total_items}
+    return render(request,'checkout.html', context)
+
+#actualizar carro
+def updateItem(request):
+    data = json.loads(request.body)
+    product_id = data['productId']
+    action = data['action']
+
+    if request.user.is_authenticated:
+        client = request.user.id
+        product = get_object_or_404(Product, id=product_id)
+
+        sales = Sales.objects.filter(client=client)
+
+        sales_product = SalesProducts.objects.filter(sale__in=sales, product=product).first()
+
+        if sales_product is None:
+            for sale in sales:
+                sales_product = SalesProducts.objects.create(sale=sale, product=product, quantity=0)
+
+    
+        if action == 'add':
+            sales_product.quantity = (sales_product.quantity + 1) 
+        elif action == 'remove':
+            sales_product.quantity = (sales_product.quantity - 1) 
+        
+        sales_product.save()
+        
+        if sales_product.quantity <= 0:
+            sales_product.delete()
+
+        return JsonResponse('Item added', safe=False)
+
+    return JsonResponse('Authentication required', status=401, safe=False)
+
+def processOrder(request):
+    print('Data:', request.body)
+    data = json.loads(request.body)
+    if request.user.is_authenticated:
+        client = request.user.id
+        sales, created = Sales.objects.get_or_create(client=client)
+        total = data['form']['total']
+    
+        Sales.objects.create(
+                client = client,
+                payment = data['payment-data']['payment'],
+                shipping = data['payment-data']['shipping'],
+                receipt = data['payment-data']['receipt']
+        )
+
+    else:
+        print('User is not logged in ')
+    return JsonResponse('Payment complete ', safe=False)

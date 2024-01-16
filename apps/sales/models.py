@@ -28,8 +28,8 @@ class Sales(models.Model):
     payment = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE, verbose_name="Payment")
     shipping = models.ForeignKey(ShippingMethod, on_delete=models.CASCADE, verbose_name="Shipping")
     receipt = models.ForeignKey(ReceiptType, on_delete=models.CASCADE, verbose_name="Receipt")
-    client = models.ForeignKey(UserClient, on_delete=models.CASCADE, verbose_name="Client")
-
+    total = models.IntegerField(blank=True,null=True, verbose_name="total")
+    
     def __str__(self):
         return self.date_sale
     
