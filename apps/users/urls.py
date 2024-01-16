@@ -18,9 +18,5 @@ urlpatterns = [
     path("search_results/", views.SearchResultsView.as_view(), name="search_results"),
     path("unauthorized_access/", views.unauthorized_access, name="unauthorized_access"),
     path("client/<int:product_id>", views.client_product_detail, name="client_product_detail"),
-    path("cart/", views.cart, name="cart"),
-    path("cart/update_item/", views.updateItem, name="update_cart"),
-    path("checkout/", views.checkout, name="checkout"),
-    path("client/update_item/", views.updateItem, name="update_item"),
 ]
 

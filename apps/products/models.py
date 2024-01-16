@@ -10,10 +10,20 @@ class ProductCategory(models.Model):
         return self.name
     
     
+class ProductName(models.Model):
+    name = models.CharField(max_length=120, verbose_name=_("Product name"))
+
+    def __str__(self):
+        return self.name
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=120, verbose_name=_("Name"))
+    name = models.ForeignKey(
+        "ProductName",
+        on_delete=models.CASCADE,
+        verbose_name=_("Name"),
+    )
+
     price = models.IntegerField(verbose_name=_("Price"))
     stock = models.IntegerField(verbose_name=_("Products in stock"))
     description = models.TextField(verbose_name=_("Description"))
