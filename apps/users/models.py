@@ -64,10 +64,10 @@ class User(AbstractUser):
 # modelo de usuario productor
 class UserProducer(User):
     address = models.CharField(max_length=255, verbose_name=_("Address"))
-    birthdate = models.DateField(verbose_name=_("Birthdate"))
+    birth_date = models.DateField(verbose_name=_("Birthdate"))
     dni = models.CharField(max_length=10, verbose_name=_("DNI"), unique=True)
-    businessname = models.CharField(max_length = 200, verbose_name=("Business Name"))
-    phonenumber = models.IntegerField(null = False)
+    business_name = models.CharField(max_length=200, verbose_name=("Business Name"))
+    phone_number = models.IntegerField(null=False)
     
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -83,7 +83,7 @@ class UserProducer(User):
 class UserClient(User):
     address = models.CharField(max_length=255, verbose_name=_("Address"))
     dni = models.CharField(max_length=10, verbose_name=_("DNI"), unique=True)
-    phonenumber = models.IntegerField(null = False)
+    phone_number = models.IntegerField(null = False)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -92,20 +92,4 @@ class UserClient(User):
         if not self.pk:
             self.set_password(self.password)
         super().save(*args, **kwargs)
-
-
-class ProducerType(models.Model):
-    producerTypeName = models.CharField(max_length = 80, verbose_name=_("Producer Type Name"))
-
-    def __str__(self):
-        return f"{self.producerTypeName}"
-
- 
-class Producer_ProducerType(models.Model):
-    producerType = models.ForeignKey(ProducerType, on_delete = models.CASCADE, verbose_name=_("Producer Type"))
-    producer = models.ForeignKey(UserProducer, on_delete=models.CASCADE, verbose_name=_("Producer"))
-
-    def __str__(self):
-        return f"{self.producer.first_name} {self.producer.last_name} {self.producer.dni} {self.producerType.producerTypeName}"
-    
 

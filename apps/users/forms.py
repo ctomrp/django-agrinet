@@ -17,27 +17,27 @@ class UserProducerForm(forms.ModelForm):
         label = 'RUT',
         widget = forms.TextInput(attrs={'placeholder': 'Ej: 11111111-K'})
     )
-    phonenumber = forms.IntegerField(
+    phone_number = forms.IntegerField(
         label = 'Teléfono',
         widget = forms.NumberInput(attrs={'placeholder': 'Ej: 956800147', 'type': 'tel'})
     )
-    bussinessname = forms.CharField(
+    bussiness_name = forms.CharField(
         label = 'Razón Social',
         widget = forms.TextInput()
     )
-    birthdate = forms.DateField(
+    birth_date = forms.DateField(
         label = 'Fecha de Nacimiento',
         widget = forms.DateInput(attrs={'type':'date', 'style': 'width: 190px; height: 30px;'})
     )
 
     class Meta:
         model = UserProducer
-        fields = ["first_name", "last_name", "email", "password", "phonenumber", "bussinessname", "address", "birthdate", "dni"]
+        fields = ["first_name", "last_name", "email", "password", "phone_number", "bussiness_name", "address", "birth_date", "dni"]
         labels = {
             'first_name': 'Primer Nombre',
             'last_name': 'Apellido Paterno',
             'address': 'Dirección',
-            'birthdate': 'Fecha de Nacimiento'
+            'birth_date': 'Fecha de Nacimiento'
         }
 
 
@@ -54,13 +54,13 @@ class UserClientForm(forms.ModelForm):
         label = 'RUN',
         widget = forms.TextInput(attrs={'placeholder': 'Ej: 11111111-K'})
     )
-    phonenumber = forms.IntegerField(
+    phone_number = forms.IntegerField(
         label = 'Teléfono',
         widget = forms.NumberInput(attrs={'placeholder': 'Ej: 956800147', 'type': 'tel'})
     )
     class Meta:
         model = UserClient
-        fields = ["first_name", "last_name", "email", "password", "phonenumber","address", "dni"]
+        fields = ["first_name", "last_name", "email", "password", "phone_number","address", "dni"]
         labels = {
             'first_name': 'Primer Nombre',
             'last_name': 'Apellido Paterno',

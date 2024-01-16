@@ -1,11 +1,4 @@
-var vdni = false, vfirstname = false, vlastname = false, vaddress = false, vphone = false, vemail = false, vpassword = false, vreppass = false,  vproType = false, vbussinessname = false, vbirthdate = false;
-
-producerTypes = [];
-
-function updateHiddenSelectedProducerTypes() {
-    $("#id_selectedproducertypes").val(producerTypes.join(","));
-    console.log($("#id_selectedproducertypes").val())
-}
+var vdni = false, vfirstname = false, vlastname = false, vaddress = false, vphone = false, vemail = false, vpassword = false, vreppass = false,  vbussinessname = false, vbirthdate = false;
 
 $("#id_dni").on("keyup", function() {
     var run = $(this).val().replace(/\./g, '').replace('-', '').trim();  // Elimina espacios al principio y al final
@@ -49,7 +42,7 @@ $("#id_dni").on("keyup", function() {
         return 0;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -75,7 +68,7 @@ $("#id_first_name").keyup(function (){
         vfirstname = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -101,7 +94,7 @@ $("#id_last_name").keyup(function (){
         vlastname = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -127,15 +120,15 @@ $("#id_address").keyup(function (){
         vaddress = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false)
     } else {
         $("#id_register_button").attr('disabled', true)
     }
 });
 
-$("#id_phonenumber").keyup(function (){
-    var phonenumber = $("#id_phonenumber").val();
+$("#id_phone_number").keyup(function (){
+    var phonenumber = $("#id_phone_number").val();
     var patternNumber = /^[0-9]+$/;
 
     if (!patternNumber.test(phonenumber)) {
@@ -154,7 +147,7 @@ $("#id_phonenumber").keyup(function (){
         }
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -179,7 +172,7 @@ $("#id_email").keyup(function (){
         vemail = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -205,7 +198,7 @@ $("#id_password").keyup(function (){
         vpassword = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -226,17 +219,17 @@ $("#id_repeat_password").keyup(function (){
         vreppass = false;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
     }
 });
 
-$("#id_bussinessname").keyup(function (){
+$("#id_bussiness_name").keyup(function (){
     var bussinessNamePattern = /^[a-zA-Z0-9'!@#$%^&*()-_+=?<> ]+$/
-    var bussinessName = $("#id_bussinessname").val()
-    var bussinessNameLength = $("#id_bussinessname").val().length
+    var bussinessName = $("#id_bussiness_name").val()
+    var bussinessNameLength = $("#id_bussiness_name").val().length
 
     if(bussinessNameLength < 3 || bussinessNameLength > 200 ){
         $("#id_bussinessname_alert").text("Razón social inválida (mín. 3 caracteres, máx. 200 caracteres)");
@@ -252,15 +245,15 @@ $("#id_bussinessname").keyup(function (){
         vbussinessname = true;
     }
 
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass &&  vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
     }
 });
 
-$("#id_birthdate").change(function (){
-    var birthdate = new Date($("#id_birthdate").val());
+$("#id_birth_date").change(function (){
+    var birthdate = new Date($("#id_birth_date").val());
     var today = new Date();
     var age = today.getFullYear() - birthdate.getFullYear()
 
@@ -282,9 +275,7 @@ $("#id_birthdate").change(function (){
         vbirthdate = false
     }
 
-    
-
-    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname && vbirthdate){
+    if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vbussinessname && vbirthdate){
         $("#id_register_button").attr('disabled', false);
     } else {
         $("#id_register_button").attr('disabled', true);
@@ -293,61 +284,4 @@ $("#id_birthdate").change(function (){
 
 $(document).ready(function () {
     $("#id_register_button").attr('disabled', true)
-
-    $("#id_add_producertype").click(function (){
-        var selectedOption = $("#id_producertypes :selected");
-        var selectedValue = $(selectedOption).val()
-        
-        if(selectedValue == ""){
-            vproType = false
-        } else {
-            var selectedValueText = $(selectedOption).text()
-            $("#id_selected_types").append('<option value="' + selectedValue + '">' + selectedValueText + '</option>');
-            producerTypes.push(selectedValue)
-            updateHiddenSelectedProducerTypes()
-            $(selectedOption).remove()
-            vproType = true
-        }
-
-        if(producerTypes.length == 0){
-            vproType = false
-        } else {
-            vproType = true
-        }
-
-        if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
-            $("#id_register_button").attr('disabled', false);
-        } else {
-            $("#id_register_button").attr('disabled', true);
-        }
-    });
-
-    $("#id_delete_producertype").click(function (){
-        var selectedOption = $("#id_list_of_selected_materials :selected");
-        var selectedValue = $(selectedOption).val()
-        var selectedValueText = $(selectedOption).text()
-        if (producerTypes.length == 0){
-            console.log("No ha seleccionado nada para que pueda ser borrado")   
-        } else {
-            $("#id_producertypes").append('<option value="' + selectedValue + '">' + selectedValueText + '</option>');
-            var index = producerTypes.indexOf(selectedValue);
-            if (index > -1) {
-                producerTypes.splice(index, 1);
-            }
-            updateHiddenSelectedProducerTypes()
-            $(selectedOption).remove();
-            if(producerTypes.length == 0){
-                vproType = false
-            } else {
-                vproType = true
-            }
-        }
-
-        if(vdni && vfirstname && vlastname && vaddress && vphone && vemail && vpassword && vreppass && vproType && vbussinessname){
-            $("#id_register_button").attr('disabled', false);
-        } else {
-            $("#id_register_button").attr('disabled', true);
-        }
-    });
-
 });

@@ -14,63 +14,44 @@
               {% csrf_token %}
               <div class="rowGrid">
                     <div class="form-group">
-                        {{form.nombre.label_tag}}
-                        {{form.nombre}}
+                        {{form.first_name.label_tag}}
+                        {{form.first_name}}
                         <p id="id_fn_alert" style="font-size: 12px;"></p>
                     </div>
                     <div class="form-group">
-                        {{form.apellido.label_tag}}
-                        {{form.apellido}}
+                        {{form.last_name.label_tag}}
+                        {{form.last_name}}
                         <p id="id_ln_alert" style="font-size: 12px;"></p>
                     </div>
                     <div class="form-group">
-                        {{form.rut.label_tag}}
-                        {{form.rut}}
+                        {{form.dni.label_tag}}
+                        {{form.dni}}
                         <p id="id_dni_alert" style="font-size: 12px;"></p>
                     </div>
                     <div class="form-group">
-                        {{form.telefono.label_tag}}
-                        {{form.telefono}}
+                        {{form.phone_number.label_tag}}
+                        {{form.phone_number}}
                         <p id="id_phone_alert" style="font-size: 12px;"></p>
                     </div>
                     <div class="form-group">
-                        {{form.correo.label_tag}}
-                        {{form.correo}}
+                        {{form.email.label_tag}}
+                        {{form.email}}
                         <p id="id_email_alert" style="font-size: 12px;"></p>
                     </div>
                     <div class="form-group">
-                        {{form.direccion.label_tag}}
-                        {{form.direccion}}
+                        {{form.address.label_tag}}
+                        {{form.address}}
                         <p id="id_address_alert" style="font-size: 12px;"></p>
                     </div>
                     <div class="form-group">
-                        {{form.razon_social.label_tag}}
-                        {{form.razon_social}}
+                        {{form.bussiness_name.label_tag}}
+                        {{form.bussiness_name}}
                         <p id="id_razon_alert" style="font-size: 12px;"></p>
                     </div>
                     <div class="form-group">
-                        {{form.fecha_nac.label_tag}}
-                        {{form.fecha_nac}}
+                        {{form.birth_date.label_tag}}
+                        {{form.birth_date}}
                         <p id="id_fecha_alert" style="font-size: 12px;"></p>
-                    </div>
-                    <div class="form-group">
-                        <label for="id_producertypes">Seleccione tipo/s productor:</label>
-                        <select name="producertypes" id="id_producertypes">
-                            <optgroup label="Tipo Productor" id="id_producertypeslist">
-                                {% for i in producerType %}
-                                    <option value="{{i.producerTypeName}}">{{i.producerTypeName}}</option>
-                                {% endfor %}
-                            </optgroup>
-                        </select>
-                        <button type="button" class="btn btn-dark btnProducerTypeList" id="id_add_producertype">Añadir Tipo Productor</button>
-                    </div>
-                    <div class="form-group">
-                        <label for="id_list_of_selected_materials">Listado de Tipos:</label>
-                        <select name="list_of_selected_materials" id="id_list_of_selected_materials">
-                            <optgroup label="Tipo/s Seleccionado/s" id="id_selected_types"></optgroup>
-                        </select>
-                        <textarea name="selectedproducertypes" hidden id="id_selectedproducertypes" cols="30" rows="10"></textarea>
-                        <button type="button" class="btn btn-danger btnProducerTypeList" id="id_delete_producertype">Quitar Tipo Productor</button>
                     </div>
               </div>
               <div class="container-fluid">

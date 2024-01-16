@@ -1,0 +1,42 @@
+from django.db import models
+
+from apps.products.models import Product
+from apps.users.models import UserClient
+
+# Create your models here.
+class ShippingMethod(models.Model):
+    shipping_method_name = models.CharField(max_length=60, verbose_name="Shipping Method Name")
+
+    def __str__(self):
+        return self.shipping_method_name
+
+class PaymentMethod(models.Model):
+    payment_method_name = models.CharField(max_length=30, verbose_name="Payment Method Name")
+
+    def __str__(self):
+        return self.payment_method_name
+
+class ReceiptType(models.Model):
+    receipt_type_name = models.CharField(max_length=30, verbose_name="Receipt Type Name")
+
+    def __str__(self):
+        return self.receipt_type_name
+
+class Sales(models.Model):
+    date_sale = models.DateField(auto_now_add=True, verbose_name="Date Sale")
+    total_sale = models.FloatField(verbose_name="Total Sale")
+    payment = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE, verbose_name="Payment")
+    shipping = models.ForeignKey(ShippingMethod, on_delete=models.CASCADE, verbose_name="Shipping")
+    receipt = models.ForeignKey(ReceiptType, on_delete=models.CASCADE, verbose_name="Receipt")
+    client = models.ForeignKey(UserClient, on_delete=models.CASCADE, verbose_name="Client")
+
+    def __str__(self):
+        return self.date_sale
+    
+class SalesProducts(models.Model):
+    units_number = models.IntegerField(verbose_name="Units")
+    sale = models.ForeignKey(Sales, on_delete=models.CASCADE, verbose_name="Sale")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Product")
+
+    def __str__(self):
+        return f"{self.sale.id} {self.product.id} {self.units}"

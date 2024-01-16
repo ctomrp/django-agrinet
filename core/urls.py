@@ -8,10 +8,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", RedirectView.as_view(url="users/", permanent=False)),
-    path("users/", include("apps.users.urls")),
     path("products/", include("apps.products.urls")),
     path('producer_application/', include('apps.producer_application.urls')),
+    path("sales/", include("apps.sales.urls")),
+    path("users/", include("apps.users.urls")),
+    path("", RedirectView.as_view(url="users/", permanent=False)),
 ]
 
 if settings.DEBUG:

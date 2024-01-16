@@ -9,7 +9,7 @@ from apps.users.views import is_userproducer
 from apps.users.models import UserProducer
 @login_required
 @user_passes_test(is_userproducer)
-def myProducts(request):
+def my_products(request):
     user_id = request.user.id
     products = Product.objects.filter(producer=user_id)
     return render(request, 'my_products.html', {'products': products})
@@ -17,7 +17,7 @@ def myProducts(request):
 
 @login_required
 @user_passes_test(is_userproducer)
-def productDetail(request, product_id):
+def product_detail(request, product_id):
      product = get_object_or_404(Product, pk=product_id)
    
      data = {
@@ -25,9 +25,9 @@ def productDetail(request, product_id):
      }
      
      if request.method == 'POST':
-          formulario = CreatePrd(data=request.POST, instance=product, files=request.FILES)
-          if formulario.is_valid():
-               formulario.save()
+          form = CreatePrd(data=request.POST, instance=product, files=request.FILES)
+          if form.is_valid():
+               form.save()
                return redirect('my_products')
           
      return render(request, 'update_product.html', data) 
@@ -35,7 +35,7 @@ def productDetail(request, product_id):
 
 @login_required
 @user_passes_test(is_userproducer)
-def deleteProduct(request, product_id):
+def delete_product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     product.delete()
     return redirect('my_products')
@@ -43,7 +43,7 @@ def deleteProduct(request, product_id):
 
 @login_required
 @user_passes_test(is_userproducer)
-def createProducts(request):
+def create_product(request):
 
     if request.method == 'GET':
             return render(request, 'create_product.html',{
@@ -65,5 +65,4 @@ def createProducts(request):
                 'error': e
 
                 })
-    
 

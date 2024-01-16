@@ -131,8 +131,8 @@ $("#id_address").keyup(function (){
     }
 });
 
-$("#id_phonenumber").keyup(function (){
-    var phonenumber = $("#id_phonenumber").val();
+$("#id_phone_number").keyup(function (){
+    var phonenumber = $("#id_phone_number").val();
     var patternNumber = /^[0-9]+$/;
 
     if (!patternNumber.test(phonenumber)) {

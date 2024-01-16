@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserClientForm, UserProducerForm, CustomAuthenticationForm
 from .models import UserClient
 
-from .models import UserClient, ProducerType, Producer_ProducerType
+from .models import UserClient
 from apps.products.models import Product
 from django.db.models import Q
 
@@ -23,7 +23,7 @@ def is_userclient(user):
     return hasattr(user, 'userclient')
 
 
-def userClientRegistration(request):
+def user_client_registration(request):
     if request.method == "POST":
         form = UserClientForm(request.POST)
         dni = form['dni'].value()
@@ -38,23 +38,13 @@ def userClientRegistration(request):
     return render(request, 'client_register_form.html', {'form': form, 'user_already_exists': False})
 
 
-def userProducerRegistration(request):
-    producerTypes = ProducerType.objects.all()
+def user_producer_registration(request):
     if request.method == "POST":
         form = UserProducerForm(request.POST)
         if form.is_valid():
             user = form.save()
-            selectedProducerTypes = request.POST['selectedproducertypes']
-            selectedProducerTypes = selectedProducerTypes.split(sep=',')
-            for i in selectedProducerTypes:
-                objProducerType = ProducerType.objects.get(id = i)
-                objProducer_ProducerType = Producer_ProducerType.objects.create(
-                    producerType = objProducerType,
-                    producer = user
-                )
-                objProducer_ProducerType.save()
             return redirect("producer_register_form")
-    return render(request, 'producer_register_form.html', {'form': UserProducerForm, 'producerType': producerTypes})
+    return render(request, 'producer_register_form.html', {'form': UserProducerForm})
 
 
 class CustomLoginView(LoginView):
@@ -140,7 +130,3 @@ class SearchResultsView(ListView):
             return queryset
         else:
             return Product.objects.none()
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     return context
