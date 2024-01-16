@@ -30,3 +30,7 @@ Y ejecuta
 ```bash
 poetry install
 ```
+
+### BUENAS PRÁCTICAS PYTHON
+
+[Buenas prácticas python pep8](https://ellibrodepython.com/python-pep8)
