@@ -202,22 +202,3 @@ def updateItem(request):
         return JsonResponse('Item added', safe=False)
 
     return JsonResponse('Authentication required', status=401, safe=False)
-
-def processOrder(request):
-    print('Data:', request.body)
-    data = json.loads(request.body)
-    if request.user.is_authenticated:
-        client = request.user.id
-        sales, created = Sales.objects.get_or_create(client=client)
-        total = data['form']['total']
-    
-        Sales.objects.create(
-                client = client,
-                payment = data['payment-data']['payment'],
-                shipping = data['payment-data']['shipping'],
-                receipt = data['payment-data']['receipt']
-        )
-
-    else:
-        print('User is not logged in ')
-    return JsonResponse('Payment complete ', safe=False)
