@@ -1,9 +1,6 @@
-from django.shortcuts import render, redirect
-from django.http import HttpRequest
-
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ApplicationFormForm
-from .models import ApplicationForm
-
+from .forms import ApplicationForm  
 
 def application_form_view(request):
     if request.method == 'POST':
@@ -31,3 +28,33 @@ def application_form_view(request):
         'form': ApplicationFormForm
     })
         
+
+def edit_application_form(request, form_id):
+    existing_form = get_object_or_404(ApplicationForm, id=form_id)
+
+    if request.method == 'POST':
+        form = ApplicationFormForm(request.POST, instance=existing_form)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+
+    form_list = ApplicationForm.objects.all()
+
+    return render(request, 'producer_application.html', {
+        'form': form,
+        'form_list': form_list
+    })
+
+def delete_application_form(request, form_id):
+    existing_form = get_object_or_404(ApplicationForm, id=form_id)
+
+    if request.method == 'POST':
+        existing_form.delete()
+        return redirect('login')
+
+    form_list = ApplicationForm.objects.all()
+
+    return render(request, 'producer_application.html', {
+        'form': ApplicationFormForm(),
+        'form_list': form_list
+    })

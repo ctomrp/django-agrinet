@@ -186,7 +186,7 @@ function validarRutChileno(rut) {
 
 $("#id_bussiness_name").keyup(function () {
   var caracteres = $("#id_bussiness_name").val();
-  var patronNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+  var patronNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\d.]*$/;
   var largo = $("#id_bussiness_name").val().length;
 
   if (largo < 3 || largo > 25) {
@@ -194,7 +194,7 @@ $("#id_bussiness_name").keyup(function () {
     $("#id_razon_alert").css("color", "red");
     vrazonsocial = false;
   } else if (!patronNombre.test(caracteres)) {
-    $("#id_razon_alert").text("Sólo puede ingresar letras");
+    $("#id_razon_alert").text("Sólo puede ingresar letras y números");
     $("#id_razon_alert").css("color", "red");
     vrazonsocial = false;
   } else {
