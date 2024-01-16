@@ -135,6 +135,9 @@ class SearchResultsView(ListView):
 
 
 def cart(request):
+    items = []
+    sales = []  
+
     if request.user.is_authenticated:
         client = request.user.id
         sales = Sales.objects.filter(client=client)
@@ -145,7 +148,7 @@ def cart(request):
             
     else:
         items = []
-        sales = []  # Asegúrate de inicializar sales como una lista vacía si el usuario no está autenticado.
+        sales = []  
 
     total_cart = sum([item.get_total for item in items])
 
