@@ -9,9 +9,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 import json
 
-from .forms import UserClientForm, UserProducerForm, CustomAuthenticationForm
+from .forms import UserClientForm, UserProducerForm, CustomAuthenticationForm , SalesData
 from .models import UserClient
-from apps.sales.models import SalesProducts, Sales
+from apps.sales.models import SalesProducts, Sales, PaymentMethod, ReceiptType, ShippingMethod
 
 from apps.products.models import Product
 from django.db.models import Q
@@ -170,7 +170,7 @@ def checkout(request):
     total_cart = sum([item.get_total for item in items])
     total_items = sum([item.quantity for item in items])
 
-    context = {'items': items, 'sales': sales, 'total_cart': total_cart, 'total_items': total_items}
+    context = {'items': items, 'sales': sales, 'total_cart': total_cart, 'total_items': total_items, 'form': SalesData }
     return render(request,'checkout.html', context)
 
 #actualizar carro
@@ -178,49 +178,52 @@ def updateItem(request):
     data = json.loads(request.body)
     product_id = data['productId']
     action = data['action']
+ 
+    client = request.user.userclient
+    product = Product.objects.get(id=product_id)
+    sale, created = Sales.objects.get_or_create(client=client)
 
-    if request.user.is_authenticated:
-        client = request.user.id
-        product = get_object_or_404(Product, id=product_id)
-
-        sales = Sales.objects.filter(client=client)
-
-        sales_product = SalesProducts.objects.filter(sale__in=sales, product=product).first()
-
-        if sales_product is None:
-            for sale in sales:
-                sales_product = SalesProducts.objects.create(sale=sale, product=product, quantity=0)
-
+    sale_product, created = SalesProducts.objects.get_or_create(sale=sale,product=product)
     
-        if action == 'add':
-            sales_product.quantity = (sales_product.quantity + 1) 
-        elif action == 'remove':
-            sales_product.quantity = (sales_product.quantity - 1) 
-        
-        sales_product.save()
-        
-        if sales_product.quantity <= 0:
-            sales_product.delete()
+    if action == 'add':
+        sale_product.quantity = (sale_product.quantity + 1) 
+    elif action == 'remove':
+        sale_product.quantity = (sale_product.quantity - 1) 
+    
+    sale_product.save()
+    
+    if sale_product.quantity <= 0:
+        sale_product.delete()
 
-        return JsonResponse('Item added', safe=False)
-
-    return JsonResponse('Authentication required', status=401, safe=False)
+    return JsonResponse('Item added', safe=False)
 
 def processOrder(request):
     print('Data:', request.body)
     data = json.loads(request.body)
-    if request.user.is_authenticated:
-        client = request.user.id
-        sales, created = Sales.objects.get_or_create(client=client)
-        total = data['form']['total']
     
-        Sales.objects.create(
-                client = client,
-                payment = data['payment-data']['payment'],
-                shipping = data['payment-data']['shipping'],
-                receipt = data['payment-data']['receipt']
-        )
+    if request.user.is_authenticated:
+        client = request.user.userclient
 
+        # Obtener o crear una instancia de Sales para el cliente
+        sale, created = Sales.objects.get_or_create(client=client)
+
+        # Convertir el valor de payment a una instancia de PaymentMethod
+        payment_id = data['form']['payment']
+        payment_method = get_object_or_404(PaymentMethod, pk=payment_id)
+
+        shipping_id = data['form']['shipping']
+        shipping_method = get_object_or_404(ShippingMethod, pk=shipping_id)
+
+        receipt_id = data['form']['receipt']
+        receipt_type = get_object_or_404(ReceiptType, pk=receipt_id)
+
+        # Actualizar los campos de la instancia existente
+        sale.payment = payment_method
+        sale.shipping = shipping_method
+        sale.receipt = receipt_type
+        sale.total = data['form']['total']
+        sale.save()
     else:
         print('User is not logged in ')
+
     return JsonResponse('Payment complete ', safe=False)

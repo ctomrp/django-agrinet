@@ -27,9 +27,9 @@ class ReceiptType(models.Model):
 class Sales(models.Model):
     client = models.ForeignKey(UserClient, on_delete=models.CASCADE, verbose_name="Client")
     date_sale = models.DateField(auto_now_add=True, verbose_name="Date Sale")
-    payment = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE, verbose_name="Payment")
-    shipping = models.ForeignKey(ShippingMethod, on_delete=models.CASCADE, verbose_name="Shipping")
-    receipt = models.ForeignKey(ReceiptType, on_delete=models.CASCADE, verbose_name="Receipt")
+    payment = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE, blank=True,null=True, verbose_name="Payment")
+    shipping = models.ForeignKey(ShippingMethod, on_delete=models.CASCADE, blank=True,null=True,verbose_name="Shipping")
+    receipt = models.ForeignKey(ReceiptType, on_delete=models.CASCADE, blank=True,null=True,verbose_name="Receipt")
     total = models.IntegerField(blank=True,null=True, verbose_name="total")
     
     def __str__(self):
@@ -40,7 +40,7 @@ class Sales(models.Model):
 class SalesProducts(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Product")
     sale = models.ForeignKey(Sales, on_delete=models.CASCADE,verbose_name="Sale")
-    quantity = models.IntegerField(verbose_name="Units")
+    quantity = models.IntegerField(default=0, verbose_name="Units")
     
     @property
     def get_total(self):
