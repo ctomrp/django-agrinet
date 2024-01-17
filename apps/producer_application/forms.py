@@ -4,7 +4,7 @@ from .models import ApplicationForm
 class ApplicationFormForm(forms.ModelForm):
     class Meta:
         model = ApplicationForm
-        fields = ["first_name", "last_name", "email", "phone_number", "bussiness_name", "address", "birth_date", "dni"]
+        fields = ["first_name", "last_name", "email", "phone_number", "bussiness_name", "address", "birth_date", "dni", "state"]
 
     first_name = forms.CharField(
         label = 'Nombre',
@@ -36,4 +36,8 @@ class ApplicationFormForm(forms.ModelForm):
     birth_date = forms.DateField(
         label = 'Fecha de Nacimiento',
         widget = forms.DateInput(attrs={'type':'date', 'style': 'width: 190px; height: 30px;'})
+    )
+    state = forms.IntegerField(
+        required=False,
+        widget = forms.HiddenInput(attrs={'required':'False'})
     )

@@ -32,7 +32,6 @@ THIRD_PARTY_APPS = []
 PROJECT_APPS = [
     "apps.producer_application",
     "apps.products",
-    "apps.reports",
     "apps.users",
     "apps.sales",
 ]

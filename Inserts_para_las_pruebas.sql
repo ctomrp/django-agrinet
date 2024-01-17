@@ -1,10 +1,3 @@
-/* Insert de Tipos de Productor */
-INSERT  INTO users_producertype VALUES (1, 'Productor de Frutas');
-INSERT  INTO users_producertype VALUES (2, 'Productor de Verduras');
-INSERT  INTO users_producertype VALUES (3, 'Productor de Tuberculos');
-INSERT  INTO users_producertype VALUES (4, 'Productor de Hortalizas');
-INSERT  INTO users_producertype VALUES (5, 'Productor de Legumbres');
-
 /* Insert de Nombres de Productos */
 INSERT INTO products_productname VALUES (1, 'Arándanos');
 INSERT INTO products_productname VALUES (2, 'Papas');
@@ -19,3 +12,8 @@ INSERT INTO products_productcategory  VALUES (2, 'Verdura');
 INSERT INTO products_productcategory  VALUES (3, 'Tuberculo');
 INSERT INTO products_productcategory  VALUES (4, 'Legumbre');
 INSERT INTO products_productcategory  VALUES (5, 'Hortaliza');
+
+/* Insert de Estados de Postulacion */
+INSERT INTO producer_application_applicationformstate  VALUES(10, 'Pendiente');
+INSERT INTO producer_application_applicationformstate VALUES(20, 'Aprobado');
+INSERT INTO producer_application_applicationformstate VALUES(30, 'Rechazado');

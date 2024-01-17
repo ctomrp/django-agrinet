@@ -28,7 +28,6 @@
                     
                     <div class="dataDiv">
                         <h6 class="d-flex"><div class="fw-bold">Producto:&nbsp;</div>{{product.name}}</h6>
-                        <!-- <h6 class="d-flex"><div class="fw-bold">Proveedor:&nbsp;</div>{{product.producer}}</h6> -->
                         <h6 class="d-flex"><div class="fw-bold">Tipo de producto:&nbsp;</div>{{product.category}}</h6>
                         <h6 class="d-flex"><div class="fw-bold">Precio:&nbsp;</div>${{product.price}}</h6>
                         <h6 class="d-flex"><div class="fw-bold">Stock:&nbsp;</div>{{product.stock}}</h6>
@@ -36,9 +35,9 @@
 
                     <div></div>
 
-                    <div class="btnDiv">
-                        <a type="button" href="{% url 'update_product' product.id %}" class="btnUpd btn btn-dark btn-sm fw-bold fs-5 rounded-4 p-2">Actualizar</a>
-                        <a type="button" href="{% url 'delete_product' product.id %}" class="btnUpd btn btn-danger btn-sm fw-bold fs-5 fw-bold rounded-4 p-2">Eliminar</a>
+                    <div class="d-flex flex-column gap-3">
+                        <a type="button" href="{% url 'update_product' product.id %}" class="btn btn-dark w-100 fw-bold rounded-4">Actualizar</a>
+                        <a type="button" href="{% url 'delete_product' product.id %}" class="btn btn-danger w-100 fw-bold rounded-4">Eliminar</a>
                     </div>
 
                     
