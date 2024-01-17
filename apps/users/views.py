@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
+from django.http import JsonResponse
+import json
 from django.views.generic import ListView
 from django.shortcuts import render, redirect, get_object_or_404
 

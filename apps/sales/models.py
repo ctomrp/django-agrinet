@@ -23,6 +23,7 @@ class ReceiptType(models.Model):
         return self.receipt_type_name
 
 class Sales(models.Model):
+    client = models.ForeignKey(UserClient, on_delete=models.CASCADE, verbose_name="Client")
     date_sale = models.DateField(auto_now_add=True, verbose_name="Date Sale")
     payment = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE, blank=True,null=True, verbose_name="Payment")
     shipping = models.ForeignKey(ShippingMethod, on_delete=models.CASCADE, blank=True,null=True,verbose_name="Shipping")
@@ -34,10 +35,8 @@ class Sales(models.Model):
         return self.date_sale
     
 class SalesProducts(models.Model):
-    units_number = models.IntegerField(verbose_name="Units")
     sale = models.ForeignKey(Sales, on_delete=models.CASCADE, verbose_name="Sale")
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Product")
-    sale = models.ForeignKey(Sales, on_delete=models.CASCADE,verbose_name="Sale")
     quantity = models.IntegerField(default=0, verbose_name="Units")
     
     @property
