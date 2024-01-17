@@ -21,10 +21,15 @@ def create_application_form(request):
     })
 
         
+# @login_required  
+# def list_applications(request):
+#     applications = ApplicationForm.objects.all()
+#     return render(request, "application_status.html", {'applications': applications})
 @login_required  
 def list_applications(request):
-    applications = ApplicationForm.objects.all()
-    return render(request, "application_status.html", {'applications': applications})
+    pending_applications = ApplicationForm.objects.filter(state__id=10)
+
+    return render(request, "application_status.html", {'pending_applications': pending_applications})
 
 
 @login_required

@@ -15,8 +15,10 @@
             <h2> {{ user.first_name }} {{ user.last_name }} </h2>
           </div>
 
-          <div class="main">
-            <div class="card bg-dark text-white">
+          
+          <div class="main d-flex mx-auto">
+            <div class="col"></div>
+            <div class="card bg-dark text-white col">
               <a href="{% url 'application_status' %}">
                 <img src="{% static 'img/reports.jpg' %}" class="card-img" alt="postulantes" >
                 <div class="card-img-overlay d-flex align-items-center justify-content-center">
@@ -24,7 +26,20 @@
                 </div>
               </a>
             </div>
-            <div class="card bg-dark text-white">
+            <div class="col"></div>
+            
+            <div class="col">
+              {% if messages %}
+              <div class="alert alert-success" role="alert" style="color: green; font-size: 12px;">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+            <div class="col"></div>
+            
+            <div class="card bg-dark text-white col">
               <a href="{% url 'producer_register_form' %}">
                 <img src="{% static 'img/reports.jpg' %}" class="card-img" alt="registrar" >
                 <div class="card-img-overlay d-flex align-items-center justify-content-center">
@@ -32,6 +47,7 @@
                 </div>
               </a>
             </div>           
+            <div class="col"></div>
           </div>
      </div>    
     {% endblock main %}

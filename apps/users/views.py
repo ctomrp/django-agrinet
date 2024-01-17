@@ -46,7 +46,8 @@ def user_producer_registration(request):
         form = UserProducerForm(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect("producer_register_form")
+            messages.success(request, 'Productor registrado exitosamente.')
+            return redirect("admin_dashboard")
     return render(request, 'producer_register_form.html', {'form': UserProducerForm})
 
 

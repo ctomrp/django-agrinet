@@ -32,12 +32,14 @@ class UserProducerForm(forms.ModelForm):
 
     class Meta:
         model = UserProducer
-        fields = ["first_name", "last_name", "email", "password", "phone_number", "bussiness_name", "address", "birth_date", "dni"]
+        fields = ["first_name", "last_name", "email", "password", "phone_number", "bussiness_name", "address", "latitude", "length", "birth_date", "dni"]
         labels = {
             'first_name': 'Primer Nombre',
             'last_name': 'Apellido Paterno',
             'address': 'Dirección',
-            'birth_date': 'Fecha de Nacimiento'
+            'latitude': 'Latitud',
+            'length': 'Longitud',
+            'birth_date': 'Fecha de Nacimiento',
         }
 
 

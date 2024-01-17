@@ -64,6 +64,8 @@ class User(AbstractUser):
 # modelo de usuario productor
 class UserProducer(User):
     address = models.CharField(max_length=255, verbose_name=_("Address"))
+    latitude = models.FloatField(verbose_name=_("Latitude"))
+    length = models.FloatField(verbose_name=_("Length"))
     birth_date = models.DateField(verbose_name=_("Birthdate"))
     dni = models.CharField(max_length=10, verbose_name=_("DNI"), unique=True)
     business_name = models.CharField(max_length=200, verbose_name=("Business Name"))
