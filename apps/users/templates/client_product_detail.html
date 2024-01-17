@@ -38,8 +38,8 @@
       </div>
                       {% else %}
                       <div class="row d-flex flex-row justify-content-between gap-5 mt-5">
-                        <a href="{% url 'client_dashboard'  %}" class="btn btn-dark w-25 fw-bold rounded-4">Volver</a>
-                        <a href="#" class="btn btn-success w-25 fw-bold rounded-4">Comprar</a>        
+                        <a href="{% url 'client_dashboard'  %}" class="btn-color-2 text-center w-25">Volver</a>
+                        <a href="#" data-product={{product.id}} data-action="add" class="btn-color-1 text-center w-25 update-cart">Agregar al carro</a>        
                       </div>
                      
                       {% endif %}

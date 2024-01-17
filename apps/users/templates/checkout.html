@@ -1,0 +1,97 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'styles/checkout.css' %}">
+{% endblock extra_css %}
+
+
+  
+  {% block main %}
+  
+    <div class="w-50 mt-5 mx-auto">
+      
+      <div class="payment-div">
+        <div class="payment-data">
+          <h1>Total de productos</h1>
+          <h1>{{total_items}}</h1>
+        </div>
+        
+        <div class="payment-data">
+          <img src="{% static 'img/checkoutlogo.png' %}" alt="" width="130px">
+        </div>
+
+        <div class="payment-data">
+          <h1>Total a pagar</h1>
+          <h1>${{total_cart}}</h1>
+        </div>
+      </div>    
+
+      <div class="line"></div>
+
+        <form id="form">
+          <div class="payment-div">
+            <div class="info">
+              <h2>Eliga su metodo de pago</h2>
+              {{form.payment}}
+            </div>
+
+            <div class="info">
+              <h2>Eliga el tipo de comprobante</h2>
+              {{form.receipt}}
+            </div>
+              
+            <div class="info">
+              <h2>Eliga el metodo de retiro</h2>
+              {{form.shipping}}
+            </div>
+          </div>
+          
+          <div class="payment-btn d-flex gap-5">
+            <button id="make-payment" class="btn btn-success fw-bold rounded-4 w-50">Pagar</button>
+            <a href="{% url 'cart' %}" class="btn btn-danger fw-bold rounded-4 w-50">Cancelar</a>
+          </div>
+        </form>
+    </div>          
+        
+
+     <script>
+        var total = '{{total_cart}}'
+        var form = document.getElementById('form')
+        document.getElementById('make-payment').addEventListener('click', function(e){
+          submitFormData()
+        })
+
+        function submitFormData(){
+          console.log('payment btn clicked :oo')
+
+          var paymentdata = {
+            'shipping': form.shipping.value,  // El valor de shipping ya es el ID seleccionado
+            'payment': form.payment.value,    // El valor de payment ya es el ID seleccionado
+            'receipt': form.receipt.value,
+            'total': total,
+          }
+          var url = 'process_order/'
+          fetch(url, {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'X-CSRFToken':csrftoken,
+            },
+            body:JSON.stringify({'form':paymentdata})
+
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('Succes:',data);
+            alert('Transaction Completed');
+            window.location.href = "{% url 'client_dashboard' %}"
+        
+          })
+        }
+
+     </script>
+
+
+    {% endblock main %}
+

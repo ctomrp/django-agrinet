@@ -1,7 +1,17 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-
+from apps.sales.models import Sales
 from .models import UserProducer, UserClient
+
+class SalesData(forms.ModelForm):
+    class Meta:
+        model = Sales
+        fields = ['shipping','payment','receipt']
+        widgets = {
+            'shipping': forms.Select(attrs={'class': 'form-select'}),
+            'payment': forms.Select(attrs={'class': 'form-select'}),
+            'receipt': forms.Select(attrs={'class': 'form-select'}),
+        }
 
 
 class UserProducerForm(forms.ModelForm):

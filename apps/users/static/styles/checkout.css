@@ -1,0 +1,27 @@
+.payment-div{
+  display: grid;
+  grid-template-columns: repeat(3,2fr);
+  align-items: center;
+  margin: 20px;
+}
+
+.payment-data{
+  margin: 10px;
+  text-align: center;
+}
+
+.info{
+  margin: 20px;
+  text-align: center;
+}
+
+.payment-btn{
+  display: flex;
+  justify-content: center;
+}
+
+
+.line{
+  border-top: solid 2px black;;
+}
+
