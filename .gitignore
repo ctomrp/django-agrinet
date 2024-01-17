@@ -1,5 +1,6 @@
 *.pyc
 _pycache_
+migrations
 venv
 db.sqlite3
 poetry.lock
