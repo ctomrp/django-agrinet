@@ -31,9 +31,9 @@
         <div class="container">
             <div class="products-container border border-dark rounded-5 p-5">
                 <div class="pTitle">
-                    <h2>Total a pagar ${{total_cart }}</h2>
-                    <a href="{% url 'checkout' %}">
-                        <button class="btn btn-success btn-custom shadow" >Pagar</button>
+                    <h2 class="txt">Total a pagar ${{total_cart }}</h2>
+                    <a href="{% url 'checkout' %}" class="btn btn-success fw-bold rounded-3 w-100">
+                        Pagar
                     </a>
                 </div>
                 
@@ -43,8 +43,8 @@
                         <h4>Precio</h4>
                         <h4>Cantidad</h4>
                         <h4>Total</h4>
-
                     </div>
+                    <div class="line"></div>
                 {% for item in items %}
                     <div class="cart-info">
                         <div class="imgDiv">

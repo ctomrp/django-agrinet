@@ -74,7 +74,7 @@ def producer_dashboard(request):
 @login_required
 @user_passes_test(is_userclient)
 def client_dashboard(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(stock__gt=0)
     return render(request, "client_dashboard.html", {'products': products})
 
 
@@ -133,47 +133,46 @@ class SearchResultsView(ListView):
         else:
             return Product.objects.none()
 
-
+@login_required
+@user_passes_test(is_userclient)
 def cart(request):
     items = []
-    sales = []  
+    sale = []  
 
     if request.user.is_authenticated:
-        client = request.user.id
-        sales = Sales.objects.filter(client=client)
-        items = []
-
-        for sale in sales:
-            items.extend(sale.salesproducts_set.all())
-            
+        client = request.user.userclient
+        sale, created = Sales.objects.get_or_create(client=client, is_complete=False)
+        items = sale.salesproducts_set.all()
     else:
         items = []
-        sales = []  
+        sale = []  
 
     total_cart = sum([item.get_total for item in items])
 
-    context = {'items': items, 'sales': sales, 'total_cart': total_cart}
+    context = {'items': items, 'sales': sale, 'total_cart': total_cart}
     return render(request, 'cart.html', context)
 
+@login_required
+@user_passes_test(is_userclient)
 def checkout(request):
     if request.user.is_authenticated:
-        client = request.user.id
-        sales = Sales.objects.filter(client=client)
-        items = []
+        client = request.user.userclient
+        sale, created = Sales.objects.get_or_create(client=client, is_complete=False)
+        items = sale.salesproducts_set.all()
 
-        for sale in sales:
-            items.extend(sale.salesproducts_set.all())
     else:
         items = []
-        sales = []  
+        sale = []  
 
     total_cart = sum([item.get_total for item in items])
     total_items = sum([item.quantity for item in items])
 
-    context = {'items': items, 'sales': sales, 'total_cart': total_cart, 'total_items': total_items, 'form': SalesData }
+    context = {'items': items, 'sales': sale, 'total_cart': total_cart, 'total_items': total_items, 'form': SalesData }
     return render(request,'checkout.html', context)
 
 #actualizar carro
+@login_required
+@user_passes_test(is_userclient)
 def updateItem(request):
     data = json.loads(request.body)
     product_id = data['productId']
@@ -181,33 +180,35 @@ def updateItem(request):
  
     client = request.user.userclient
     product = Product.objects.get(id=product_id)
-    sale, created = Sales.objects.get_or_create(client=client)
-
+    sale, created = Sales.objects.get_or_create(client=client, is_complete=False)
     sale_product, created = SalesProducts.objects.get_or_create(sale=sale,product=product)
     
     if action == 'add':
-        sale_product.quantity = (sale_product.quantity + 1) 
+        if product.stock > sale_product.quantity:
+            sale_product.quantity += 1
+            sale_product.save()
+        else:
+            return JsonResponse({'error': 'No hay suficiente stock disponible'}, status=400)
     elif action == 'remove':
-        sale_product.quantity = (sale_product.quantity - 1) 
+        sale_product.quantity = max(0, sale_product.quantity - 1)
+        sale_product.save()
     
-    sale_product.save()
-    
-    if sale_product.quantity <= 0:
-        sale_product.delete()
+        if sale_product.quantity == 0:
+            sale_product.delete()
 
-    return JsonResponse('Item added', safe=False)
+    return JsonResponse({'message': 'Operación exitosa'}, status=200)
 
+
+@login_required
+@user_passes_test(is_userclient)
 def processOrder(request):
     print('Data:', request.body)
     data = json.loads(request.body)
-    
+
     if request.user.is_authenticated:
         client = request.user.userclient
+        sale, created = Sales.objects.get_or_create(client=client, is_complete=False)
 
-        # Obtener o crear una instancia de Sales para el cliente
-        sale, created = Sales.objects.get_or_create(client=client)
-
-        # Convertir el valor de payment a una instancia de PaymentMethod
         payment_id = data['form']['payment']
         payment_method = get_object_or_404(PaymentMethod, pk=payment_id)
 
@@ -217,11 +218,17 @@ def processOrder(request):
         receipt_id = data['form']['receipt']
         receipt_type = get_object_or_404(ReceiptType, pk=receipt_id)
 
-        # Actualizar los campos de la instancia existente
+        sale.is_complete = True
         sale.payment = payment_method
         sale.shipping = shipping_method
         sale.receipt = receipt_type
         sale.total = data['form']['total']
+        
+        for sale_product in sale.salesproducts_set.all():
+                product = sale_product.product
+                product.stock -= sale_product.quantity
+                product.save()
+
         sale.save()
     else:
         print('User is not logged in ')

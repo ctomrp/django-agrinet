@@ -12,23 +12,30 @@
     text-align: center;
 }
 
-.pTitle h2{
-    font-weight: 700;
-}
 
-.btn-custom {
-    background: #00c67c;
+.txt {
+    background: #198754;
     border-radius: 8px;
     border: none;
-    height: 3rem;
-    width: 100%;
+    text-align: center;
+    color: white;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  }
+
+
+  .btn-custom {
+    background: #00c67c;
+    margin-top: 10px;
+    
+    height: 3rem;
+    
     outline: none;
     color: white;
     font-weight: bold;
     font-size: 24px;
     letter-spacing: -1px;
   }
+  
 
 .cart-info{
     display: grid;
@@ -72,3 +79,6 @@
     margin: 3px 10px 5px 10px;
 }
 
+.line{
+    border-top: solid 2px black;;
+}
