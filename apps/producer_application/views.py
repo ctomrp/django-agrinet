@@ -1,33 +1,59 @@
 from django.shortcuts import render, redirect
-from django.http import HttpRequest
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseBadRequest
+
 
 from .forms import ApplicationFormForm
-from .models import ApplicationForm
+from .models import ApplicationForm, ApplicationFormState
 
-
-def application_form_view(request):
+def create_application_form(request):
     if request.method == 'POST':
         form = ApplicationFormForm(request.POST)
         if form.is_valid():
-            """
-            dni = form.cleaned_data['rut']
-            first_name = form.cleaned_data['nombre']
-            last_name = form.cleaned_data['apellido']
-            email = form.cleaned_data['correo']
-            address = form.cleaned_data['direccion']
-            phone_number = form.cleaned_data['telefono']
-            bussiness_name = form.cleaned_data['razon_social']
-            birth_date = form.cleaned_data['fecha_nac']
-            form_obj = ApplicationForm.objects.create(
-                dni = dni, first_name = first_name, last_name = last_name,
-                email = email, address = address, phone_number = phone_number,
-                bussiness_name = bussiness_name, birth_date = birth_date
-            )
-            """
-            form.save()
+            new_application = form.save(commit=False)
+            new_application.state = ApplicationFormState.objects.get(id=10)
+            new_application.save()
             return redirect('login')
 
     return render(request, 'producer_application.html', {
         'form': ApplicationFormForm
     })
+
         
+@login_required  
+def list_applications(request):
+    applications = ApplicationForm.objects.all()
+    return render(request, "application_status.html", {'applications': applications})
+
+
+@login_required
+def application_detail(request, application_id):
+    application = get_object_or_404(ApplicationForm, pk=application_id)   
+    application_status = ApplicationFormState.objects.all()
+    context = {
+        'application': application,
+        'application_status': application_status
+    }
+    return render(request, 'application_detail.html', context)
+
+
+@login_required
+def update_application_form(request, application_id):
+    application_instance = get_object_or_404(ApplicationForm, id=application_id)
+
+    if request.method == 'POST':
+        feedback = request.POST.get('feedback', '')
+        state_id = request.POST.get('state', '')
+        
+        if state_id:
+            selected_state = ApplicationFormState.objects.get(id=state_id)
+            application_instance.state = selected_state
+
+            if feedback:    
+                application_instance.feedback = feedback
+
+            application_instance.save()
+            return redirect('application_status')
+
+    return HttpResponseBadRequest("Invalid request")

@@ -14,9 +14,14 @@
         {% csrf_token %}
         {{error}}
         {{form}}        
-        <button class="btn-custom">
-          Actualizar
-        </button>
+        <div class="d-flex justify-content-between">
+          <a href="{% url 'my_products' %}" class="btn btn-dark w-25 fw-bold rounded-4 mt-5 align-self-center">
+            Cancelar
+          </a>
+          <button type="submit" class="btn btn-success w-25 fw-bold rounded-4 mt-5 align-self-center">
+            Guardar cambios
+          </button>
+        </div>
      </form>
     </div>
   </div>

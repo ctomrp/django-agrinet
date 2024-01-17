@@ -112,7 +112,7 @@ $("#id_email").keyup(function () {
 
 $("#id_address").keyup(function (){
   var address = $("#id_address").val();
-  var addressPattern = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.,-]*$/;
+  var addressPattern = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.,#-]*$/;
   var addressLenght = $("#id_address").val().length;
 
   if (addressLenght < 3 || addressLenght > 100) {
@@ -186,7 +186,7 @@ function validarRutChileno(rut) {
 
 $("#id_bussiness_name").keyup(function () {
   var caracteres = $("#id_bussiness_name").val();
-  var patronNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+  var patronNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\d.]*$/;
   var largo = $("#id_bussiness_name").val().length;
 
   if (largo < 3 || largo > 25) {
@@ -194,7 +194,7 @@ $("#id_bussiness_name").keyup(function () {
     $("#id_razon_alert").css("color", "red");
     vrazonsocial = false;
   } else if (!patronNombre.test(caracteres)) {
-    $("#id_razon_alert").text("Sólo puede ingresar letras");
+    $("#id_razon_alert").text("Sólo puede ingresar letras y números");
     $("#id_razon_alert").css("color", "red");
     vrazonsocial = false;
   } else {
@@ -243,6 +243,8 @@ $("#id_birth_date").change(function (){
 
 $(document).ready(function() {
   // ... (tu código de validación existente)
+
+  $("#id_register_button").attr('disabled', true)
 
   $("#id_register_button").click(function() {
       // Realizar validación antes de mostrar el mensaje
