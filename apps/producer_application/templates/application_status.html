@@ -1,0 +1,47 @@
+{% extends 'base_template.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'styles/client.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/review_styles.css' %}">
+{% endblock %}
+
+{% block main %}
+
+    {% if user.is_superuser %}
+    <div class="container">
+        <div class="products-container border border-dark rounded-5 p-5">
+            <div class="">
+                <h2>Postulaciones pendientes</h2>
+            </div>
+
+            <div class="d-flex flex-row justify-content-between mt-5 w-100 mx-auto">
+                <h5 class="fw-bold col-3 text-center">Nombre del postulante</h5>
+                <h5 class="fw-bold col-3 text-center">Fecha de postulación</h5>
+                <h5 class="fw-bold col-3 text-center">Estado de la postulación</h5>
+                <h5 class="fw-bold col-3 text-center">Opciones</h5>
+            </div>
+                {% for application in applications %}
+
+                <div class=" d-flex flex-row justify-content-between mt-5 w-100 mx-auto products-info">
+                    <h6 class="col-3 text-center">{{ application.first_name }}&nbsp;{{application.last_name}}</h6>
+                    <h6 class="col-3 text-center">{{ application.application_date }}</h6>
+                    <h6 class="col-3 text-center fw-bold">Pendiente</h6>
+                    <a type="button" href="{% url 'application_detail' application.id %}" class="btn btn-success fw-bold rounded-4 col-3 text-center">Ver detalle</a>
+                </div>      
+
+                {% endfor %}
+        </div>
+    </div>
+
+
+    {% else %}
+    <div class="bg-dark d-flex flex-column">
+        <h1 class="fs-1 mt-5 text-center text-green">Acceso no autorizado, si desea ser productor, cierre su sesión actual y dirígase a la opción de postulación</h1>
+    </div>
+
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

@@ -23,6 +23,7 @@ def is_userclient(user):
     return hasattr(user, 'userclient')
 
 
+
 def user_client_registration(request):
     if request.method == "POST":
         form = UserClientForm(request.POST)
@@ -37,7 +38,7 @@ def user_client_registration(request):
         form = UserClientForm()
     return render(request, 'client_register_form.html', {'form': form, 'user_already_exists': False})
 
-
+@login_required
 def user_producer_registration(request):
     if request.method == "POST":
         form = UserProducerForm(request.POST)
@@ -60,7 +61,14 @@ class CustomLoginView(LoginView):
         elif hasattr(user, "userclient"):
             login(self.request, user)
             return redirect("client_dashboard")
+        elif user.is_superuser:
+            login(self.request, user)
+            return redirect("admin_dashboard")
         return super().form_invalid(form)
+    
+@login_required
+def admin_dashboard(request):
+    return render(request, "admin_dashboard.html")
 
 
 @login_required
