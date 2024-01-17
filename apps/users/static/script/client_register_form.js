@@ -107,7 +107,7 @@ $("#id_last_name").keyup(function (){
 
 $("#id_address").keyup(function (){
     var characters = $("#id_address").val();
-    var addressPattern = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.,-]*$/;
+    var addressPattern = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.,#-]*$/;
     var addressLenght = $("#id_address").val().length;
 
     if (addressLenght < 3 || addressLenght > 100) {

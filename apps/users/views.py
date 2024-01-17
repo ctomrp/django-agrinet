@@ -2,6 +2,7 @@ from django.contrib.auth import logout, login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import PasswordResetForm
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.views.generic import ListView
@@ -32,6 +33,7 @@ def user_client_registration(request):
         
         if form.is_valid():
             user = form.save()
+            messages.success(request, 'Registro exitoso. Ahora puedes iniciar sesión.')
             return redirect("login")
     else:
         form = UserClientForm()
