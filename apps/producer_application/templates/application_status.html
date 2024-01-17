@@ -23,12 +23,16 @@
             </div>
                 {% for application in applications %}
 
+                {% if application.state.id == 10 %}
+                  
                 <div class=" d-flex flex-row justify-content-between mt-5 w-100 mx-auto products-info">
                     <h6 class="col-3 text-center">{{ application.first_name }}&nbsp;{{application.last_name}}</h6>
                     <h6 class="col-3 text-center">{{ application.application_date }}</h6>
-                    <h6 class="col-3 text-center fw-bold">Pendiente</h6>
+                    <h6 class="col-3 text-center fw-bold">{{ application.state }}</h6>
                     <a type="button" href="{% url 'application_detail' application.id %}" class="btn btn-success fw-bold rounded-4 col-3 text-center">Ver detalle</a>
                 </div>      
+                
+                {% endif %}
 
                 {% endfor %}
         </div>

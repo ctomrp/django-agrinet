@@ -8,53 +8,54 @@
 {% endblock %}
 
 {% block main %}
-
     {% if user.is_superuser %}
-    <div class="container d-flex flex-column justify-content-center mt-5 border border-dark rounded-5 p-5">
-        <div class="row d-flex justify-content-between">
-            <h2 class="fs-2 col mb-5">Detalle de postulación</h2>
-          </div>
-
-
-        <div class="d-flex flex-row gap-3">
-            <div class="application-detail p-5 rounded-5 col-7">
-                <p class="fs-4"><b>Nombre:&nbsp;</b>{{application.first_name}}&nbsp;{{application.last_name}}</p>
-                <p class="fs-4"><b>RUT:&nbsp;</b>{{application.dni}}</p>
-                <p class="fs-4"><b>Razón social:&nbsp;</b>{{application.bussiness_name}}</p>
-                <p class="fs-4"><b>Dirección:&nbsp;</b>{{application.address}}</p>
-                <p class="fs-4"><b>Fecha de nacimiento:&nbsp;</b>{{application.birth_date}}</p>
-                <p class="fs-4"><b>Correo electrónico:&nbsp;</b>{{application.email}}</p>
-                <p class="fs-4"><b>Teléfono:&nbsp;</b>{{application.phone_number}}</p>
+        <div class="container d-flex flex-column justify-content-center mt-5 border border-dark rounded-5 p-5">
+            <div class="row d-flex justify-content-between">
+                <h2 class="fs-2 col mb-5">Detalle de postulación</h2>
             </div>
-            <div class="form p-1 rounded-5 col-5">
-                <p class="fs-4 fw-bold text-center pt-5">Motivo del rechazo</p>
-                <form action="" class="p-2 pt-3">
-                    <textarea class="form-control text-area border-0 rounded-5 p-3" id="exampleFormControlTextarea1" rows="3" placeholder="Ingrese el motivo del rechazo"></textarea>
 
-                    <div class="col-5 d-flex justify-content-between w-100 gap-5 mt-5">
-                
-                        <button type="button" class="btn btn-danger w-50 fw-bold rounded-4">Rechazar</button>
-                        <button type="submit" class="btn btn-success w-50 fw-bold rounded-4">Aprobar</button>
-                    </div>
-            </form>
+            <div class="d-flex flex-row gap-3">
+                <div class="application-detail p-5 rounded-5 col-7">
+                    <p class="fs-4"><b>Nombre:&nbsp;</b>{{application.first_name}}&nbsp;{{application.last_name}}</p>
+                    <p class="fs-4"><b>RUT:&nbsp;</b>{{application.dni}}</p>
+                    <p class="fs-4"><b>Razón social:&nbsp;</b>{{application.bussiness_name}}</p>
+                    <p class="fs-4"><b>Dirección:&nbsp;</b>{{application.address}}</p>
+                    <p class="fs-4"><b>Fecha de nacimiento:&nbsp;</b>{{application.birth_date}}</p>
+                    <p class="fs-4"><b>Correo electrónico:&nbsp;</b>{{application.email}}</p>
+                    <p class="fs-4"><b>Teléfono:&nbsp;</b>{{application.phone_number}}</p>
+                </div>
+                <div class="form p-1 rounded-5 col-5">
+                    <p class="fs-4 fw-bold text-center pt-5">Motivo del rechazo</p>
+                    <form action="{% url 'update_application_form' application.id %}" method="post" class="p-2 pt-3">
+                        {% csrf_token %}
+                        <textarea class="form-control text-area border-0 rounded-5 p-3" id="exampleFormControlTextarea1" rows="3" placeholder="Ingrese el motivo del rechazo" name="feedback">{{application.feedback}}</textarea>
+                    
+                        <div class="col-5 d-flex justify-content-between w-100 gap-5 mt-5">
+                            <select class="form-select w-50 rounded-5" name="state">
+                                <option selected disabled>Seleccione el estado</option>
+
+                                    {% for state in application_status %}
+                                        <option value="{{ state.id }}" {% if state.id == application.state.id %}selected{% endif %}>{{ state.state_name }}</option>
+                                    {% endfor %}
+                                                         
+                            </select>
+                            <button type="submit" class="btn btn-success w-50 fw-bold rounded-4">Guardar</button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-5">
+                <div class="col-7">
+                    <a href="{% url 'application_status' %}" class="btn btn-dark w-25 fw-bold rounded-4">Volver</a>
+                </div>
             </div>
         </div>
-
-  <div class="d-flex justify-content-between mt-5">
-    <div class="col-7">
-        <a href="{% url 'application_status' %}" class="btn btn-dark w-25 fw-bold rounded-4">Vovler</a>
-    </div>
-  </div>
-
-          </div>
-  
-        
-
     {% else %}
-    <div class="bg-dark d-flex flex-column">
-        <h1 class="fs-1 mt-5 text-center text-green">Acceso no autorizado, si desea ser productor, cierre su sesión actual y dirígase a la opción de postulación</h1>
-    </div>
-
+        <div class="bg-dark d-flex flex-column">
+            <h1 class="fs-1 mt-5 text-center text-green">Acceso no autorizado, si desea ser productor, cierre su sesión actual y diríjase a la opción de postulación</h1>
+        </div>
     {% endif %}
 {% endblock %}
 

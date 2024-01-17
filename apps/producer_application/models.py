@@ -20,6 +20,7 @@ class ApplicationForm(models.Model):
     birth_date = models.DateField(verbose_name=("Fecha de nacimiento"))
     application_date = models.DateField(auto_now_add=True, verbose_name=("Fecha de postulación"))
     state = models.ForeignKey("ApplicationFormState", on_delete=models.CASCADE, verbose_name=("Status"))
+    feedback = models.TextField(null=True, blank=True, verbose_name="Retroalimentación")
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} {self.state}"
