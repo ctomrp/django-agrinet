@@ -18,6 +18,7 @@ class ApplicationForm(models.Model):
     phone_number = models.CharField(max_length=20)
     bussiness_name = models.CharField(max_length=255)
     birth_date = models.DateField(verbose_name=("Fecha de nacimiento"))
+    application_date = models.DateField(auto_now_add=True, verbose_name=("Fecha de postulación"))
     state = models.ForeignKey(AplicationFormState, on_delete=models.CASCADE, verbose_name=("Status"))
 
     def __str__(self):

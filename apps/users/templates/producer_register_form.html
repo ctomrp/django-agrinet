@@ -4,17 +4,12 @@
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'styles/panel.css'%}">
     <link rel="stylesheet" href="{% static 'styles/register_form.css'%}">
+    <link rel="stylesheet" href="{% static 'styles/extra.css'%}">
 {% endblock %}
 
 {% block main %}
 
-    {% if request.user.is_authenticated %}
-    <div class="bg-dark d-flex flex-column">
-    <p class="fs-3 text-light text-center mt-5">
-        Ya hay una sesión iniciada. Cierra la sesión para volver a ingresar. <br class="mt-5 mb-5">
-    </p>
-    </div>
-    {% else %}
+    {% if user.is_superuser %}
     <div class="registerFrameBackground justify-content-center">
         <div class="row">
             <div class="col-md-6">
@@ -85,13 +80,18 @@
                             <p style="color: red; font-size: 12px;">El usuario ya está registrado. Por favor, ingrese su RUN. En caso de que su RUN haya sido registrado y no es usted, contactarse con el Administrador.</p>
                         {% endif %}
                     </div>
-                    <div class="container-fluid">
-                        <button id="id_register_button" type="submit" class="btn btnRegister w-100"><b>Registrar Productor</b></button>
+                    <div class="d-flex justify-content-center mt-5">
+                        <button id="id_register_button" type="submit" class="btn btn-success w-25 fw-bold rounded-4"><b>Registrar Productor</b></button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    {% else %}
+    <div class="bg-dark d-flex flex-column">
+        <h1 class="fs-1 mt-5 text-center text-green">Acceso no autorizado, si desea ser productor, cierre su sesión actual y dirígase a la opción de postulación</h1>
+    </div>
+    
     {% endif %}
 {% endblock %}
 

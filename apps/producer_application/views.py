@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from django.http import HttpRequest
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, redirect, get_object_or_404
+
 
 from .forms import ApplicationFormForm
 from .models import ApplicationForm, AplicationFormState
-
 
 def application_form_view(request):
     if request.method == 'POST':
@@ -17,4 +18,16 @@ def application_form_view(request):
     return render(request, 'producer_application.html', {
         'form': ApplicationFormForm
     })
+    
+   
         
+@login_required  
+def list_applications(request):
+    applications = ApplicationForm.objects.all()
+    return render(request, "application_status.html", {'applications': applications})
+
+
+@login_required
+def application_detail(request, application_id):
+    application = get_object_or_404(ApplicationForm, pk=application_id)   
+    return render(request, 'application_detail.html', {'application': application})
