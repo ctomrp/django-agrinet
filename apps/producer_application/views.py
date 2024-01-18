@@ -7,25 +7,32 @@ from django.conf import settings
 
 from .forms import ApplicationFormForm
 from .models import ApplicationForm, ApplicationFormState
+from apps.location.models import Region, Commune
+
 
 def create_application_form(request):
+    regions = Region.objects.all()
+    communes = Commune.objects.all()
+    context = {
+        'regions': regions,
+        'communes': communes,
+        'form': ApplicationFormForm
+    }
+
     if request.method == 'POST':
         form = ApplicationFormForm(request.POST)
         if form.is_valid():
+            selected_region = request.POST.get('regions')
+            selected_commune = request.POST.get('communes')
             new_application = form.save(commit=False)
+            new_application.address = new_application.address+', '+selected_commune+', '+selected_region
             new_application.state = ApplicationFormState.objects.get(id=10)
             new_application.save()
             return redirect('login')
 
-    return render(request, 'producer_application.html', {
-        'form': ApplicationFormForm
-    })
+    return render(request, 'producer_application.html', context)
 
         
-# @login_required  
-# def list_applications(request):
-#     applications = ApplicationForm.objects.all()
-#     return render(request, "application_status.html", {'applications': applications})
 @login_required  
 def list_applications(request):
     pending_applications = ApplicationForm.objects.filter(state__id=10)

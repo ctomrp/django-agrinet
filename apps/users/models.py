@@ -93,16 +93,3 @@ class UserClient(User):
             self.set_password(self.password)
         super().save(*args, **kwargs)
 
-
-class Region(models.Model):
-    nombre = models.CharField(max_length=45)
-
-    def __str__(self):
-        return self.nombre
-
-class Comuna(models.Model):
-    nombre = models.CharField(max_length=45)
-    region = models.ForeignKey(Region, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.nombre

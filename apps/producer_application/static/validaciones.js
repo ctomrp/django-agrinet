@@ -1,6 +1,6 @@
 /*validar primer nombre*/
 
-var vnombre = false, vapellido = false, vtelefono = false, vmail = false, vrut = false, vdireccion = false, vrazonsocial = false, vfechanac = false;
+var vnombre = false, vapellido = false, vtelefono = false, vmail = false, vrut = false, vdireccion = false, vrazonsocial = false, vfechanac = false, vregion = false, vcommune = false;
 
 
 $("#id_first_name").keyup(function () {
@@ -22,7 +22,7 @@ $("#id_first_name").keyup(function () {
     vnombre = true;
   }
 
-  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac){
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac && vregion && vcommune){
       $("#id_register_button").attr('disabled', false);
   } else {
       $("#id_register_button").attr('disabled', true);
@@ -50,11 +50,11 @@ $("#id_last_name").keyup(function () {
     vapellido = true;
   }
 
-  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac){
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac && vregion && vcommune){
     $("#id_register_button").attr('disabled', false);
-  } else {
-      $("#id_register_button").attr('disabled', true);
-  }  
+} else {
+    $("#id_register_button").attr('disabled', true);
+}  
 });
 
 /*validar telefono*/
@@ -79,8 +79,8 @@ $("#id_phone_number").keyup(function () {
     }
   }
 
-  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac){
-    $("#id_register_button").attr('disabled', false);
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac && vregion && vcommune){
+      $("#id_register_button").attr('disabled', false);
   } else {
       $("#id_register_button").attr('disabled', true);
   }  
@@ -103,8 +103,8 @@ $("#id_email").keyup(function () {
     vmail = true;
   }
 
-  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac){
-    $("#id_register_button").attr('disabled', false);
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac && vregion && vcommune){
+      $("#id_register_button").attr('disabled', false);
   } else {
       $("#id_register_button").attr('disabled', true);
   }  
@@ -129,8 +129,8 @@ $("#id_address").keyup(function (){
       vdireccion = true;
   }
 
-  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac){
-    $("#id_register_button").attr('disabled', false);
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac && vregion && vcommune){
+      $("#id_register_button").attr('disabled', false);
   } else {
       $("#id_register_button").attr('disabled', true);
   }  
@@ -151,8 +151,8 @@ $("#id_dni").keyup(function () {
     vrut = false;
   }
 
-  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac){
-    $("#id_register_button").attr('disabled', false);
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac && vregion && vcommune){
+      $("#id_register_button").attr('disabled', false);
   } else {
       $("#id_register_button").attr('disabled', true);
   }  
@@ -231,15 +231,46 @@ $("#id_birth_date").change(function (){
         vfechanac = false
     }
 
-  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac){
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac && vregion && vcommune){
+      $("#id_register_button").attr('disabled', false);
+  } else {
+      $("#id_register_button").attr('disabled', true);
+  }  
+});
+
+$("#id_regions").change(function(){
+  region = $("#id_regions").val()
+  if(region === ""){
+    vregion = false;
+    console.log(vregion)
+  } else {
+    vregion = true;
+    console.log(vregion)
+  }
+
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac && vregion && vcommune){
     $("#id_register_button").attr('disabled', false);
   } else {
       $("#id_register_button").attr('disabled', true);
   }  
 });
 
+$("#id_communes").change(function(){
+  commune = $("#id_communes").val()
+  if(commune === ""){
+    vcommune = false;
+    console.log(vcommune)
+  } else {
+    vcommune = true;
+    console.log(vcommune)
+  }
 
-
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac && vregion && vcommune){
+    $("#id_register_button").attr('disabled', false);
+  } else {
+      $("#id_register_button").attr('disabled', true);
+  }  
+});
 
 $(document).ready(function() {
   // ... (tu código de validación existente)
@@ -261,7 +292,7 @@ $(document).ready(function() {
 
 function validarCampos() {
   // Utilizando las variables de validación existentes
-  if (vnombre && vapellido && vtelefono && vmail && vrut && vdireccion && vrazonsocial && vfechanac) {
+  if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac && vregion && vcommune) {
       return true;  // Todos los campos son válidos
   } else {
       // Muestra un mensaje de error o realiza otra acción si algún campo no es válido
