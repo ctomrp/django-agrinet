@@ -14,3 +14,11 @@ class CreatePrd(forms.ModelForm):
             'category': forms.Select(attrs={'class': 'form-select'}),
             'picture': forms.FileInput(attrs={'class': 'form-control'}),
         }
+        labels = {
+            'name': 'Nombre',
+            'price': 'Precio',
+            'stock': 'Cantidad en inventario',
+            'description': 'Descripción',
+            'category': 'Categoría',
+            'picture': 'Imagen',
+        }
