@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.http import JsonResponse
 import json
+from django.contrib import messages
 from django.views.generic import ListView
 from django.shortcuts import render, redirect, get_object_or_404
 
