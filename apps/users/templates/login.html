@@ -16,7 +16,13 @@
       <div class="welcome">
         <img src="{% static 'assets/logo2.png' %}" class="logo" />
       </div>
-
+      {% if messages %}
+        <div class="alert alert-success" role="alert" style="color: green; font-size: 12px;">
+          {% for message in messages %}
+            {{ message }}
+          {% endfor %}
+        </div>
+      {% endif %}
       <form method="post" action="{% url 'login' %}" class="d-flex flex-column">
         {% csrf_token %}
         <div class="container-fluid fs-5 mb-4">

@@ -48,26 +48,58 @@
           </div>
           
           <div class="payment-btn d-flex gap-5">
-            <button id="make-payment" class="btn btn-success fw-bold rounded-4 w-50">Pagar</button>
+            <a href="#" id="make-payment" class="btn btn-success fw-bold rounded-4 w-50" data-bs-toggle="modal" data-bs-target="#payment-modal"  data-bs-toggle="modal" data-bs-target="#payment-modal"
+            >Pagar</a>
+        
             <a href="{% url 'cart' %}" class="btn btn-danger fw-bold rounded-4 w-50">Cancelar</a>
           </div>
         </form>
-    </div>          
+    </div>    
+    
+    
+
+
+    <div
+    class="modal fade bg-modal"
+    id="payment-modal"
+    tabindex="-1"
+    aria-labelledby="passwordModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered bg-modal">
+      <div class="modal-content border-modal bg-modal-inside">
+        <div class="modal-header d-flex flex-column border-modal-top">
+          <img src="{% static 'assets/logo3.png' %}" class="" width="40%" />
+          <div class="text-light fs-5">
+            Muchas gracias por su compra!!
+          </div>
+          <div class="text-light fs-5 text-center">
+            Su compra estara disponible el dia {{arrive_date}} aproximadamente :D
+          </div>
+
+          <div class="fs-5">
+            <a href="{% url 'client_dashboard' %}" class="btn btn-success fw-bold rounded-4 w-100">Volver al inicio</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
         
 
-    <script>
-      var total = '{{total_cart}}'
+     <script>
+        var total = '{{total_cart}}'
+        var form = document.getElementById('form')
+        document.getElementById('make-payment').addEventListener('click', function(e){
+          submitFormData()
+        })
 
-      document.getElementById('make-payment').addEventListener('click', function(e){
-        submitFormData()
-      })
+        function submitFormData(){
+          console.log('payment btn clicked :oo')
 
-      function submitFormData(){
-        console.log('payment btn clicked :oo')
-
-        var paymentdata = {
+          var paymentdata = {
             'shipping': form.shipping.value, 
-            'payment': form.payment.value,
+            'payment': form.payment.value,   
             'receipt': form.receipt.value,
             'total': total,
           }
@@ -80,17 +112,14 @@
             },
             body:JSON.stringify({'form':paymentdata})
 
-        })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('Succes:',data);
-          alert('Transaction Completed');
-          window.location.href = "{% url 'client_dashboard' %}"
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('Succes:',data);
+          })
+        }
 
-        })
-      }
-
-   </script>
+     </script>
 
 
     {% endblock main %}
