@@ -30,7 +30,7 @@
       <div class="line"></div>
 
         <form id="form">
-          <div class="payment-div">
+          <div class="payment-div align-items-end p-3 mt-5 mb-5 d-flex justify-content-center mx-auto">
             <div class="info">
               <h2>Eliga su metodo de pago</h2>
               {{form.payment}}
@@ -48,10 +48,10 @@
           </div>
           
           <div class="payment-btn d-flex gap-5">
-            <a href="#" id="make-payment" class="btn btn-success fw-bold rounded-4 w-50" data-bs-toggle="modal" data-bs-target="#payment-modal"  data-bs-toggle="modal" data-bs-target="#payment-modal"
+            <a href="{% url 'cart' %}" class="btn btn-danger fw-bold rounded-4 w-25">Cancelar</a>
+            <a href="#" id="make-payment" class="btn btn-success fw-bold rounded-4 w-25" data-bs-toggle="modal" data-bs-target="#payment-modal"  data-bs-toggle="modal" data-bs-target="#payment-modal"
             >Pagar</a>
         
-            <a href="{% url 'cart' %}" class="btn btn-danger fw-bold rounded-4 w-50">Cancelar</a>
           </div>
         </form>
     </div>    
