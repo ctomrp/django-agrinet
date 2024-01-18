@@ -15,7 +15,8 @@
                 <div class="d-flex justify-content-between mb-5">
                     <h2 class="col-8">Productos</h2>
                     <select id="categoryFilter" class="form-select col-4 w-25" aria-label="Categorias :p">
-                        <option value="0">Filtrar por categoria</option>
+                        <option selected disabled>--Filtrar por categoria--</option>
+                        <option value="0">Mostrar todos los productos</option>
                         {% for category in category %}
                             <option value="{{category.id}}"> {{category.name}}</option>
                         {% endfor %}
@@ -60,25 +61,23 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var categoryFilter = document.getElementById('categoryFilter');
-                
+        
                 categoryFilter.addEventListener('change', function () {
                     var selectedCategoryId = categoryFilter.value;
-                    
-                    
+        
                     var allProducts = document.querySelectorAll('.products-info');
                     allProducts.forEach(function (product) {
                         product.style.display = 'grid';
-
                     });
+        
                     
-                    // Ocultar productos que no pertenecen a la categoría seleccionada
-                    if (selectedCategoryId !== "") {
+                    if (selectedCategoryId !==  "0"){
+                        // Ocultar productos que no pertenecen a la categoría seleccionada
                         var productsToHide = document.querySelectorAll('.products-info:not(.category-' + selectedCategoryId + ')');
                         productsToHide.forEach(function (product) {
                             product.style.display = 'none';
                         });
                     }
-
                 });
             });
         </script>
