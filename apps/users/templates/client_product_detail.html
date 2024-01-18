@@ -32,8 +32,8 @@
                 </div>
                 <p class="mt-5"><b>Proveedor:</b>&nbsp;<div class="text-capitalize">{{ product.producer.first_name }}</div></p>
                 <p><b>Dirección:</b>&nbsp;<div class="text-capitalize">{{ product.producer.address }}</div></p>
-                <p id="user-latitude" data-user-latitude="{{ product.producer.latitude }}"></p>
-                <p id="user-longitude" data-user-longitude="{{ product.producer.longitude }}"></p>
+                <p id="user-latitude" data-user-latitude="{{ latitude }}"></p>
+                <p id="user-longitude" data-user-longitude="{{ longitude }}"></p>
                 <!-- mapa -->
                 <div id="map" style="height: 350px; width: 500px;" class="rounded-3 shadow"></div>
 

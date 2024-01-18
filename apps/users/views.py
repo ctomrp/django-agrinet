@@ -13,9 +13,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 import json
 from datetime import timedelta
+import geocoder
 
 from .forms import UserClientForm, UserProducerForm, CustomAuthenticationForm , SalesData
-from .models import UserClient
+from .models import UserClient, UserProducer
 from apps.sales.models import SalesProducts, Sales, PaymentMethod, ReceiptType, ShippingMethod
 
 from apps.products.models import Product,ProductCategory
@@ -102,11 +103,27 @@ def custom_logout(request):
     return redirect("login")
 
 
+def get_address(producer_pk):
+    API_KEY = "AijDOUDckvHD3EUNqfj8YgwZAnt45YJPRdW6ykjnma1PUNVtRDzrfC5SlJcakPWy"
+    producer = UserProducer.objects.get(pk = producer_pk)
+    address = producer.address
+    location = geocoder.bing(address, key=API_KEY)
+    if location.ok:
+        return location
+
+
 @login_required
-# @user_passes_test(is_userclient)
 def client_product_detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    return render(request, 'client_product_detail.html',  {'product': product})
+    location = get_address(product.producer.id)
+    latitude = location.lat
+    longitude = location.lng
+    context = {
+        'product': product,
+        'latitude': latitude,
+        'longitude': longitude,
+    }
+    return render(request, 'client_product_detail.html', context)
 
 
 def unauthorized_access(request):

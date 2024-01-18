@@ -64,8 +64,6 @@ class User(AbstractUser):
 # modelo de usuario productor
 class UserProducer(User):
     address = models.CharField(max_length=255, verbose_name=_("Address"))
-    latitude = models.FloatField(verbose_name=_("Latitude"))
-    longitude = models.FloatField(null=True, verbose_name=_("Longitude"))
     birth_date = models.DateField(verbose_name=_("Birthdate"))
     dni = models.CharField(max_length=10, verbose_name=_("DNI"), unique=True)
     business_name = models.CharField(max_length=200, verbose_name=("Business Name"))
@@ -95,3 +93,16 @@ class UserClient(User):
             self.set_password(self.password)
         super().save(*args, **kwargs)
 
+
+class Region(models.Model):
+    nombre = models.CharField(max_length=45)
+
+    def __str__(self):
+        return self.nombre
+
+class Comuna(models.Model):
+    nombre = models.CharField(max_length=45)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nombre
