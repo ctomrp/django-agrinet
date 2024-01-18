@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseBadRequest
-
+from django.core.mail import send_mail
+from django.conf import settings
 
 from .forms import ApplicationFormForm
 from .models import ApplicationForm, ApplicationFormState
@@ -40,7 +41,7 @@ def application_detail(request, application_id):
 
 @login_required
 def update_application_form(request, application_id):
-    application_instance = get_object_or_404(ApplicationForm, id=application_id)
+    producer_application_instance = get_object_or_404(ApplicationForm, id=application_id)
 
     if request.method == 'POST':
         feedback = request.POST.get('feedback', '')
@@ -48,12 +49,28 @@ def update_application_form(request, application_id):
         
         if state_id:
             selected_state = ApplicationFormState.objects.get(id=state_id)
-            application_instance.state = selected_state
+            producer_application_instance.state = selected_state
+
 
             if feedback:    
-                application_instance.feedback = feedback
+                producer_application_instance.feedback = feedback
 
-            application_instance.save()
+            if selected_state.id == 20:
+                send_mail(
+                    'Su postulación en Agrinet ha sido aceptada',
+                    'Este correo de prueba es para mostrar que su postulación fue aceptada',
+                    'settings.EMAIL_HOST_USER',
+                    [producer_application_instance.email]
+                )
+            elif selected_state.id == 30:
+                send_mail(
+                    'Su postulación en Agrinet ha sido rechazada',
+                    'Este correo de prueba es para mostrar que su postulación fue rechazada',
+                    'settings.EMAIL_HOST_USER',
+                    [producer_application_instance.email]
+                )
+
+            producer_application_instance.save()
             return redirect('application_status')
 
     return HttpResponseBadRequest("Invalid request")
