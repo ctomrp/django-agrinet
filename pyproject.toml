@@ -9,7 +9,6 @@ readme = "README.md"
 python = "^3.11"
 django = "^4.2.9"
 pillow = "^10.2.0"
-geopy = "^2.4.1"
 
 
 [build-system]

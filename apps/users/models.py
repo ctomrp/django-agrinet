@@ -94,4 +94,3 @@ class UserClient(User):
         if not self.pk:
             self.set_password(self.password)
         super().save(*args, **kwargs)
-

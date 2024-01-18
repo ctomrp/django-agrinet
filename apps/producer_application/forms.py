@@ -23,7 +23,8 @@ class ApplicationFormForm(forms.ModelForm):
         widget = forms.TextInput(attrs={'placeholder': 'Ej: 11111111-K'})
     )
     address = forms.CharField(
-        label='Dirección'
+        label='Dirección',
+        widget=forms.TextInput(attrs={'placeholder': 'Ej: Nombre calle 1234'})
     )
     phone_number = forms.IntegerField(
         label = 'Número de Teléfono',

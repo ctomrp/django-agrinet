@@ -19,14 +19,14 @@
                         <p id="id_fn_alert" style="font-size: 12px;"></p>
                     </div>
                     <div class="form-group">
+                        {{form.email.label_tag}}
+                        {{form.email}}
+                        <p id="id_email_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <div class="form-group">
                         {{form.last_name.label_tag}}
                         {{form.last_name}}
                         <p id="id_ln_alert" style="font-size: 12px;"></p>
-                    </div>
-                    <div class="form-group">
-                        {{form.dni.label_tag}}
-                        {{form.dni}}
-                        <p id="id_dni_alert" style="font-size: 12px;"></p>
                     </div>
                     <div class="form-group">
                         {{form.phone_number.label_tag}}
@@ -34,29 +34,41 @@
                         <p id="id_phone_alert" style="font-size: 12px;"></p>
                     </div>
                     <div class="form-group">
-                        {{form.email.label_tag}}
-                        {{form.email}}
-                        <p id="id_email_alert" style="font-size: 12px;"></p>
+                        {{form.dni.label_tag}}
+                        {{form.dni}}
+                        <p id="id_dni_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <select name="regions" id="id_regions">
+                        <option disabled selected>--- Seleccione su región ---</option>
+                        {% for region in regions %}
+                            <option value="{{region.name}}">{{region.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="form-group">
+                        {{form.bussiness_name.label_tag}}
+                        {{form.bussiness_name}}
+                        <p id="id_razon_alert" style="font-size: 12px;"></p>
+                    </div>
+                    <select name="communes" id="id_communes">
+                        <option data-comuna="">--- Seleccione su comuna ---</option>
+                        {% for commune in communes %}
+                            <option value="{{commune.name}}" data-comuna="{{commune.region.name}}">{{commune.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="form-group">
+                        {{form.birth_date.label_tag}}
+                        {{form.birth_date}}
+                        <p id="id_fecha_alert" style="font-size: 12px;"></p>
                     </div>
                     <div class="form-group">
                         {{form.address.label_tag}}
                         {{form.address}}
                         <p id="id_address_alert" style="font-size: 12px;"></p>
                     </div>
-                    <div class="form-group">
-                        {{form.bussiness_name.label_tag}}
-                        {{form.bussiness_name}}
-                        <p id="id_razon_alert" style="font-size: 12px;"></p>
-                    </div>
-                    <div class="form-group">
-                        {{form.birth_date.label_tag}}
-                        {{form.birth_date}}
-                        <p id="id_fecha_alert" style="font-size: 12px;"></p>
-                    </div>
               </div>
               <div class="d-flex justify-content-center mt-5">
                 <button id="id_register_button" type="submit" class="btn btn-success w-25 fw-bold rounded-4"><b>Postular</b></button>
-            </div>
+              </div>
             <div class="row d-flex flex-row justify-content-center gap-5 mt-5">
                 <a href="{% url 'login'  %}" class="btn btn-secondary w-25 fw-bold rounded-4">Ir al inicio</a> 
               </div>
@@ -70,4 +82,5 @@
 {% endblock %}
 {% block extra_js %}
 <script src="{% static 'validaciones.js' %}"></script>
+<script src="{% static 'communes.js' %}"></script>
 {% endblock %}
