@@ -107,15 +107,10 @@ $("#id_last_name").keyup(function (){
 
 $("#id_address").keyup(function (){
     var characters = $("#id_address").val();
-    var addressPattern = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.,#-]*$/;
     var addressLenght = $("#id_address").val().length;
 
-    if (addressLenght < 3 || addressLenght > 100) {
-        $("#id_address_alert").text("Dirección inválida (mín. 3 caracteres, máx. 100 caracteres)");
-        $("#id_address_alert").css('color', 'red');
-        vaddress = false;
-    } else if (!addressPattern.test(characters)) {
-        $("#id_address_alert").text("No puede ingresar caracteres especiales");
+    if (addressLenght < 3 || addressLenght > 255) {
+        $("#id_address_alert").text("Dirección inválida (mín. 3 caracteres, máx. 255 caracteres)");
         $("#id_address_alert").css('color', 'red');
         vaddress = false;
     } else {

@@ -69,16 +69,16 @@
     <div class="modal-dialog modal-dialog-centered bg-modal">
       <div class="modal-content border-modal bg-modal-inside">
         <div class="modal-header d-flex flex-column border-modal-top">
-          <img src="{% static 'assets/logo3.png' %}" class="" width="40%" />
-          <div class="text-light fs-5">
-            Muchas gracias por su compra!!
+          <img src="{% static 'assets/logo3.png' %}" class="mt-5" width="40%" />
+          <div class="text-light fs-5 mt-3 mb-3">
+            Su compra se ha procesado con éxito.
           </div>
-          <div class="text-light fs-5 text-center">
-            Su compra estara disponible el dia {{arrive_date}} aproximadamente :D
+          <div class="text-light fs-5 text-center mb-5">
+            La fecha aproximada para la disponibilidad de retiro o recibo de su compra es <b>{{arrive_date}}</b>.
           </div>
 
-          <div class="fs-5">
-            <a href="{% url 'client_dashboard' %}" class="btn btn-success fw-bold rounded-4 w-100">Volver al inicio</a>
+          <div class="fs-5 mb-5">
+            <a href="{% url 'sales_receipt' %}" class="btn btn-success fw-bold rounded-4 w-100">Volver al inicio</a>
           </div>
 
         </div>

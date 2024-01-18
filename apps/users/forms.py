@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
+
 from apps.sales.models import Sales
 from .models import UserProducer, UserClient
+
 
 class SalesData(forms.ModelForm):
     class Meta:
@@ -39,7 +41,6 @@ class UserProducerForm(forms.ModelForm):
         label = 'Fecha de Nacimiento',
         widget = forms.DateInput(attrs={'type':'date', 'style': 'width: 190px; height: 30px;'})
     )
-
     class Meta:
         model = UserProducer
         fields = ["first_name", "last_name", "email", "password", "phone_number", "bussiness_name", "address", "birth_date", "dni"]
@@ -92,5 +93,3 @@ class CustomAuthenticationForm(AuthenticationForm):
             attrs={"placeholder": "Contraseña", "class": "input-text"}
         ),
     )
-
-

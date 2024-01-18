@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
 from apps.users.models import UserProducer
 
 
@@ -7,9 +8,7 @@ class ProductCategory(models.Model):
     name = models.CharField(max_length=120, verbose_name=_("Category name"))
 
     def __str__(self):
-        return self.name
-    
-    
+        return self.name   
 
 
 class Product(models.Model):
@@ -23,7 +22,6 @@ class Product(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_("Category"),
     )
-
     producer = models.ForeignKey(
         UserProducer, on_delete=models.CASCADE, verbose_name=_("Producer")
     )

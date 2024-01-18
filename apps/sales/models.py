@@ -3,12 +3,13 @@ from django.db import models
 from apps.products.models import Product
 from apps.users.models import UserClient
 
-# Create your models here.
+
 class ShippingMethod(models.Model):
     shipping_method_name = models.CharField(max_length=60, verbose_name="Shipping Method Name")
 
     def __str__(self):
         return self.shipping_method_name
+
 
 class PaymentMethod(models.Model):
     payment_method_name = models.CharField(max_length=30, verbose_name="Payment Method Name")
@@ -16,12 +17,12 @@ class PaymentMethod(models.Model):
     def __str__(self):
         return self.payment_method_name
 
+
 class ReceiptType(models.Model):
     receipt_type_name = models.CharField(max_length=30, verbose_name="Receipt Type Name")
 
     def __str__(self):
         return self.receipt_type_name
-    
 
 
 class Sales(models.Model):
@@ -36,7 +37,6 @@ class Sales(models.Model):
     def __str__(self):
         return str(self.id)
 
-
     
 class SalesProducts(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Product")
@@ -47,7 +47,6 @@ class SalesProducts(models.Model):
     def get_total(self):
         total = self.product.price * self.quantity
         return total
-
 
     def __str__(self):
         return f"{self.sale.id} - Product: {self.product.name} - Quantity: {self.quantity}"

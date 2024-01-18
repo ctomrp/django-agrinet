@@ -112,15 +112,10 @@ $("#id_email").keyup(function () {
 
 $("#id_address").keyup(function (){
   var address = $("#id_address").val();
-  var addressPattern = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.,#-]*$/;
   var addressLenght = $("#id_address").val().length;
 
-  if (addressLenght < 3 || addressLenght > 100) {
-      $("#id_address_alert").text("Dirección inválida (mín. 3 caracteres, máx. 100 caracteres)");
-      $("#id_address_alert").css('color', 'red');
-      vdireccion = false;
-  } else if (!addressPattern.test(address)) {
-      $("#id_address_alert").text("No puede ingresar caracteres especiales");
+  if (addressLenght < 3 || addressLenght > 255) {
+      $("#id_address_alert").text("Dirección inválida (mín. 3 caracteres, máx. 255 caracteres)");
       $("#id_address_alert").css('color', 'red');
       vdireccion = false;
   } else {

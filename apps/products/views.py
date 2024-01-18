@@ -1,12 +1,13 @@
 
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, redirect, get_object_or_404
 
-
+from apps.users.models import UserProducer
+from apps.users.views import is_userproducer
 from .forms import CreatePrd
 from .models import Product
-from apps.users.views import is_userproducer
-from apps.users.models import UserProducer
+
+
 @login_required
 @user_passes_test(is_userproducer)
 def my_products(request):
@@ -65,4 +66,3 @@ def create_product(request):
                 'error': e
 
                 })
-

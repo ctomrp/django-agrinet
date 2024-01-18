@@ -1,26 +1,33 @@
-from django.contrib.auth import logout, login
-from django.contrib.auth import views as auth_views
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.auth.forms import PasswordResetForm
 from django.contrib import messages
+from django.contrib.auth import login, logout, views as auth_views
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.forms import PasswordResetForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
+from django.db.models import Q
 from django.http import JsonResponse
-import json
-from django.contrib import messages
-from django.views.generic import ListView
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
-import json
+from django.views.generic import ListView
+
 from datetime import timedelta
 import geocoder
+import json
 
-from .forms import UserClientForm, UserProducerForm, CustomAuthenticationForm , SalesData
+from .forms import (
+    UserClientForm,
+    UserProducerForm,
+    CustomAuthenticationForm,
+    SalesData,
+)
 from .models import UserClient, UserProducer
-from apps.sales.models import SalesProducts, Sales, PaymentMethod, ReceiptType, ShippingMethod
-
-from apps.products.models import Product,ProductCategory
-from django.db.models import Q
+from apps.sales.models import (
+    SalesProducts,
+    Sales,
+    PaymentMethod,
+    ReceiptType,
+    ShippingMethod,
+)
+from apps.products.models import Product, ProductCategory
 
 
 def is_userproducer(user):
@@ -29,7 +36,6 @@ def is_userproducer(user):
 
 def is_userclient(user):
     return hasattr(user, 'userclient')
-
 
 
 def user_client_registration(request):
@@ -46,6 +52,7 @@ def user_client_registration(request):
     else:
         form = UserClientForm()
     return render(request, 'client_register_form.html', {'form': form, 'user_already_exists': False})
+
 
 @login_required
 def user_producer_registration(request):
@@ -75,7 +82,8 @@ class CustomLoginView(LoginView):
             login(self.request, user)
             return redirect("admin_dashboard")
         return super().form_invalid(form)
-    
+
+
 @login_required
 def admin_dashboard(request):
     return render(request, "admin_dashboard.html")
@@ -168,6 +176,7 @@ class SearchResultsView(ListView):
         else:
             return Product.objects.none()
 
+
 @login_required
 @user_passes_test(is_userclient)
 def cart(request):
@@ -187,10 +196,10 @@ def cart(request):
     context = {'items': items, 'sales': sale, 'total_cart': total_cart}
     return render(request, 'cart.html', context)
 
+
 def checkout(request):
     user_has_items_to_pay = False
     
-
     if request.user.is_authenticated:
         client = request.user.userclient
         sale, created = Sales.objects.get_or_create(client=client, is_complete=False)
@@ -212,6 +221,7 @@ def checkout(request):
 
     context = {'items': items, 'sales': sale, 'total_cart': total_cart, 'total_items': total_items, 'form': SalesData, 'arrive_date':arrive_date }
     return render(request, 'checkout.html', context)
+
 
 #actualizar carro
 @login_required

@@ -1,13 +1,13 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-# Create your models here.
 
 class ApplicationFormState(models.Model):
     state_name = models.CharField(max_length=40)
 
     def __str__(self):
         return self.state_name
+
 
 class ApplicationForm(models.Model):
     dni = models.CharField(max_length=12, )
@@ -24,3 +24,4 @@ class ApplicationForm(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} {self.state}"
+    

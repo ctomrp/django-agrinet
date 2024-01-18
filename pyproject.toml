@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.11"
 django = "^4.2.9"
 pillow = "^10.2.0"
+geocoder = "^1.38.1"
 
 
 [build-system]

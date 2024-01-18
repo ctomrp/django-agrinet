@@ -2,6 +2,7 @@ from django import forms
 
 from .models import Product
 
+
 class CreatePrd(forms.ModelForm):
     class Meta:
         model = Product

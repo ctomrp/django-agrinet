@@ -1,6 +1,7 @@
 from django import forms
 from .models import ApplicationForm
 
+
 class ApplicationFormForm(forms.ModelForm):
     class Meta:
         model = ApplicationForm
@@ -10,7 +11,6 @@ class ApplicationFormForm(forms.ModelForm):
         label = 'Nombre',
         widget = forms.TextInput(attrs={'required': 'false'})
     )
-
     last_name = forms.CharField(
         label = 'Apellido'
     )

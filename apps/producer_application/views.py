@@ -1,13 +1,13 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseBadRequest
-from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.mail import send_mail
+from django.http import HttpResponseBadRequest
+from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
+from apps.location.models import Region, Commune
 from .forms import ApplicationFormForm
 from .models import ApplicationForm, ApplicationFormState
-from apps.location.models import Region, Commune
 
 
 def create_application_form(request):

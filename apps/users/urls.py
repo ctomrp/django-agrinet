@@ -1,5 +1,5 @@
-from django.urls import path
 from django.contrib.auth import views as auth_views
+from django.urls import path
 
 from . import views
 
@@ -25,4 +25,3 @@ urlpatterns = [
     path("client/update_item/", views.updateItem, name="update_item"),
     path("checkout/process_order/", views.processOrder, name="process_order"),
 ]
-

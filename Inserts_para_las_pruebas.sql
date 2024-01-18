@@ -23,9 +23,8 @@ INSERT INTO sales_shippingmethod VALUES (2, 'Retiro');
 INSERT INTO sales_receipttype VALUES (1, 'Boleta');
 INSERT INTO sales_receipttype VALUES (2, 'Factura');
 
-
-
-INSERT INTO users_region(nombre) VALUES('Tarapacá')
+/* Insert de Regiones */
+INSERT INTO location_region(name) VALUES('Tarapacá')
                                 ,('Antofagasta')
                                 ,('Atacama')
                                 ,('Coquimbo')
@@ -42,7 +41,8 @@ INSERT INTO users_region(nombre) VALUES('Tarapacá')
                                 ,('Arica y Parinacota')
                                 ,('Ñuble');
 
-INSERT INTO users_comuna(nombre, REGION_id) VALUES('Alto Hospicio',1)
+/* Insert de Comunas */
+INSERT INTO location_commune (name, region_id) VALUES('Alto Hospicio',1)
                                             ,('Iquique',1)
                                             ,('Camiña',1)
                                             ,('Colchane',1)
