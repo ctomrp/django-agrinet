@@ -21,6 +21,8 @@ class ReceiptType(models.Model):
 
     def __str__(self):
         return self.receipt_type_name
+    
+
 
 class Sales(models.Model):
     client = models.ForeignKey(UserClient, on_delete=models.CASCADE, verbose_name="Client")
@@ -32,11 +34,13 @@ class Sales(models.Model):
     total = models.IntegerField(blank=True,null=True, verbose_name="total")
     
     def __str__(self):
-        return self.date_sale
+        return str(self.id)
+
+
     
 class SalesProducts(models.Model):
-    sale = models.ForeignKey(Sales, on_delete=models.CASCADE, verbose_name="Sale")
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Product")
+    sale = models.ForeignKey(Sales, on_delete=models.CASCADE,verbose_name="Sale")
     quantity = models.IntegerField(default=0, verbose_name="Units")
     
     @property
@@ -46,4 +50,4 @@ class SalesProducts(models.Model):
 
 
     def __str__(self):
-        return f"{self.sale.id} {self.product.id} {self.units}"
+        return f"{self.sale.id} - Product: {self.product.name} - Quantity: {self.quantity}"

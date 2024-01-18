@@ -2,18 +2,18 @@ from django.contrib.auth import logout, login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import PasswordResetForm
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.http import JsonResponse
-import json
 from django.views.generic import ListView
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
+import json
 
 from .forms import UserClientForm, UserProducerForm, CustomAuthenticationForm , SalesData
 from .models import UserClient
 from apps.sales.models import SalesProducts, Sales, PaymentMethod, ReceiptType, ShippingMethod
 
-from .models import UserClient
 from apps.products.models import Product
 from django.db.models import Q
 
@@ -36,6 +36,7 @@ def user_client_registration(request):
         
         if form.is_valid():
             user = form.save()
+            messages.success(request, 'Registro exitoso. Ahora puedes iniciar sesión.')
             return redirect("login")
     else:
         form = UserClientForm()

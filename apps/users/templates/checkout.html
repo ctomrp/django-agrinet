@@ -55,19 +55,19 @@
     </div>          
         
 
-    <script>
-      var total = '{{total_cart}}'
+     <script>
+        var total = '{{total_cart}}'
+        var form = document.getElementById('form')
+        document.getElementById('make-payment').addEventListener('click', function(e){
+          submitFormData()
+        })
 
-      document.getElementById('make-payment').addEventListener('click', function(e){
-        submitFormData()
-      })
+        function submitFormData(){
+          console.log('payment btn clicked :oo')
 
-      function submitFormData(){
-        console.log('payment btn clicked :oo')
-
-        var paymentdata = {
+          var paymentdata = {
             'shipping': form.shipping.value, 
-            'payment': form.payment.value,
+            'payment': form.payment.value,   
             'receipt': form.receipt.value,
             'total': total,
           }
@@ -80,17 +80,17 @@
             },
             body:JSON.stringify({'form':paymentdata})
 
-        })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('Succes:',data);
-          alert('Transaction Completed');
-          window.location.href = "{% url 'client_dashboard' %}"
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('Succes:',data);
+            alert('Transaction Completed');
+            window.location.href = "{% url 'client_dashboard' %}"
+        
+          })
+        }
 
-        })
-      }
-
-   </script>
+     </script>
 
 
     {% endblock main %}
