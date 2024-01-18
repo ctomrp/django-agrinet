@@ -3,18 +3,10 @@
     min-height: 52rem;
 }
 
-.pTitle{
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 75%;
-    margin: 20px;
-    text-align: center;
-}
-
 .pTitle h2{
     font-weight: 700;
 }
+
 
 .addBtn{
     background-color: #01AA95;

@@ -9,12 +9,13 @@ from django.views.generic import ListView
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 import json
+from datetime import timedelta
 
 from .forms import UserClientForm, UserProducerForm, CustomAuthenticationForm , SalesData
 from .models import UserClient
 from apps.sales.models import SalesProducts, Sales, PaymentMethod, ReceiptType, ShippingMethod
 
-from apps.products.models import Product
+from apps.products.models import Product,ProductCategory
 from django.db.models import Q
 
 
@@ -85,7 +86,10 @@ def producer_dashboard(request):
 @user_passes_test(is_userclient)
 def client_dashboard(request):
     products = Product.objects.filter(stock__gt=0)
-    return render(request, "client_dashboard.html", {'products': products})
+    category = ProductCategory.objects.all()
+    context = {'products': products,'category': category}
+
+    return render(request, "client_dashboard.html",context)
 
 
 @login_required
@@ -97,8 +101,8 @@ def custom_logout(request):
 @login_required
 # @user_passes_test(is_userclient)
 def client_product_detail(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)   
-    return render(request, 'client_product_detail.html', {'product': product})
+    product = get_object_or_404(Product, pk=product_id)
+    return render(request, 'client_product_detail.html',  {'product': product})
 
 
 def unauthorized_access(request):
@@ -162,23 +166,31 @@ def cart(request):
     context = {'items': items, 'sales': sale, 'total_cart': total_cart}
     return render(request, 'cart.html', context)
 
-@login_required
-@user_passes_test(is_userclient)
 def checkout(request):
+    user_has_items_to_pay = False
+    
+
     if request.user.is_authenticated:
         client = request.user.userclient
         sale, created = Sales.objects.get_or_create(client=client, is_complete=False)
         items = sale.salesproducts_set.all()
 
+        arrive_date = sale.date_sale + timedelta(days=4)
+
+        if items.exists():  
+            user_has_items_to_pay = True
     else:
         items = []
-        sale = []  
+        sale = []
 
-    total_cart = sum([item.get_total for item in items])
+    if not user_has_items_to_pay:
+        return redirect('client_dashboard') 
+
+    total_cart = sum([item.get_total for item in items]) 
     total_items = sum([item.quantity for item in items])
 
-    context = {'items': items, 'sales': sale, 'total_cart': total_cart, 'total_items': total_items, 'form': SalesData }
-    return render(request,'checkout.html', context)
+    context = {'items': items, 'sales': sale, 'total_cart': total_cart, 'total_items': total_items, 'form': SalesData, 'arrive_date':arrive_date }
+    return render(request, 'checkout.html', context)
 
 #actualizar carro
 @login_required

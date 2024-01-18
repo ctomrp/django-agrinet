@@ -12,12 +12,18 @@
   
         <div class="container">
             <div class="products-container border border-dark rounded-5 p-5">
-                <div class="pTitle">
-                    <h2>Productos</h2>
+                <div class="d-flex justify-content-between mb-5">
+                    <h2 class="col-8">Productos</h2>
+                    <select id="categoryFilter" class="form-select col-4 w-25" aria-label="Categorias :p">
+                        <option value="0">Filtrar por categoria</option>
+                        {% for category in category %}
+                            <option value="{{category.id}}"> {{category.name}}</option>
+                        {% endfor %}
+                      </select>
                 </div>
                 
                 {% for product in products %}
-                <div class="products-info row">
+                <div class="products-info row category-{{ product.category.id }}">
 
                     <div class="p-3">
                         <img src="{{product.picture.url}}" alt="" class="img-thumbnail">
@@ -36,22 +42,45 @@
                     </div>
                     
                   {% else %}
-                  <div>
-                      <h6 class="d-flex flex-column align-items-center justify-content-center pt-4 pb-4 rounded-4 fs-5 bg-price"><div>Precio por kilo:</div><div class="fw-bold">${{product.price}}</div></h6>
-                  </div>
+                    <div>
+                        <h6 class="d-flex flex-column align-items-center justify-content-center pt-4 pb-4 rounded-4 fs-5 bg-price"><div>Precio por kilo:</div><div class="fw-bold">${{product.price}}</div></h6>
+                    </div>
 
-                  <div class="btnDiv">
-                      <a type="button" href="{% url 'client_product_detail' product.id %}" class="btn btn-dark w-100 fw-bold rounded-4">Comprar</a>
-                  </div>
+                    <div class="btnDiv">
+                        <a type="button" href="{% url 'client_product_detail' product.id %}" class="btn btn-dark w-100 fw-bold rounded-4">Comprar</a>
+                    </div>
                  
                   {% endif %}
-
-
-                    
-                    
                 </div>
                 {% endfor %}
+                
             </div>
-        </div>    
+        </div>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var categoryFilter = document.getElementById('categoryFilter');
+                
+                categoryFilter.addEventListener('change', function () {
+                    var selectedCategoryId = categoryFilter.value;
+                    
+                    
+                    var allProducts = document.querySelectorAll('.products-info');
+                    allProducts.forEach(function (product) {
+                        product.style.display = 'grid';
+
+                    });
+                    
+                    // Ocultar productos que no pertenecen a la categoría seleccionada
+                    if (selectedCategoryId !== "") {
+                        var productsToHide = document.querySelectorAll('.products-info:not(.category-' + selectedCategoryId + ')');
+                        productsToHide.forEach(function (product) {
+                            product.style.display = 'none';
+                        });
+                    }
+
+                });
+            });
+        </script>
     {% endblock main %}
 
