@@ -35,29 +35,24 @@
               <tr>
                 <th scope="col">Producto</th>
                 <th scope="col" class="text-center align-self-center">Kilos (cantidad)</th>
-                <th scope="col" class="text-end align-self-end">Precio x kilo</th>
+                <th scope="col" class="text-end align-self-end">Precio unitario</th>
+                <th scope="col" class="text-center align-self-center">Total</th>
               </tr>
             </thead>
             <tbody>
-
                 <!-- esto ira dentro de un for y se obtienen los valores del elemento -->
-                <tr>
-                  <td>Papas</td>
-                  <td class="text-center align-self-center">2</td>
-                  <td class="text-end align-self-end">$2900</td>
-                </tr>
-                <tr>
-                  <td>Tomates</td>
-                  <td class="text-center align-self-center">1</td>
-                  <td class="text-end align-self-end">$800</td>
-                </tr>
-                <tr>
-                  <td>Manzanas</td>
-                  <td class="text-center align-self-center">1</td>
-                  <td class="text-end align-self-end">$750</td>
-                </tr>
-                <!-- aca terminará el for -->
+                {% for sale_product in sale_products_list %}
+                    <tr>
+                        <td>{{ sale_product.name }}</td>
+                        <td class="text-center align-self-center">{{ sale_product.quantity }}</td>
+                        <td class="text-end align-self-end"> ${{ sale_product.price }}</td>
+                        <td class="text-end align-self-end"> ${{ sale_product.total }}</td>
+                        
+                    </tr>
+                {% endfor %}
 
+              
+                <!-- aca terminará el for -->
             </tbody>
           </table>
         </div>
@@ -66,18 +61,54 @@
           <div class="col">
             <img src="{% static 'assets/timbre.png' %}" alt="" class="w-75">
           </div>
-          <div class="col fs-5 text-end">
+          <div class="col fs-5 text-end" id="totalGeneral">
               Precio total<br>
-              <b>$7350{{ valor_total }}</b>
+              <b>$ {{ total_general }}</b>
           </div>
         </div>
-
+       
       </div>
       <div class="container d-flex justify-content-start mt-5">
 
-        <a href="{% url 'client_dashboard' %}" class="btn btn-dark w-25 fw-bold rounded-4">Vovler</a>
+        <a href="{% url 'client_dashboard' %}" class="btn btn-dark w-25 fw-bold rounded-4">Volver</a>
         </div>
 
+        <div class="container d-flex justify-content-start mt-5">
+          <button id="downloadPdfBtn">Descargar PDF</button>
+          
+        </div>
+      
+
+          <script>
+              document.getElementById("downloadPdfBtn").addEventListener("click", function() {
+    // Obtener el total general
+    var totalGeneral = document.getElementById("totalGeneral").innerText;
+
+    // Crear un objeto FormData
+    var formData = new FormData();
+    formData.append('total_general', totalGeneral);
+
+    // Realizar una solicitud AJAX al servidor para generar el PDF
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "{% url 'generate_pdf' %}", true);
+  
+    xhr.onload = function() {
+        // Crear un enlace para descargar el PDF
+        var url = window.URL.createObjectURL(xhr.response);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'sales_receipt.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    };
+
+    // Enviar el objeto FormData con el total general
+    xhr.send(formData);
+});
+
+          </script>
       
   
 

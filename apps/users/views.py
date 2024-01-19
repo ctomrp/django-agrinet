@@ -254,35 +254,81 @@ def updateItem(request):
 @login_required
 @user_passes_test(is_userclient)
 def processOrder(request):
+    # Imprime los datos recibidos en la solicitud POST
     print('Data:', request.body)
+
+    # Convierte los datos de la solicitud JSON a un diccionario de Python
     data = json.loads(request.body)
 
+    # Verifica si el usuario está autenticado
     if request.user.is_authenticated:
+        # Obtiene el cliente asociado al usuario autenticado
         client = request.user.userclient
+
+        # Crea una venta asociada al cliente si no existe una activa
         sale, created = Sales.objects.get_or_create(client=client, is_complete=False)
 
+        # Obtén los IDs de payment, shipping y receipt del formulario
         payment_id = data['form']['payment']
-        payment_method = get_object_or_404(PaymentMethod, pk=payment_id)
-
         shipping_id = data['form']['shipping']
-        shipping_method = get_object_or_404(ShippingMethod, pk=shipping_id)
-
         receipt_id = data['form']['receipt']
+
+        # Obtiene los objetos correspondientes a los IDs
+        payment_method = get_object_or_404(PaymentMethod, pk=payment_id)
+        shipping_method = get_object_or_404(ShippingMethod, pk=shipping_id)
         receipt_type = get_object_or_404(ReceiptType, pk=receipt_id)
 
+        # Completa la venta con los datos del formulario
         sale.is_complete = True
         sale.payment = payment_method
         sale.shipping = shipping_method
         sale.receipt = receipt_type
         sale.total = data['form']['total']
-        
+
+        # Actualiza el stock de los productos en la venta
         for sale_product in sale.salesproducts_set.all():
-                product = sale_product.product
-                product.stock -= sale_product.quantity
-                product.save()
+            product = sale_product.product
+            product.stock -= sale_product.quantity
+            product.save()
 
+        # Guarda la venta
         sale.save()
-    else:
-        print('User is not logged in ')
 
+        # Prepara la lista de productos para pasar al contexto
+        sale_products_list = []
+        for sale_product in sale.salesproducts_set.all():
+            product_data = {
+                'name': sale_product.product.name,
+                'quantity': sale_product.quantity,
+                'price': sale_product.product.price,
+                'total': sale_product.get_total,
+            }
+            sale_products_list.append(product_data)
+
+            request.session['sale_products_list'] = sale_products_list
+
+        # Pasa los datos necesarios al contexto
+        
+        total_general = sum(product_data['total'] for product_data in sale_products_list)
+
+    # Agrega el total general al contexto
+        context['total_general'] = total_general
+
+        context = {
+            'sale': sale,
+            'sale_products': sale.salesproducts_set.all(),
+            'sale_products_list': sale_products_list,  # Agrega la lista al contexto
+            'total_general': total_general,
+            
+        }
+
+        print(sale_products_list)
+
+        # Renderiza el segundo template con el contexto
+        return render(request, 'sales_receipt.html', context)
+    else:
+        # Si el usuario no está autenticado, imprime un mensaje en la consola
+        print('User is not logged in')
+
+    # Retorna una respuesta JSON indicando que el pago se completó
     return JsonResponse('Payment complete ', safe=False)
