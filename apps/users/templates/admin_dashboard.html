@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block extra_css %}
-  <link rel="stylesheet" href="{% static 'styles/panel.css' %}">
+  <!-- <link rel="stylesheet" href="{% static 'styles/panel.css' %}"> -->
+  <link rel="stylesheet" href="{% static 'styles/admin_dashboard.css' %}">
 {% endblock extra_css %}
 
 
@@ -18,14 +19,9 @@
           
           <div class="main d-flex mx-auto">
             <div class="col"></div>
-            <div class="card bg-dark text-white col">
               <a href="{% url 'application_status' %}">
-                <img src="{% static 'img/reports.jpg' %}" class="card-img" alt="postulantes" >
-                <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                  <h1 class="card-title text-center">Ver postulaciones pendientes</h1>
-                </div>
+                  <div class="text-center fs-5 fw-bold btn btn-warning w-100 rounded-4">Ver postulaciones pendientes</div>
               </a>
-            </div>
             <div class="col"></div>
             
             <div class="col">
@@ -39,14 +35,9 @@
             </div>
             <div class="col"></div>
             
-            <div class="card bg-dark text-white col">
               <a href="{% url 'producer_register_form' %}">
-                <img src="{% static 'img/reports.jpg' %}" class="card-img" alt="registrar" >
-                <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                  <h1 class="card-title text-center">Registrar un nuevo productor</h1>
-                </div>
+                <div class="text-center fs-5 fw-bold btn btn-info w-100 rounded-4">Registrar a un nuevo productor</div>
               </a>
-            </div>           
             <div class="col"></div>
           </div>
      </div>    
