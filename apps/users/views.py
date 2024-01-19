@@ -28,7 +28,7 @@ from apps.sales.models import (
     ShippingMethod,
 )
 from apps.products.models import Product, ProductCategory
-
+from apps.producer_application.models import ApplicationForm
 
 def is_userproducer(user):
     return hasattr(user, 'userproducer')
@@ -63,7 +63,6 @@ def user_producer_registration(request):
             messages.success(request, 'Productor registrado exitosamente.')
             return redirect("admin_dashboard")
     return render(request, 'producer_register_form.html', {'form': UserProducerForm})
-
 
 class CustomLoginView(LoginView):
     template_name = "login.html"
