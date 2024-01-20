@@ -36,11 +36,18 @@ def create_application_form(request):
 
 def application_accepted(first_name, last_name, email, password):
 
-    html_body = render_to_string('emails/application_accepted.html', 
-                                 {'first_name': first_name, 
-                                  'last_name': last_name, 
-                                  'email': email,
-                                  'password': password})
+    protocol = "http"
+    domain = "127.0.0.1:8000"
+
+    html_body = render_to_string(
+        'emails/application_accepted.html', 
+        {'first_name': first_name, 
+        'last_name': last_name, 
+        'email': email,
+        'password': password,
+        'domain': domain,
+        'protocol': protocol 
+        })
 
     content_text_plain = strip_tags(html_body)
 
@@ -48,11 +55,22 @@ def application_accepted(first_name, last_name, email, password):
         'Su postulación a Productor en Agrinet ha sido aceptada',
         content_text_plain,
         'settings.EMAIL_HOST_USER',
-        [email]
+        [email],
+        html_message=html_body
     )
 
 def application_rejected(first_name, last_name, email, reject_reason):
-    html_body = render_to_string('emails/application_rejected.html', {'first_name': first_name, 'last_name': last_name, 'reject_reason': reject_reason})
+    protocol = "http"
+    domain = "127.0.0.1:8000"
+
+    html_body = render_to_string(
+        'emails/application_rejected.html', 
+        {'first_name': first_name, 
+         'last_name': last_name, 
+         'reject_reason': reject_reason,
+         'domain': domain,
+         'protocol': protocol 
+         })
 
     content_text_plain = strip_tags(html_body)
 
@@ -60,7 +78,8 @@ def application_rejected(first_name, last_name, email, reject_reason):
         'Su postulación a Productor en Agrinet ha sido rechazada',
         content_text_plain,
         'settings.EMAIL_HOST_USER',
-        [email]
+        [email],
+        html_message=html_body
     )
 
 @login_required  

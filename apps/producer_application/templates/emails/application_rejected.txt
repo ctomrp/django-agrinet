@@ -11,7 +11,7 @@
         </strong>
     </b></p>
     
-    <p>Basado en el motivo de rechazo, puede volver a realizar una postulación teniendo en mente lo comunicado por este medio para poder ser considerado nuevamente para ser revisado.</p>
-    <p>Si desea volver a postular corrigiendo lo mencionado en el motivo de rechazo, puede hacerlo <a href="{{protocol}}://{{domain}}{% url 'application_form' %}">aquí</a></p>
+    <p>Basado en el motivo de rechazo, puede volver a realizar una postulación teniendo en mente lo comunicado por este medio para poder ser considerado nuevamente para ser revisado.
+    </p>
 </body>
 </html>
