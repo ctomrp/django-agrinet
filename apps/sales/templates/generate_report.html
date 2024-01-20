@@ -8,11 +8,9 @@
 {% block main %}
 
 <div class="container d-flex flex-column justify-content-center mt-5 border border-dark rounded-5 p-5">
-
-
-  
+ 
       <div class="row d-flex justify-content-between">
-        <h2 class="fs-1 col">Reportes de</h2>
+        <h2 class="fs-1 col">Reporte de ventas</h2>
         <div class="col-2 d-flex justify-content-end">
             <img src="{% static 'assets/logo-white.png' %}" alt="" class="w-50">
         </div>
@@ -21,14 +19,15 @@
       <div class="row mt-0">
         <div class="col">
 
-            <div class="text-capitalize fs-5 col">{{ product.producer.first_name }}Juanito Arcoiris McFly Potter</div>
-            <div class="text-capitalize fs-5 col">RUT:&nbsp;{{ product.producer.dni }}12.345.678-9</div>
-            <div class="text-capitalize fs-5 col">Fecha de reporte:&nbsp;{{ sale.date_sale }}15-02-2024</div>
+            <div class="text-capitalize fs-5 col">{{ request.user.first_name }}&nbsp;{{ request.user.last_name }}</div>
+            <div class="text-capitalize fs-5 col">RUT:&nbsp;{{ producer.dni }}</div>
+            <div class="text-capitalize fs-5 col">Fecha de reporte:&nbsp;{{ current_date }}</div>
         </div>
       </div>
 
       <div class="container mt-5">
-          <form action="">
+        <form method="POST" action="{% url 'sales_report' %}">
+          {% csrf_token %}
             <div class="fs-5 mb-4">Seleccione el periodo del reporte</div>
             <div class="d-flex flex-row">
                 <input type="date" name="report_starts" id="" class="">
@@ -41,16 +40,14 @@
             <div class="row mt-5 d-flex justify-content-between">
 
                 <a href="{% url 'producer_dashboard' %}" class="btn btn-dark w-25 fw-bold rounded-4">Vovler</a>
-                
-                <!-- el "generar" debe ser un button submit, aca esta como href mientras se termina la logica -->
-                <a href="{% url 'sales_report' %}" class="btn btn-success w-25 fw-bold rounded-4">Generar</a>
+                <button type="submit" class="btn btn-success w-25 fw-bold rounded-4">Generar</button>
             </div>
           </form>
       </div>
       </div>
       <div class="container d-flex justify-content-start mt-5">
 
-        </div>
+</div>
 
       
   
