@@ -3,9 +3,12 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import connection
 from django.shortcuts import render, redirect
 from django.urls import reverse
+import locale
 
 from apps.users.models import UserProducer
 from apps.users.views import is_userproducer, is_userclient
+
+locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
 
 @login_required
@@ -51,16 +54,16 @@ def sales_report(request):
             total = sum([total + sale[3] for sale in sales])
        
         if report_starts:
-            report_starts_str = datetime.strptime(report_starts, '%Y-%m-%d').strftime('%d-%m-%Y')
+            report_starts_str = datetime.strptime(report_starts, '%Y-%m-%d').strftime("%d de %B de %Y")
 
         if report_ends:
-            report_ends_str = datetime.strptime(report_ends, '%Y-%m-%d').strftime('%d-%m-%Y')
+            report_ends_str = datetime.strptime(report_ends, '%Y-%m-%d').strftime("%d de %B de %Y")
             
     context = {
         'report_starts_str': report_starts_str,
         'report_ends_str': report_ends_str,
         'producer': UserProducer.objects.get(pk=request.user.id),
-        'current_date': datetime.now().strftime("%d-%m-%Y"),
+        'current_date': datetime.now().strftime("%d de %B de %Y"),
         'sales': sales,
         'total': total
     }
@@ -70,19 +73,14 @@ def sales_report(request):
 
 @login_required
 @user_passes_test(is_userproducer)
-def generate_report(request):
+def generate_report(request):     
+    if request.method == 'POST':       
+        return redirect(reverse('sales_report'))
     
     context = {
         'producer': UserProducer.objects.get(pk=request.user.id),
-        'current_date': datetime.now().strftime("%d-%m-%Y"),
-    }    
-    if request.method == 'POST':
-        report = {
-            'report_starts': request.POST.get('report_starts'),
-            'report_ends': request.POST.get('report_ends')
-        }        
-        return redirect(reverse('sales_report'), report)
-        
+        'current_date': datetime.now().strftime("%d de %B de %Y"),
+    }  
     return render(request, 'generate_report.html', context)
 
 

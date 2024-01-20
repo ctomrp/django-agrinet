@@ -21,16 +21,18 @@
       <div class="row mt-0">
         <div class="col">
 
-          <div class="text-capitalize fs-5 col uppercase">{{ request.user.first_name }}&nbsp;{{ request.user.last_name }}</div>
+          <div class="text-capitalize fs-5 col fw-bold">{{ request.user.first_name }}&nbsp;{{ request.user.last_name }}</div>
           <div class="text-capitalize fs-5 col">RUT:&nbsp;{{ producer.dni }}</div>
-          <div class="text-capitalize fs-5 col">Fecha de reporte:&nbsp;{{ current_date }}</div>
+          <div class="fs-5 col">Fecha de reporte:&nbsp;{{ current_date }}</div>
         </div>
-        <div class="col-5 fs-5 align-self-end d-flex justify-content-end">
-            Ventas entre&nbsp;<b>{{ report_starts_str }}</b>&nbsp;y&nbsp;<b>{{ report_ends_str }}</b>
-        </div>
+        
       </div>
 
+      <div class="fs-5 text-center mt-5">
+        Ventas entre&nbsp;<b>{{ report_starts_str }}</b>&nbsp;y&nbsp;<b>{{ report_ends_str }}</b>
+      </div>
       <div class="detail mt-5 d-flex justify-content-center">
+        
         <table class="table table-striped w-75">
             <thead>
               <tr>

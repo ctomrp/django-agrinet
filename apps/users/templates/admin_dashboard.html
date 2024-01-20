@@ -2,44 +2,29 @@
 {% load static %}
 
 {% block extra_css %}
-  <!-- <link rel="stylesheet" href="{% static 'styles/panel.css' %}"> -->
-  <link rel="stylesheet" href="{% static 'styles/admin_dashboard.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'styles/panel.css' %}"> -->
+<link rel="stylesheet" href="{% static 'styles/admin_dashboard.css' %}">
 {% endblock extra_css %}
 
 
-  
-  {% block main %}
-  
-    <div>
-          <div class="d-flex flex-column justify-content-center text-center">
-            <img src="{% static 'img/admin.png' %}" alt="admin icon" class="rounded mx-auto d-block mt-3 img-thumbnail border-0">
-            <h2> {{ user.first_name }} {{ user.last_name }} </h2>
-          </div>
 
-          
-          <div class="main d-flex mx-auto">
-            <div class="col"></div>
-              <a href="{% url 'application_status' %}">
-                  <div class="text-center fs-5 fw-bold btn btn-warning w-100 rounded-4">Ver postulaciones pendientes</div>
-              </a>
-            <div class="col"></div>
-            
-            <div class="col">
-              {% if messages %}
-              <div class="alert alert-success" role="alert" style="color: green; font-size: 12px;">
-                {% for message in messages %}
-                {{ message }}
-                {% endfor %}
-              </div>
-              {% endif %}
-            </div>
-            <div class="col"></div>
-            
-              <a href="{% url 'producer_register_form' %}">
-                <div class="text-center fs-5 fw-bold btn btn-info w-100 rounded-4">Registrar a un nuevo productor</div>
-              </a>
-            <div class="col"></div>
-          </div>
-     </div>    
-    {% endblock main %}
+{% block main %}
 
+<div>
+  <div class="d-flex flex-column justify-content-center text-center">
+    <img src="{% static 'img/admin.png' %}" alt="admin icon"
+      class="rounded mx-auto d-block mt-3 img-thumbnail border-0">
+    <h2> {{ user.first_name }} {{ user.last_name }} </h2>
+  </div>
+
+  <div class="container d-flex justify-content-center">
+
+    <a 
+    href="{% url 'application_status' %}" 
+    class="text-center fs-5 fw-bold btn btn-success rounded-4 mt-5">
+      Ver postulaciones pendientes
+    </a>
+  </div>
+
+</div>
+{% endblock main %}
