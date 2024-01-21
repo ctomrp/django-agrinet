@@ -12,7 +12,7 @@
 
   
       <div class="row d-flex justify-content-between">
-        <h2 class="fs-1 col">Comprobante de ventas</h2>
+        <h2 class="fs-1 col">Tipo de recibo: {{ receipt_type }}</h2>
         <div class="col-2 d-flex justify-content-end">
             <img src="{% static 'assets/logo-white.png' %}" alt="" class="w-50">
         </div>
@@ -24,7 +24,8 @@
             <div class="text-capitalize fs-5 col">Agrinet S.A.</div>
             <div class="fs-5 col">www.agrinet.cl</div>
             <div class="text-capitalize fs-5 col">RUT:&nbsp;78.987.987-8</div>
-            <div class="text-capitalize fs-5 col">Fecha de venta:&nbsp;{{ sale.date_sale }}15-02-2024</div>
+            <div class="text-capitalize fs-5 col">Fecha de venta: {{ current_date|date:"l, j F Y" }}</div>
+
         </div>
 
       </div>
@@ -35,8 +36,8 @@
               <tr>
                 <th scope="col">Producto</th>
                 <th scope="col" class="text-center align-self-center">Kilos (cantidad)</th>
-                <th scope="col" class="text-end align-self-end">Precio unitario</th>
-                <th scope="col" class="text-center align-self-center">Total</th>
+                <th scope="col" class="text-center align-self-center">Precio unitario</th>
+                <th scope="col" class="text-end align-self-end">Total</th>
               </tr>
             </thead>
             <tbody>
@@ -45,7 +46,7 @@
                     <tr>
                         <td>{{ sale_product.name }}</td>
                         <td class="text-center align-self-center">{{ sale_product.quantity }}</td>
-                        <td class="text-end align-self-end"> ${{ sale_product.price }}</td>
+                        <td class="text-center align-self-center"> ${{ sale_product.price }}</td>
                         <td class="text-end align-self-end"> ${{ sale_product.total }}</td>
                         
                     </tr>
@@ -70,50 +71,23 @@
       </div>
       <div class="container d-flex justify-content-start mt-5">
 
-        <a href="{% url 'client_dashboard' %}" class="btn btn-dark w-25 fw-bold rounded-4">Volver</a>
+        <a href="{% url 'client_dashboard' %}" class="btn btn-dark w-25 fw-bold rounded-4" >Volver</a>
+     
+        <a href="{% url 'generate_pdf' %}" class="btn btn-dark w-25 fw-bold rounded-4" >Descargar comprobante</a>
+
         </div>
 
-        <div class="container d-flex justify-content-start mt-5">
-          <button id="downloadPdfBtn">Descargar PDF</button>
-          
-        </div>
-      
+        
+       
+        
 
-          <script>
-              document.getElementById("downloadPdfBtn").addEventListener("click", function() {
-    // Obtener el total general
-    var totalGeneral = document.getElementById("totalGeneral").innerText;
 
-    // Crear un objeto FormData
-    var formData = new FormData();
-    formData.append('total_general', totalGeneral);
-
-    // Realizar una solicitud AJAX al servidor para generar el PDF
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "{% url 'generate_pdf' %}", true);
-  
-    xhr.onload = function() {
-        // Crear un enlace para descargar el PDF
-        var url = window.URL.createObjectURL(xhr.response);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'sales_receipt.pdf';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-    };
-
-    // Enviar el objeto FormData con el total general
-    xhr.send(formData);
-});
-
-          </script>
+        
       
   
 
 {% endblock main %}
 
 {% block extra_js %}
-  
+          
 {% endblock extra_js %}

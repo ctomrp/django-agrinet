@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
 
 from datetime import timedelta
+from datetime import datetime
 import geocoder
 import json
 
@@ -256,7 +257,7 @@ def updateItem(request):
 def processOrder(request):
     # Imprime los datos recibidos en la solicitud POST
     print('Data:', request.body)
-
+    current_date = datetime.now()
     # Convierte los datos de la solicitud JSON a un diccionario de Python
     data = json.loads(request.body)
 
@@ -306,23 +307,27 @@ def processOrder(request):
             sale_products_list.append(product_data)
 
             request.session['sale_products_list'] = sale_products_list
+            request.session['receipt_type'] = receipt_type.name
 
         # Pasa los datos necesarios al contexto
         
         total_general = sum(product_data['total'] for product_data in sale_products_list)
 
     # Agrega el total general al contexto
-        context['total_general'] = total_general
-
+       
+        
         context = {
             'sale': sale,
             'sale_products': sale.salesproducts_set.all(),
             'sale_products_list': sale_products_list,  # Agrega la lista al contexto
             'total_general': total_general,
+            'current_date': current_date,
+            'receipt_type': receipt_type.name,
             
         }
 
         print(sale_products_list)
+       
 
         # Renderiza el segundo template con el contexto
         return render(request, 'sales_receipt.html', context)
