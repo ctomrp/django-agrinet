@@ -23,7 +23,7 @@ $("#id_dni").on("keyup", function() {
     let run = $(this).val().replace(/\./g, '').replace('-', '').trim();  // Elimina espacios al principio y al final
 
     if (regexDni.test(run)) {
-        const rut = run.slice(0, -1);
+        let rut = run.slice(0, -1);
         const dv = run.slice(-1).toUpperCase();
 
         if (rut.length === 7) {
@@ -45,6 +45,10 @@ $("#id_dni").on("keyup", function() {
         if (resultado === 11) resultado = 0;
         else if (resultado === 10) resultado = 'K';
 
+        let formattedRun = run.slice(0, -1) + '-' + run.slice(-1, -1);
+
+        $(this).val(formattedRun + dv); 
+
         if (resultado == dv) {
             $("#id_dni_alert").text('RUN válido');
             $("#id_dni_alert").css('color', 'green');
@@ -55,6 +59,7 @@ $("#id_dni").on("keyup", function() {
             vdni = false;
         }
     } else {
+        run = 
         $("#id_dni_alert").text('Este campo no puede quedar vacío');
         $("#id_dni_alert").css('color', 'red');
         vdni = false;

@@ -2,7 +2,8 @@ import {
   regexName, 
   regexNumber,
   regexEmail,
-  regexBussinessName
+  regexBussinessName,
+  regexDni
   } from '../../../../static/js/constants.js';
 
 /*validar primer nombre*/
@@ -101,7 +102,7 @@ $("#id_phone_number").keyup(function () {
 /*validar correo*/
 $("#id_email").keyup(function () {
   const correo = $.trim($("#id_email").val());
-
+  
   if (correo === "") {
     $("#id_email_alert").text("Este campo no puede quedar vacío");
     $("#id_email_alert").css("color", "red");
@@ -145,49 +146,58 @@ $("#id_address").keyup(function (){
 
 
 /*validar rut*/
-$("#id_dni").keyup(function () {
-  const rut = $("#id_dni").val().replace(/[.-]/g, '').toUpperCase();
+$("#id_dni").on("keyup", function() {
+  let run = $(this).val().replace(/\./g, '').replace('-', '').trim();  // Elimina espacios al principio y al final
 
-  if (validarRutChileno(rut)) {
-    $("#id_dni_alert").text("RUT válido");
-    $("#id_dni_alert").css("color", "green");
-    vrut = true;
+  if (regexDni.test(run)) {
+      let rut = run.slice(0, -1);
+      const dv = run.slice(-1).toUpperCase();
+
+      if (rut.length === 7) {
+          rut = '0' + rut; // Agrega un cero al principio si solo hay 7 dígitos
+      }
+
+      let suma = 0;
+      let multiplo = 2;
+
+      for (let i = rut.length - 1; i >= 0; i--) {
+          suma += rut.charAt(i) * multiplo;
+          if (multiplo < 7) multiplo++;
+          else multiplo = 2;
+      }
+
+      const resto = suma % 11;
+      let resultado = 11 - resto;
+
+      if (resultado === 11) resultado = 0;
+      else if (resultado === 10) resultado = 'K';
+
+      let formattedRun = run.slice(0, -1) + '-' + run.slice(-1, -1);
+
+      $(this).val(formattedRun + dv); 
+
+      if (resultado == dv) {
+          $("#id_dni_alert").text('RUN válido');
+          $("#id_dni_alert").css('color', 'green');
+          vrut = true;
+      } else {
+          $("#id_dni_alert").text('RUN inválido');
+          $("#id_dni_alert").css('color', 'red');
+          vrut = false;
+      }
   } else {
-    $("#id_dni_alert").text("RUT inválido");
-    $("#id_dni_alert").css("color", "red");
-    vrut = false;
+      $("#id_dni_alert").text('Este campo no puede quedar vacío');
+      $("#id_dni_alert").css('color', 'red');
+      vrut = false;
+      return 0;
   }
 
   if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac && vregion && vcommune){
-      $("#id_register_button").attr('disabled', false);
+    $("#id_register_button").attr('disabled', false);
   } else {
       $("#id_register_button").attr('disabled', true);
   }  
 });
-
-function validarRutChileno(rut) {
-  const rutNumerico = rut.slice(0, -1);
-  const dvIngresado = rut.slice(-1).toUpperCase();
-
-  let suma = 0;
-  let multiplo = 2;
-
-  for (let i = rutNumerico.length - 1; i >= 0; i--) {
-    suma += parseInt(rutNumerico.charAt(i)) * multiplo;
-
-    if (multiplo < 7) {
-      multiplo += 1;
-    } else {
-      multiplo = 2;
-    }
-  }
-
-  let dvEsperado = 11 - (suma % 11);
-  dvEsperado = (dvEsperado === 11) ? 0 : dvEsperado;
-  dvEsperado = (dvEsperado === 10) ? "K" : dvEsperado.toString();
-
-  return dvIngresado === dvEsperado;
-}
 
 /*validar razon social*/
 
@@ -246,7 +256,6 @@ $("#id_birth_date").change(function (){
 
 $("#id_regions").change(function(){
   const region = $("#id_regions").val()
-
   if(region === ""){
     vregion = false;
   } else {
@@ -262,7 +271,6 @@ $("#id_regions").change(function(){
 
 $("#id_communes").change(function(){
   const commune = $("#id_communes").val()
-  
   if(commune === ""){
     vcommune = false;
   } else {
