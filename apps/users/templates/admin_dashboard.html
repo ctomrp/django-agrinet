@@ -2,53 +2,29 @@
 {% load static %}
 
 {% block extra_css %}
-  <link rel="stylesheet" href="{% static 'styles/panel.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'styles/panel.css' %}"> -->
+<link rel="stylesheet" href="{% static 'styles/admin_dashboard.css' %}">
 {% endblock extra_css %}
 
 
-  
-  {% block main %}
-  
-    <div>
-          <div class="d-flex flex-column justify-content-center text-center">
-            <img src="{% static 'img/admin.png' %}" alt="admin icon" class="rounded mx-auto d-block mt-3 img-thumbnail border-0">
-            <h2> {{ user.first_name }} {{ user.last_name }} </h2>
-          </div>
 
-          
-          <div class="main d-flex mx-auto">
-            <div class="col"></div>
-            <div class="card bg-dark text-white col">
-              <a href="{% url 'application_status' %}">
-                <img src="{% static 'img/reports.jpg' %}" class="card-img" alt="postulantes" >
-                <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                  <h1 class="card-title text-center">Ver postulaciones pendientes</h1>
-                </div>
-              </a>
-            </div>
-            <div class="col"></div>
-            
-            <div class="col">
-              {% if messages %}
-              <div class="alert alert-success" role="alert" style="color: green; font-size: 12px;">
-                {% for message in messages %}
-                {{ message }}
-                {% endfor %}
-              </div>
-              {% endif %}
-            </div>
-            <div class="col"></div>
-            
-            <div class="card bg-dark text-white col">
-              <a href="{% url 'producer_register_form' %}">
-                <img src="{% static 'img/reports.jpg' %}" class="card-img" alt="registrar" >
-                <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                  <h1 class="card-title text-center">Registrar un nuevo productor</h1>
-                </div>
-              </a>
-            </div>           
-            <div class="col"></div>
-          </div>
-     </div>    
-    {% endblock main %}
+{% block main %}
 
+<div>
+  <div class="d-flex flex-column justify-content-center text-center">
+    <img src="{% static 'img/admin.png' %}" alt="admin icon"
+      class="rounded mx-auto d-block mt-3 img-thumbnail border-0">
+    <h2> {{ user.first_name }} {{ user.last_name }} </h2>
+  </div>
+
+  <div class="container d-flex justify-content-center">
+
+    <a 
+    href="{% url 'application_status' %}" 
+    class="text-center fs-5 fw-bold btn btn-success rounded-4 mt-5">
+      Ver postulaciones pendientes
+    </a>
+  </div>
+
+</div>
+{% endblock main %}

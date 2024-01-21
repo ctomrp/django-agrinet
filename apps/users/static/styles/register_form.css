@@ -39,7 +39,6 @@ body{
     border-radius: 8px;
     border: none;
     height: 3rem;
-    width: 95%;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     outline: none;
     color: white;
@@ -72,7 +71,6 @@ body{
     margin-bottom: 2rem;
     border-radius: 8px;
     border: none;
-    width: 95%;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     outline: none;
     color: white;

@@ -1,34 +1,53 @@
-var vdni = false, vfirstname = false, vlastname = false, vaddress = false, vphone = false, vemail = false, vpassword = false, vreppass = false;
+import {
+        regexName, 
+        regexNumber,
+        regexEmail,
+        regexPassword,
+        regexDni
+        } from '../../../../static/js/constants.js';
+
+let vdni = false;
+let vfirstname = false;
+let vlastname = false;
+let vaddress = false;
+let vphone = false;
+let vemail = false;
+let vpassword = false;
+let vreppass = false;
 
 $(document).ready(function () {
     $("#id_register_button").attr('disabled', true)
 });
 
 $("#id_dni").on("keyup", function() {
-    var run = $(this).val().replace(/\./g, '').replace('-', '').trim();  // Elimina espacios al principio y al final
+    let run = $(this).val().replace(/\./g, '').replace('-', '').trim();  // Elimina espacios al principio y al final
 
-    if (/^\d{7,8}[-]?\w$/.test(run)) {
-        var rut = run.slice(0, -1);
-        var dv = run.slice(-1).toUpperCase();
+    if (regexDni.test(run)) {
+        let rut = run.slice(0, -1);
+        const dv = run.slice(-1).toUpperCase();
 
         if (rut.length === 7) {
             rut = '0' + rut; // Agrega un cero al principio si solo hay 7 dígitos
         }
 
-        var suma = 0;
-        var multiplo = 2;
+        let suma = 0;
+        let multiplo = 2;
 
-        for (var i = rut.length - 1; i >= 0; i--) {
+        for (let i = rut.length - 1; i >= 0; i--) {
             suma += rut.charAt(i) * multiplo;
             if (multiplo < 7) multiplo++;
             else multiplo = 2;
         }
 
-        var resto = suma % 11;
-        var resultado = 11 - resto;
+        const resto = suma % 11;
+        let resultado = 11 - resto;
 
         if (resultado === 11) resultado = 0;
         else if (resultado === 10) resultado = 'K';
+
+        let formattedRun = run.slice(0, -1) + '-' + run.slice(-1, -1);
+
+        $(this).val(formattedRun + dv); 
 
         if (resultado == dv) {
             $("#id_dni_alert").text('RUN válido');
@@ -40,6 +59,7 @@ $("#id_dni").on("keyup", function() {
             vdni = false;
         }
     } else {
+        run = 
         $("#id_dni_alert").text('Este campo no puede quedar vacío');
         $("#id_dni_alert").css('color', 'red');
         vdni = false;
@@ -54,15 +74,14 @@ $("#id_dni").on("keyup", function() {
 });
 
 $("#id_first_name").keyup(function (){
-    var characters = $("#id_first_name").val();
-    var namePattern = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
-    var nameLength = $("#id_first_name").val().length;
+    const characters = $("#id_first_name").val();
+    const nameLength = $("#id_first_name").val().length;
 
     if (nameLength < 3 || nameLength > 30) {
         $("#id_fn_alert").text("Nombre inválido (mín. 3 caracteres, máx. 30 caracteres)");
         $("#id_fn_alert").css('color', 'red');
         vfirstname = false;
-    } else if (!namePattern.test(characters)) {
+    } else if (!regexName.test(characters)) {
         $("#id_fn_alert").text("Sólo puede ingresar letras");
         $("#id_fn_alert").css('color', 'red');
         vfirstname = false;
@@ -80,15 +99,14 @@ $("#id_first_name").keyup(function (){
 });
 
 $("#id_last_name").keyup(function (){
-    var characters = $("#id_last_name").val();
-    var lastnamePattern = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
-    var lastnameLenght = $("#id_last_name").val().length;
+    const characters = $("#id_last_name").val();
+    const lastnameLenght = $("#id_last_name").val().length;
 
     if (lastnameLenght < 3 || lastnameLenght > 30) {
         $("#id_ln_alert").text("Apellido inválido (mín. 3 caracteres, máx. 30 caracteres)");
         $("#id_ln_alert").css('color', 'red');
         vlastname = false;
-    } else if (!lastnamePattern.test(characters)) {
+    } else if (!regexName.test(characters)) {
         $("#id_ln_alert").text("Sólo puede ingresar letras");
         $("#id_ln_alert").css('color', 'red');
         vlastname = false;
@@ -106,8 +124,7 @@ $("#id_last_name").keyup(function (){
 });
 
 $("#id_address").keyup(function (){
-    var characters = $("#id_address").val();
-    var addressLenght = $("#id_address").val().length;
+    const addressLenght = $("#id_address").val().length;
 
     if (addressLenght < 3 || addressLenght > 255) {
         $("#id_address_alert").text("Dirección inválida (mín. 3 caracteres, máx. 255 caracteres)");
@@ -127,10 +144,9 @@ $("#id_address").keyup(function (){
 });
 
 $("#id_phone_number").keyup(function (){
-    var phonenumber = $("#id_phone_number").val();
-    var patternNumber = /^[0-9]+$/;
+    const phonenumber = $("#id_phone_number").val();
 
-    if (!patternNumber.test(phonenumber)) {
+    if (!regexNumber.test(phonenumber)) {
         $("#id_phone_alert").text("Ingresa solo números");
         $("#id_phone_alert").css('color', 'red');
         vphone = false;
@@ -154,14 +170,13 @@ $("#id_phone_number").keyup(function (){
 });
 
 $("#id_email").keyup(function (){
-    var patternEmail = /^[a-zA-Z0-9.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
-    var email = $.trim($("#id_email").val());
+    const email = $.trim($("#id_email").val());
 
     if (email === "") {
         $("#id_email_alert").text("Este campo no puede quedar vacío");
         $("#id_email_alert").css('color', 'red');
         vemail = false;
-    } else if (!patternEmail.test(email)) {
+    } else if (!regexEmail.test(email)) {
         $("#id_email_alert").text("Formato de correo electrónico incorrecto");
         $("#id_email_alert").css('color', 'red');
         vemail = false;
@@ -179,15 +194,14 @@ $("#id_email").keyup(function (){
 });
 
 $("#id_password").keyup(function (){
-    var password = $("#id_password").val();
-    var patternPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d.*\d)(?=.*[!@#$%^&*()_+,.\-])[A-Za-z\d!@#$%^&*()_+,.\-]+$/;
-    var passwordLength = $("#id_password").val().length;
+    const password = $("#id_password").val();    
+    const passwordLength = $("#id_password").val().length;
 
     if(passwordLength < 8 || passwordLength > 20){
         $("#id_password_alert").text("Contraseña inválida. Debe tener: min. 8 caracteres, máx. 20 caracteres, una letra mayúscula, dos números y un carácter especial.")
         $("#id_password_alert").css("color", "red");
         vpassword = false;
-    } else if (!patternPassword.test(password)) {
+    } else if (!regexPassword.test(password)) {
         $("#id_password_alert").text("Contraseña inválida. Debe tener: min. 8 caracteres, máx. 20 caracteres, una letra mayúscula, dos números y un carácter especial.")
         $("#id_password_alert").css("color", "red");
         vpassword = false;
@@ -205,8 +219,8 @@ $("#id_password").keyup(function (){
 });
 
 $("#id_repeat_password").keyup(function (){
-    var password = $("#id_password").val();
-    var repeatPassword = $("#id_repeat_password").val();
+    const password = $("#id_password").val();
+    const repeatPassword = $("#id_repeat_password").val();
 
     if(password === repeatPassword){
         $("#id_repeat_password_alert").text("Ambas contraseñas coinciden");
