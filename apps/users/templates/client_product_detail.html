@@ -44,12 +44,42 @@
                 {% else %}
                     <div class="row d-flex flex-row justify-content-between gap-5 mt-5">
                         <a href="{% url 'client_dashboard'  %}" class="btn btn-dark w-25 fw-bold rounded-4">Volver</a>
-                        <a href="#" data-product="{{ product.id }}" data-action="add" class="btn btn-success w-25 fw-bold rounded-4 update-cart">Agregar al carro</a>
+                        <a data-product="{{ product.id }}" data-action="add" class="btn btn-success w-25 fw-bold rounded-4 update-cart">Agregar al carro</a>
                     </div>
                 {% endif %}
             </div>
         </div>
     </div>
+
+
+    <div
+    class="modal fade bg-modal"
+    id="cart-modal"
+    tabindex="-1"
+    aria-labelledby="passwordModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered bg-modal">
+      <div class="modal-content border-modal bg-modal-inside">
+        <div class="modal-header d-flex flex-column border-modal-top">
+          <img src="{% static 'assets/logo3.png' %}" class="mt-5" width="40%" />
+          <div class="text-light fs-5 mt-3 mb-3">
+            El producto fue agregado al carrito con exito!
+          </div>
+          <div class="text-light fs-5 text-center mb-5">
+          Pulse el siquiente boton para ver su carrito de compras
+          </div>
+
+          <div class="fs-5 mb-5">
+            <a href="{% url 'cart' %}" class="btn btn-success fw-bold rounded-4 w-100">Pulsa aqui</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+
+        
 {% endblock main %}
 
 {% block extra_js %}
