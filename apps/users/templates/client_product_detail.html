@@ -30,8 +30,8 @@
                         <div class="fw-bold">${{ product.price }}</div>
                     </h6>
                 </div>
-                <p class="mt-5"><b>Proveedor:</b>&nbsp;<div class="text-capitalize">{{ product.producer.first_name }}</div></p>
-                <p><b>Dirección:</b>&nbsp;<div class="text-capitalize">{{ product.producer.address }}</div></p>
+                <p class="mt-5 text-capitalize"><b>Proveedor:</b>&nbsp;{{ product.producer.first_name }}</p>
+                <p class="text-capitalize"><b>Dirección:</b>&nbsp;{{ product.producer.address }}</p>
                 <p id="user-latitude" data-user-latitude="{{ latitude }}"></p>
                 <p id="user-longitude" data-user-longitude="{{ longitude }}"></p>
                 <!-- mapa -->

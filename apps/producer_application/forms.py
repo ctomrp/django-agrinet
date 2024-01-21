@@ -9,30 +9,31 @@ class ApplicationFormForm(forms.ModelForm):
 
     first_name = forms.CharField(
         label = 'Nombre',
-        widget = forms.TextInput(attrs={'required': 'false'})
+        widget = forms.TextInput(attrs={'required': 'false', 'placeholder': 'John'})
     )
     last_name = forms.CharField(
-        label = 'Apellido'
+        label = 'Apellido',
+        widget = forms.TextInput(attrs={'required': 'false', 'placeholder': 'Doe'})
     )
     email = forms.EmailField(
         label = 'Correo Electrónico',
-        widget = forms.EmailInput(attrs={'placeholder': 'example@mail.com"'})
+        widget = forms.EmailInput(attrs={'placeholder': 'johndoe@gmail.com'})
     )
     dni = forms.CharField(
         label = 'RUT',
-        widget = forms.TextInput(attrs={'placeholder': 'Ej: 11111111-K'})
+        widget = forms.TextInput(attrs={'placeholder': '12345678-K'})
     )
     address = forms.CharField(
         label='Dirección',
-        widget=forms.TextInput(attrs={'placeholder': 'Ej: Nombre calle 1234'})
+        widget=forms.TextInput(attrs={'placeholder': 'Calle Falsa 123'})
     )
     phone_number = forms.IntegerField(
         label = 'Número de Teléfono',
-        widget = forms.NumberInput(attrs={'placeholder': 'Ej: 956800147', 'type': 'tel'})
+        widget = forms.NumberInput(attrs={'placeholder': '988776655', 'type': 'tel'})
     )
     bussiness_name = forms.CharField(
         label = 'Razón Social',
-        widget = forms.TextInput(attrs={'placeholder': 'Agricultora Perez LTDA'})
+        widget = forms.TextInput(attrs={'placeholder': 'John Doe el Granjero Ltda.'})
     )
     birth_date = forms.DateField(
         label = 'Fecha de Nacimiento',

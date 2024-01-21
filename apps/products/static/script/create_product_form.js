@@ -121,7 +121,7 @@ $("#id_picture").change(function (){
         vprodpic = false;
     } else {
         $("#id_productpicture_alert").text("Ingreso correcto");
-        $("#id_productpicture_alert").css('color', 'red');
+        $("#id_productpicture_alert").css('color', 'green');
         vprodpic = true;
     }
     
