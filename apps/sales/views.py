@@ -8,6 +8,9 @@ import locale
 from apps.users.models import UserProducer
 from apps.users.views import is_userproducer, is_userclient
 
+
+DATE_DMY = '%Y-%m-%d'
+DATE_DMY_STR = "%d de %B de %Y"
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
 
@@ -54,16 +57,16 @@ def sales_report(request):
             total = sum([total + sale[3] for sale in sales])
        
         if report_starts:
-            report_starts_str = datetime.strptime(report_starts, '%Y-%m-%d').strftime("%d de %B de %Y")
+            report_starts_str = datetime.strptime(report_starts, DATE_DMY).strftime(DATE_DMY_STR)
 
         if report_ends:
-            report_ends_str = datetime.strptime(report_ends, '%Y-%m-%d').strftime("%d de %B de %Y")
+            report_ends_str = datetime.strptime(report_ends, DATE_DMY).strftime(DATE_DMY_STR)
             
     context = {
         'report_starts_str': report_starts_str,
         'report_ends_str': report_ends_str,
         'producer': UserProducer.objects.get(pk=request.user.id),
-        'current_date': datetime.now().strftime("%d de %B de %Y"),
+        'current_date': datetime.now().strftime(DATE_DMY_STR),
         'sales': sales,
         'total': total
     }
@@ -79,7 +82,7 @@ def generate_report(request):
     
     context = {
         'producer': UserProducer.objects.get(pk=request.user.id),
-        'current_date': datetime.now().strftime("%d de %B de %Y"),
+        'current_date': datetime.now().strftime(DATE_DMY_STR),
     }  
     return render(request, 'generate_report.html', context)
 

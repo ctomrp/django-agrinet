@@ -149,6 +149,6 @@ def generate_random_password():
 
     password_length = 12
     characters = string.ascii_letters + string.digits + string.punctuation
-    generated_password = ''.join(secrets.choice(characters) for i in range(password_length))
+    generated_password = ''.join(secrets.choice(characters) for _ in range(password_length))
 
     return generated_password
