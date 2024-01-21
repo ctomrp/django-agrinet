@@ -24,9 +24,9 @@
             <div class="text-capitalize fs-5 col">Agrinet S.A.</div>
             <div class="fs-5 col">www.agrinet.cl</div>
             <div class="text-capitalize fs-5 col">RUT:&nbsp;78.987.987-8</div>
-            <div class="text-capitalize fs-5 col">Fecha de venta:&nbsp;{{ sale.date_sale }}15-02-2024</div>
-        </div>
+            <div class="text-capitalize fs-5 col">Fecha de venta:&nbsp; {{ sale_date|date:'d-m-Y' }}</div>
 
+        </div>
       </div>
 
       <div class="detail mt-5 d-flex justify-content-center">
@@ -41,15 +41,15 @@
             </thead>
             <tbody>
                 <!-- esto ira dentro de un for y se obtienen los valores del elemento -->
-                {% for sale_product in sale_products_list %}
-                    <tr>
-                        <td>{{ sale_product.name }}</td>
-                        <td class="text-center align-self-center">{{ sale_product.quantity }}</td>
-                        <td class="text-end align-self-end"> ${{ sale_product.price }}</td>
-                        <td class="text-end align-self-end"> ${{ sale_product.total }}</td>
+              {% for sale_product in sale_products_list %}
+                <tr>
+                  <td>{{ sale_product.name }}</td>
+                  <td class="text-center align-self-center">{{ sale_product.quantity }}</td>
+                  <td class="text-end align-self-end"> ${{ sale_product.price }}</td> 
+                  <td class="text-end align-self-end"> ${{ sale_product.total }}</td>
                         
-                    </tr>
-                {% endfor %}
+                </tr>
+              {% endfor %}
 
               
                 <!-- aca terminará el for -->
@@ -61,12 +61,12 @@
           <div class="col">
             <img src="{% static 'assets/timbre.png' %}" alt="" class="w-75">
           </div>
-          <div class="col fs-5 text-end" id="totalGeneral">
+          <div class="col fs-5 text-end">
               Precio total<br>
               <b>$ {{ total_general }}</b>
           </div>
         </div>
-       
+
       </div>
       <div class="container d-flex justify-content-start mt-5">
 
@@ -74,41 +74,32 @@
         </div>
 
         <div class="container d-flex justify-content-start mt-5">
+
           <button id="downloadPdfBtn">Descargar PDF</button>
-          
-        </div>
-      
+          </div>
 
           <script>
-              document.getElementById("downloadPdfBtn").addEventListener("click", function() {
-    // Obtener el total general
-    var totalGeneral = document.getElementById("totalGeneral").innerText;
-
-    // Crear un objeto FormData
-    var formData = new FormData();
-    formData.append('total_general', totalGeneral);
-
-    // Realizar una solicitud AJAX al servidor para generar el PDF
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "{% url 'generate_pdf' %}", true);
-  
-    xhr.onload = function() {
-        // Crear un enlace para descargar el PDF
-        var url = window.URL.createObjectURL(xhr.response);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'sales_receipt.pdf';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-    };
-
-    // Enviar el objeto FormData con el total general
-    xhr.send(formData);
-});
-
-          </script>
+            document.getElementById("downloadPdfBtn").addEventListener("click", function() {
+                // Realiza una solicitud AJAX al servidor para generar el PDF
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "{% url 'generate_pdf' %}", true);
+                xhr.responseType = "blob";
+            
+                xhr.onload = function() {
+                    // Crea un enlace para descargar el PDF
+                    var url = window.URL.createObjectURL(xhr.response);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'sales_receipt.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                };
+            
+                xhr.send();
+            });
+            </script>
       
   
 

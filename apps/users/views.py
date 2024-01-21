@@ -30,6 +30,8 @@ from apps.sales.models import (
 from apps.products.models import Product, ProductCategory
 from apps.producer_application.models import ApplicationForm
 
+import datetime
+
 def is_userproducer(user):
     return hasattr(user, 'userproducer')
 
@@ -250,7 +252,6 @@ def updateItem(request):
 
     return JsonResponse({'message': 'Operación exitosa'}, status=200)
 
-
 @login_required
 @user_passes_test(is_userclient)
 def processOrder(request):
@@ -301,25 +302,21 @@ def processOrder(request):
                 'name': sale_product.product.name,
                 'quantity': sale_product.quantity,
                 'price': sale_product.product.price,
-                'total': sale_product.get_total,
+                'total': sale_product.get_total(),
             }
             sale_products_list.append(product_data)
 
-            request.session['sale_products_list'] = sale_products_list
+        # Almacena la lista en la sesión
+        request.session['sale_products_list'] = sale_products_list
 
         # Pasa los datos necesarios al contexto
-        
         total_general = sum(product_data['total'] for product_data in sale_products_list)
-
-    # Agrega el total general al contexto
-        context['total_general'] = total_general
 
         context = {
             'sale': sale,
             'sale_products': sale.salesproducts_set.all(),
-            'sale_products_list': sale_products_list,  # Agrega la lista al contexto
+            'sale_products_list': sale_products_list,
             'total_general': total_general,
-            
         }
 
         print(sale_products_list)

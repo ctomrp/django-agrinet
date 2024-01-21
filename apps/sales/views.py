@@ -7,7 +7,8 @@ from django.template.loader import get_template
 from django.views import View
 from xhtml2pdf import pisa  # Instala esta librería con pip install xhtml2pdf
 import os
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseServerError
+
 
 
 
@@ -22,36 +23,35 @@ def sales_report(request):
 def generate_report(request):
     return render(request, 'generate_report.html')
 
-
+@login_required
+@user_passes_test(is_userclient)
 def sales_receipt(request):
     sale_products_list = request.session.get('sale_products_list', [])
 
-    # Calcula el total general
     total_general = sum(product_data['total'] for product_data in sale_products_list)
-
-    # Agrega el total general al contexto
+    
     context = {'sale_products_list': sale_products_list, 'total_general': total_general}
 
-    print(sale_products_list)
+    print(sale_products_list, total_general,)
     return render(request, "sales_receipt.html", context)
 
 
 
 class GeneratePdf(View):
     def get(self, request, *args, **kwargs):
-        sale_products_list = request.session.get('sale_products_list', [])
+        try:
+            sale_products_list = request.session.get('sale_products_list', [])
+            context = {'sale_products_list': sale_products_list}
+            template_path = 'sales_receipt.html'
+            template = get_template(template_path)
+            html = template.render(context)
 
-        context = {
-            'sale_products_list': sale_products_list,
-        }
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="sales_receipt.pdf"'
 
-        template_path = 'sales_receipt.html'
-        template = get_template(template_path)
-        html = template.render(context)
-
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="sales_receipt.pdf"'
-
-        pisa.CreatePDF(html, dest=response)
-
-        return response
+            pisa.CreatePDF(html, dest=response)
+            return response
+        except Exception as e:
+            # Manejar cualquier excepción que pueda ocurrir durante la generación del PDF
+            print(f"Error generando PDF: {e}")
+            return HttpResponseServerError("Error generando el PDF")
