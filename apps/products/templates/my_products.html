@@ -8,43 +8,88 @@
 
 
   
-    {% block main %}
-  
-        <div class="container">
-            <div class="products-container border border-dark rounded-5 p-5">
-                <div class="pTitle">
-                    <h2>Mis Productos</h2>
-                    <a href="{% url 'create_products' %}">
-                        <button class="btn btn-success addBtn shadow" ><i class="bi bi-plus-lg"></i></button>
-                    </a>
-                </div>
-                
-                {% for product in products %}
-                <div class="products-info">
+{% block main %}
+  <div class="container">
+    <div class="products-container border border-dark rounded-5 p-5">
+      <div class="pTitle">
+        <h2>Mis Productos</h2>
+        <a href="{% url 'create_products' %}">
+          <button class="btn btn-success addBtn shadow" ><i class="bi bi-plus-lg"></i></button>
+        </a>
+      </div>
+      
+      {% for product in products %}
+        <div class="products-info">
 
-                    <div class="p-3">
-                        <img src="{{product.picture.url}}" alt="" class="img-thumbnail">
-                    </div>
-                    
-                    <div class="dataDiv">
-                        <h6 class="d-flex"><div class="fw-bold">Producto:&nbsp;</div>{{product.name}}</h6>
-                        <h6 class="d-flex"><div class="fw-bold">Tipo de producto:&nbsp;</div>{{product.category}}</h6>
-                        <h6 class="d-flex"><div class="fw-bold">Precio:&nbsp;</div>${{product.price}}</h6>
-                        <h6 class="d-flex"><div class="fw-bold">Stock:&nbsp;</div>{{product.stock}}</h6>
-                    </div>
+          <div class="p-3">
+            <img src="{{product.picture.url}}" alt="" class="img-thumbnail">
+          </div>
+          
+          <div class="dataDiv">
+            <h6 class="d-flex"><div class="fw-bold">Producto:&nbsp;</div>{{product.name}}</h6>
+            <h6 class="d-flex"><div class="fw-bold">Tipo de producto:&nbsp;</div>{{product.category}}</h6>
+            <h6 class="d-flex"><div class="fw-bold">Precio:&nbsp;</div>${{product.price}}</h6>
+            <h6 class="d-flex"><div class="fw-bold">Stock:&nbsp;</div>{{product.stock}}</h6>
+          </div>
 
-                    <div></div>
+          <div></div>
 
-                    <div class="d-flex flex-column gap-3">
-                        <a type="button" href="{% url 'update_product' product.id %}" class="btn btn-dark w-100 fw-bold rounded-4">Actualizar</a>
-                        <a type="button" href="{% url 'delete_product' product.id %}" class="btn btn-danger w-100 fw-bold rounded-4">Eliminar</a>
-                    </div>
+          <div class="d-flex flex-column gap-3">
+            <a type="button" href="{% url 'update_product' product.id %}" class="btn btn-dark w-100 fw-bold rounded-4">Actualizar</a>
+            <form action="{% url 'delete_product' product.id %}" method="post" class="delete-form">
+              {% csrf_token %}
+              <button type="button" class="btn btn-danger w-100 fw-bold rounded-4" onclick="showDeleteConfirmation(this)">Eliminar</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 
-                    
-                    
-                </div>
-                {% endfor %}
+  <div class="overlay" id="deleteOverlay"></div>
+  <div class="modal" id="deleteModal">
+    <div class="modal-content border-modal bg-modal-inside">
+        <div class="modal-header d-flex flex-column border-modal-top">
+            <img src="{% static 'assets/logo3.png' %}" class="mt-5" width="40%" />
+            <div class="text-light text-center fs-5 mt-3 mb-3">
+                ¿Estás seguro de que quieres eliminar este producto?
             </div>
+            <button class="btn-okay btn btn-danger fw-bold rounded-4 w-100" onclick="confirmDelete()">Eliminar</button>
+            <button class="btn-cancel btn btn-success fw-bold rounded-4 w-100 mt-1" onclick="cancelDelete()">Cancelar</button>
         </div>    
-    {% endblock main %}
+    </div>
+  </div>
 
+
+  {% block extra_js %}
+    <script>
+      function showDeleteConfirmation(button) {
+        var overlay = document.getElementById('deleteOverlay');
+        var modal = document.getElementById('deleteModal');
+        
+        overlay.style.display = 'block';
+        modal.style.display = 'block';
+
+        var confirmButton = modal.querySelector('.btn-okay');
+        var cancelButton = modal.querySelector('.btn-cancel');
+
+        confirmButton.onclick = function() {
+          hideDeleteConfirmation();
+          button.closest('form').submit();
+        };
+
+        cancelButton.onclick = function() {
+          hideDeleteConfirmation();
+        };
+      }
+
+      function hideDeleteConfirmation() {
+        var overlay = document.getElementById('deleteOverlay');
+        var modal = document.getElementById('deleteModal');
+        
+        overlay.style.display = 'none';
+        modal.style.display = 'none';
+      }
+    </script>
+  {% endblock extra_js %}
+{% endblock main %}
