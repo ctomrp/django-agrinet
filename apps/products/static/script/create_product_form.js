@@ -10,7 +10,7 @@ $(document).ready(function (){
     $("#id_saveproduct_button").attr('disabled', true);
 });
 
-$("#id_name").change(function (){
+$("#id_name").keyup(function (){
     const prodNameLength = $("#id_name").val().length
 
     if(prodNameLength < 3 || prodNameLength > 255){
@@ -72,13 +72,15 @@ $("#id_stock").keyup(function(){
 });
 
 $("#id_description").keyup(function(){
-    const descriptionLength = $("#id_description").val()
+    const descriptionLength = $("#id_description").val().length
 
     if(descriptionLength < 3 || descriptionLength > 255){
+        console.log(descriptionLength)
         $("#id_productdescription_alert").text("Descripción de producto inválida (mín 3 caracteres, máx 255 caracteres)");
         $("#id_productdescription_alert").css('color', 'red');
         vproddesc = false;
     } else {
+        console.log(descriptionLength)
         $("#id_productdescription_alert").text("Ingreso correcto");
         $("#id_productdescription_alert").css('color', 'green');
         vproddesc = true;
@@ -115,7 +117,7 @@ $("#id_picture").change(function (){
     const files = $(this)[0].files;
     let pictureInputLength = files.length; 
 
-    if(pictureInputLength = 0 || pictureInputLength > 1){
+    if(pictureInputLength <= 0 || pictureInputLength > 1){
         $("#id_productpicture_alert").text("Sólo puede subir una foto de su producto");
         $("#id_productpicture_alert").css('color', 'red');
         vprodpic = false;
