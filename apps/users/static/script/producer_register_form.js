@@ -1,53 +1,30 @@
-import {
-    regexName, 
-    regexNumber,
-    regexEmail,
-    regexPassword,
-    regexBussinessName,
-    regexDni
-    } from '../../../../static/js/constants.js';
-
-let vdni = false;
-let vfirstname = false;
-let vlastname = false;
-let vaddress = false;
-let vphone = false;
-let vemail = false;
-let vpassword = false;
-let vreppass = false;
-let vbussinessname = false ;
-let vbirthdate = false;
-
+var vdni = false, vfirstname = false, vlastname = false, vaddress = false, vphone = false, vemail = false, vpassword = false, vreppass = false,  vbussinessname = false, vbirthdate = false;
 
 $("#id_dni").on("keyup", function() {
-    let run = $(this).val().replace(/\./g, '').replace('-', '').trim();  // Elimina espacios al principio y al final
+    var run = $(this).val().replace(/\./g, '').replace('-', '').trim();  // Elimina espacios al principio y al final
 
-    if (regexDni.test(run)) {
-        let rut = run.slice(0, -1);
-        const dv = run.slice(-1).toUpperCase();
+    if (/^\d{7,8}[-]?\w$/.test(run)) {
+        var rut = run.slice(0, -1);
+        var dv = run.slice(-1).toUpperCase();
 
         if (rut.length === 7) {
             rut = '0' + rut; // Agrega un cero al principio si solo hay 7 dígitos
         }
 
-        let suma = 0;
-        let multiplo = 2;
+        var suma = 0;
+        var multiplo = 2;
 
-        for (let i = rut.length - 1; i >= 0; i--) {
+        for (var i = rut.length - 1; i >= 0; i--) {
             suma += rut.charAt(i) * multiplo;
             if (multiplo < 7) multiplo++;
             else multiplo = 2;
         }
 
-        const resto = suma % 11;
-        let resultado = 11 - resto;
+        var resto = suma % 11;
+        var resultado = 11 - resto;
 
         if (resultado === 11) resultado = 0;
         else if (resultado === 10) resultado = 'K';
-
-        let formattedRun = run.slice(0, -1) + '-' + run.slice(-1, -1);
-
-        $(this).val(formattedRun + dv); 
 
         if (resultado == dv) {
             $("#id_dni_alert").text('RUT válido');
@@ -73,14 +50,15 @@ $("#id_dni").on("keyup", function() {
 });
 
 $("#id_first_name").keyup(function (){
-    const firstname = $("#id_first_name").val();
-    const firstNameLength = $("#id_first_name").val().length;
+    var firstname = $("#id_first_name").val();
+    var firstNamePattern = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+    var firstNameLength = $("#id_first_name").val().length;
 
     if (firstNameLength < 3 || firstNameLength > 30) {
         $("#id_fn_alert").text("Nombre inválido (mín. 3 caracteres, máx. 30 caracteres)");
         $("#id_fn_alert").css('color', 'red');
         vfirstname = false;
-    } else if (!regexName.test(firstname)) {
+    } else if (!firstNamePattern.test(firstname)) {
         $("#id_fn_alert").text("Sólo puede ingresar letras");
         $("#id_fn_alert").css('color', 'red');
         vfirstname = false;
@@ -98,14 +76,15 @@ $("#id_first_name").keyup(function (){
 });
 
 $("#id_last_name").keyup(function (){
-    const lastname = $("#id_last_name").val();
-    const lastnameLenght = $("#id_last_name").val().length;
+    var lastname = $("#id_last_name").val();
+    var lastnamePattern = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+    var lastnameLenght = $("#id_last_name").val().length;
 
     if (lastnameLenght < 3 || lastnameLenght > 30) {
         $("#id_ln_alert").text("Apellido inválido (mín. 3 caracteres, máx. 30 caracteres)");
         $("#id_ln_alert").css('color', 'red');
         vlastname = false;
-    } else if (!regexName.test(lastname)) {
+    } else if (!lastnamePattern.test(lastname)) {
         $("#id_ln_alert").text("Sólo puede ingresar letras");
         $("#id_ln_alert").css('color', 'red');
         vlastname = false;
@@ -123,7 +102,8 @@ $("#id_last_name").keyup(function (){
 });
 
 $("#id_address").keyup(function (){
-    const addressLenght = $("#id_address").val().length;
+    var address = $("#id_address").val();
+    var addressLenght = $("#id_address").val().length;
 
     if (addressLenght < 3 || addressLenght > 255) {
         $("#id_address_alert").text("Dirección inválida (mín. 3 caracteres, máx. 255 caracteres)");
@@ -143,9 +123,10 @@ $("#id_address").keyup(function (){
 });
 
 $("#id_phone_number").keyup(function (){
-    const phonenumber = $("#id_phone_number").val();
+    var phonenumber = $("#id_phone_number").val();
+    var patternNumber = /^[0-9]+$/;
 
-    if (!regexNumber.test(phonenumber)) {
+    if (!patternNumber.test(phonenumber)) {
         $("#id_phone_alert").text("Ingresa solo números");
         $("#id_phone_alert").css('color', 'red');
         vphone = false;
@@ -169,13 +150,14 @@ $("#id_phone_number").keyup(function (){
 });
 
 $("#id_email").keyup(function (){
-    const email = $.trim($("#id_email").val());
+    var patternEmail = /^[a-zA-Z0-9.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
+    var email = $.trim($("#id_email").val());
 
     if (email === "") {
         $("#id_email_alert").text("Este campo no puede quedar vacío");
         $("#id_email_alert").css('color', 'red');
         vemail = false;
-    } else if (!regexEmail.test(email)) {
+    } else if (!patternEmail.test(email)) {
         $("#id_email_alert").text("Formato de correo electrónico incorrecto");
         $("#id_email_alert").css('color', 'red');
         vemail = false;
@@ -193,14 +175,15 @@ $("#id_email").keyup(function (){
 });
 
 $("#id_password").keyup(function (){
-    const password = $("#id_password").val();
-    const passwordLength = $("#id_password").val().length;
+    var password = $("#id_password").val();
+    var patternPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d.*\d)(?=.*[!@#$%^&*()_+,.\-])[A-Za-z\d!@#$%^&*()_+,.\-]+$/;
+    var passwordLength = $("#id_password").val().length;
 
     if(passwordLength < 8 || passwordLength > 20){
         $("#id_password_alert").text("Contraseña inválida. Debe tener: min. 8 caracteres, máx. 20 caracteres, una letra mayúscula, dos números y un carácter especial.")
         $("#id_password_alert").css("color", "red");
         vpassword = false;
-    } else if (!regexPassword.test(password)) {
+    } else if (!patternPassword.test(password)) {
         $("#id_password_alert").text("Contraseña inválida. Debe tener: min. 8 caracteres, máx. 20 caracteres, una letra mayúscula, dos números y un carácter especial.")
         $("#id_password_alert").css("color", "red");
         vpassword = false;
@@ -218,8 +201,8 @@ $("#id_password").keyup(function (){
 });
 
 $("#id_repeat_password").keyup(function (){
-    const password = $("#id_password").val();
-    const repeatPassword = $("#id_repeat_password").val();
+    var password = $("#id_password").val();
+    var repeatPassword = $("#id_repeat_password").val();
 
     if(password === repeatPassword){
         $("#id_repeat_password_alert").text("Ambas contraseñas coinciden");
@@ -239,14 +222,15 @@ $("#id_repeat_password").keyup(function (){
 });
 
 $("#id_bussiness_name").keyup(function (){
-    const bussinessName = $("#id_bussiness_name").val()
-    const bussinessNameLength = $("#id_bussiness_name").val().length
+    var bussinessNamePattern = /^[a-zA-Z0-9'!@#$%^&*()-_+=?<> ]+$/
+    var bussinessName = $("#id_bussiness_name").val()
+    var bussinessNameLength = $("#id_bussiness_name").val().length
 
     if(bussinessNameLength < 3 || bussinessNameLength > 200 ){
         $("#id_bussinessname_alert").text("Razón social inválida (mín. 3 caracteres, máx. 200 caracteres)");
         $("#id_bussinessname_alert").css("color", "red");
         vbussinessname = false;
-    } else if (!regexBussinessName.test(bussinessName)){
+    } else if (!bussinessNamePattern.test(bussinessName)){
         $("#id_bussinessname_alert").text("Caracteres NO permitidos: ({, }, ´, ¨, |, °, ¬, `)");
         $("#id_bussinessname_alert").css("color", "red");
         vbussinessname = false;
@@ -264,9 +248,9 @@ $("#id_bussiness_name").keyup(function (){
 });
 
 $("#id_birth_date").change(function (){
-    const birthdate = new Date($("#id_birth_date").val());
-    const today = new Date();
-    const age = today.getFullYear() - birthdate.getFullYear();
+    var birthdate = new Date($("#id_birth_date").val());
+    var today = new Date();
+    var age = today.getFullYear() - birthdate.getFullYear()
 
     if (birthdate.getFullYear() < 1900 || birthdate.getFullYear() > today.getFullYear() ) {
         $("#id_birthdate_alert").text("Seleccione un año válido");

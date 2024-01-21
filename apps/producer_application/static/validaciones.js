@@ -1,34 +1,18 @@
-import {
-  regexName, 
-  regexNumber,
-  regexEmail,
-  regexBussinessName,
-  regexDni
-  } from '../../../../static/js/constants.js';
-
 /*validar primer nombre*/
 
-let vrut = false;
-let vnombre = false;
-let vapellido = false;
-let vdireccion = false;
-let vtelefono = false;
-let vmail = false;
-let vrazonsocial = false ;
-let vfechanac = false;
-let vregion = false;
-let vcommune = false;
+var vnombre = false, vapellido = false, vtelefono = false, vmail = false, vrut = false, vdireccion = false, vrazonsocial = false, vfechanac = false, vregion = false, vcommune = false;
 
 
 $("#id_first_name").keyup(function () {
-  const caracteres = $("#id_first_name").val();
-  const largo = $("#id_first_name").val().length;
+  var caracteres = $("#id_first_name").val();
+  var patronNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+  var largo = $("#id_first_name").val().length;
 
   if (largo < 3 || largo > 30) {
     $("#id_fn_alert").text("Nombre inválido (mín. 3 caracteres, máx. 30 caracteres)");
     $("#id_fn_alert").css("color", "red");
     vnombre = false;
-  } else if (!regexName.test(caracteres)) {
+  } else if (!patronNombre.test(caracteres)) {
     $("#id_fn_alert").text("Sólo puede ingresar letras");
     $("#id_fn_alert").css("color", "red");
     vnombre = false;
@@ -48,14 +32,15 @@ $("#id_first_name").keyup(function () {
 /*validar apellido p*/
 
 $("#id_last_name").keyup(function () {
-  const caracteres = $("#id_last_name").val();
-  const largo = $("#id_last_name").val().length;
+  var caracteres = $("#id_last_name").val();
+  var patronNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+  var largo = $("#id_last_name").val().length;
 
   if (largo < 3 || largo > 30) {
     $("#id_ln_alert").text("Apellido inválido (mín. 3 caracteres, máx. 30 caracteres)");
     $("#id_ln_alert").css("color", "red");
     vapellido = false;
-  } else if (!regexName.test(caracteres)) {
+  } else if (!patronNombre.test(caracteres)) {
     $("#id_ln_alert").text("Sólo puede ingresar letras");
     $("#id_ln_alert").css("color", "red");
     vapellido = false;
@@ -75,9 +60,10 @@ $("#id_last_name").keyup(function () {
 /*validar telefono*/
 
 $("#id_phone_number").keyup(function () {
-  const telefono = $("#id_phone_number").val();
+  var telefono = $("#id_phone_number").val();
+  var regexNumeros = /^[0-9]+$/;
 
-  if (!regexNumber.test(telefono)) {
+  if (!regexNumeros.test(telefono)) {
     $("#id_phone_alert").text("Ingresa solo números");
     $("#id_phone_alert").css("color", "red");
     vtelefono = false;
@@ -101,13 +87,13 @@ $("#id_phone_number").keyup(function () {
 });
 /*validar correo*/
 $("#id_email").keyup(function () {
-  const correo = $.trim($("#id_email").val());
-  
+  var patronCorreo = /^[a-zA-Z0-9.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
+  var correo = $.trim($("#id_email").val());
   if (correo === "") {
     $("#id_email_alert").text("Este campo no puede quedar vacío");
     $("#id_email_alert").css("color", "red");
     vmail = false;
-  } else if (!regexEmail.test(correo)) {
+  } else if (!patronCorreo.test(correo)) {
     $("#id_email_alert").text("Formato de correo electrónico incorrecto");
     $("#id_email_alert").css("color", "red");
     vmail = false;
@@ -125,7 +111,8 @@ $("#id_email").keyup(function () {
 });
 
 $("#id_address").keyup(function (){
-  const addressLenght = $("#id_address").val().length;
+  var address = $("#id_address").val();
+  var addressLenght = $("#id_address").val().length;
 
   if (addressLenght < 3 || addressLenght > 255) {
       $("#id_address_alert").text("Dirección inválida (mín. 3 caracteres, máx. 255 caracteres)");
@@ -146,70 +133,62 @@ $("#id_address").keyup(function (){
 
 
 /*validar rut*/
-$("#id_dni").on("keyup", function() {
-  let run = $(this).val().replace(/\./g, '').replace('-', '').trim();  // Elimina espacios al principio y al final
+$("#id_dni").keyup(function () {
+  var rut = $("#id_dni").val().replace(/[.-]/g, '').toUpperCase();
 
-  if (regexDni.test(run)) {
-      let rut = run.slice(0, -1);
-      const dv = run.slice(-1).toUpperCase();
-
-      if (rut.length === 7) {
-          rut = '0' + rut; // Agrega un cero al principio si solo hay 7 dígitos
-      }
-
-      let suma = 0;
-      let multiplo = 2;
-
-      for (let i = rut.length - 1; i >= 0; i--) {
-          suma += rut.charAt(i) * multiplo;
-          if (multiplo < 7) multiplo++;
-          else multiplo = 2;
-      }
-
-      const resto = suma % 11;
-      let resultado = 11 - resto;
-
-      if (resultado === 11) resultado = 0;
-      else if (resultado === 10) resultado = 'K';
-
-      let formattedRun = run.slice(0, -1) + '-' + run.slice(-1, -1);
-
-      $(this).val(formattedRun + dv); 
-
-      if (resultado == dv) {
-          $("#id_dni_alert").text('RUN válido');
-          $("#id_dni_alert").css('color', 'green');
-          vrut = true;
-      } else {
-          $("#id_dni_alert").text('RUN inválido');
-          $("#id_dni_alert").css('color', 'red');
-          vrut = false;
-      }
+  if (validarRutChileno(rut)) {
+    $("#id_dni_alert").text("RUT válido");
+    $("#id_dni_alert").css("color", "green");
+    vrut = true;
   } else {
-      $("#id_dni_alert").text('Este campo no puede quedar vacío');
-      $("#id_dni_alert").css('color', 'red');
-      vrut = false;
-      return 0;
+    $("#id_dni_alert").text("RUT inválido");
+    $("#id_dni_alert").css("color", "red");
+    vrut = false;
   }
 
   if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac && vregion && vcommune){
-    $("#id_register_button").attr('disabled', false);
+      $("#id_register_button").attr('disabled', false);
   } else {
       $("#id_register_button").attr('disabled', true);
   }  
 });
 
+function validarRutChileno(rut) {
+  var rutNumerico = rut.slice(0, -1);
+  var dvIngresado = rut.slice(-1).toUpperCase();
+
+  var suma = 0;
+  var multiplo = 2;
+
+  for (var i = rutNumerico.length - 1; i >= 0; i--) {
+    suma += parseInt(rutNumerico.charAt(i)) * multiplo;
+
+    if (multiplo < 7) {
+      multiplo += 1;
+    } else {
+      multiplo = 2;
+    }
+  }
+
+  var dvEsperado = 11 - (suma % 11);
+  dvEsperado = (dvEsperado === 11) ? 0 : dvEsperado;
+  dvEsperado = (dvEsperado === 10) ? "K" : dvEsperado.toString();
+
+  return dvIngresado === dvEsperado;
+}
+
 /*validar razon social*/
 
 $("#id_bussiness_name").keyup(function () {
-  const caracteres = $("#id_bussiness_name").val();
-  const largo = $("#id_bussiness_name").val().length;
+  var caracteres = $("#id_bussiness_name").val();
+  var patronNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\d.]*$/;
+  var largo = $("#id_bussiness_name").val().length;
 
   if (largo < 3 || largo > 25) {
     $("#id_razon_alert").text("La razon social no puede ser menor a 3 caractéres o mayor a 25.");
     $("#id_razon_alert").css("color", "red");
     vrazonsocial = false;
-  } else if (!regexBussinessName.test(caracteres)) {
+  } else if (!patronNombre.test(caracteres)) {
     $("#id_razon_alert").text("Sólo puede ingresar letras y números");
     $("#id_razon_alert").css("color", "red");
     vrazonsocial = false;
@@ -225,9 +204,9 @@ $("#id_bussiness_name").keyup(function () {
 
 
 $("#id_birth_date").change(function (){
-    const birthdate = new Date($("#id_birth_date").val());
-    const today = new Date();
-    const age = today.getFullYear() - birthdate.getFullYear()
+    var birthdate = new Date($("#id_birth_date").val());
+    var today = new Date();
+    var age = today.getFullYear() - birthdate.getFullYear()
 
     if (birthdate.getFullYear() < 1900 || birthdate.getFullYear() > today.getFullYear() ) {
         $("#id_fecha_alert").text("Seleccione un año válido");
@@ -255,11 +234,13 @@ $("#id_birth_date").change(function (){
 });
 
 $("#id_regions").change(function(){
-  const region = $("#id_regions").val()
+  region = $("#id_regions").val()
   if(region === ""){
     vregion = false;
+    console.log(vregion)
   } else {
     vregion = true;
+    console.log(vregion)
   }
 
   if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac && vregion && vcommune){
@@ -270,11 +251,13 @@ $("#id_regions").change(function(){
 });
 
 $("#id_communes").change(function(){
-  const commune = $("#id_communes").val()
+  commune = $("#id_communes").val()
   if(commune === ""){
     vcommune = false;
+    console.log(vcommune)
   } else {
     vcommune = true;
+    console.log(vcommune)
   }
 
   if(vrut && vnombre && vapellido && vdireccion && vtelefono && vmail && vrazonsocial && vfechanac && vregion && vcommune){
@@ -292,11 +275,11 @@ $(document).ready(function() {
   $("#id_register_button").click(function() {
       // Realizar validación antes de mostrar el mensaje
       if (validarCampos()) {
-          const mensaje = "¡Postulación enviada correctamentes!";
+          var mensaje = "¡Postulación enviada correctamentes!";
           mostrarMensaje(mensaje);
       } else {
           // Cambiar el mensaje de error de console.log a alert
-          const mensajeError = "Error en la validación de campos. Por favor, complete todos los campos correctamente.";
+          var mensajeError = "Error en la validación de campos. Por favor, complete todos los campos correctamente.";
           alert(mensajeError);
       }
   });

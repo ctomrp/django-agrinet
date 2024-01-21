@@ -28,7 +28,7 @@ class ApplicationFormForm(forms.ModelForm):
     )
     phone_number = forms.IntegerField(
         label = 'Número de Teléfono',
-        widget = forms.NumberInput(attrs={'placeholder': 'Ej: 956800147', 'type': 'tel'})
+        widget = forms.NumberInput(attrs={'placeholder': 'Ej: 956800147'})
     )
     bussiness_name = forms.CharField(
         label = 'Razón Social',

@@ -13,12 +13,14 @@
     <div class="registerFrameBackground justify-content-center">
         <div class="row">
             <div class="col-md-6">
-                <div class="presentationMessage align-items-center">
-                    <img src="{% static 'assets/logo3.png' %}" alt="icono_agrinet" width="600px">
+                <div class="presentationMessage">
+                    <div></div>
+                    <div></div>
+                    <center><img src="{% static 'assets/logo3.png' %}" alt="icono_agrinet" width="600px"></center>
                 </div>
             </div>
             <div class="col-md-6 registerFormBackground">
-                <h1 class="registerFormTitle text-center">Formulario de Registro</h1>
+                <h1 class="registerFormTitle"><b>Formulario de Registro</b></h1>
                 <form method="POST" class="w-75 container justify-content-center validate-form">
                     {% csrf_token %}
                     <div class="rowGrid">
@@ -78,8 +80,8 @@
                             <p style="color: red; font-size: 12px;">El usuario ya está registrado. Por favor, ingrese su RUN. En caso de que su RUN haya sido registrado y no es usted, contactarse con el Administrador.</p>
                         {% endif %}
                     </div>
-                    <div class="d-flex justify-content-center mt-5 w-100">
-                        <button id="id_register_button" type="submit" class="btn btn-success w-100 fw-bold rounded-4"><b>Registrar Productor</b></button>
+                    <div class="d-flex justify-content-center mt-5">
+                        <button id="id_register_button" type="submit" class="btn btn-success w-25 fw-bold rounded-4"><b>Registrar Productor</b></button>
                     </div>
                 </form>
             </div>
@@ -94,5 +96,5 @@
 {% endblock %}
 
 {% block extra_js %} 
-    <script type="module" src="{% static 'script/producer_register_form.mjs' %}"></script>
+    <script src="{% static 'script/producer_register_form.js' %}"></script>
 {% endblock %}

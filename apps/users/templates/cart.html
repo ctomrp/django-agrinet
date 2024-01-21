@@ -30,7 +30,14 @@
   
         <div class="container">
             <div class="products-container border border-dark rounded-5 p-5">
-               
+                <div class="d-flex justify-content-between gap-5">
+                    <h2 class="border rounded shadow fw-bold text-center p-3 fs-5 col-4">Total a pagar ${{total_cart }}</h2>
+                    <div class="col-4"></div>
+                    <a href="{% url 'checkout' %}" class="btn btn-success w-100 fw-bold rounded-4 align-self-center shadow">
+                        Pagar
+                    </a>
+                </div>
+                
                     <div class="cart-info">
                         <p></p>
                         <h4>Producto</h4>
@@ -55,9 +62,9 @@
 
                         <div class="unitContainer">
                             <div class="units bg-light p-2 rounded d-flex justify-content-evenly border">
-                                <i class="bi bi-dash iunits update-cart bg-danger text-center text-light rounded" data-product="{{item.product.id}}" data-action="remove"></i>
-                                <p class="units text-center text-dark rounded-3 fs-5 fw-bold">{{item.quantity}}</p>
                                 <i class="bi bi-plus iunits update-cart bg-success text-center text-light rounded" data-product="{{item.product.id}}" data-action="add"></i>
+                                <p class="units text-center text-dark rounded-3 fs-5 fw-bold">{{item.quantity}}</p>
+                                <i class="bi bi-dash iunits update-cart bg-danger text-center text-light rounded" data-product="{{item.product.id}}" data-action="remove"></i>
                             </div>
                         </div>
 
@@ -66,13 +73,7 @@
                         </div>
                     </div>
                 {% endfor %}
-                <div class="d-flex justify-content-between gap-5">
-                    <h2 class="border rounded shadow fw-bold text-center p-3 fs-5 col-4">Total a pagar ${{total_cart }}</h2>
-                    <div class="col-4"></div>
-                    <a href="{% url 'checkout' %}" class="btn btn-success w-100 fw-bold rounded-4 align-self-center shadow">
-                        Pagar
-                    </a>
-                </div>
+
             </div>
         </div>    
     {% endblock main %}

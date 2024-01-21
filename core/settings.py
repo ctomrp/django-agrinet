@@ -1,10 +1,5 @@
 from pathlib import Path
 import os
-
-from decouple import config
-
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -13,10 +8,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = "django-insecure-%y^-7x=n+@^6oarn=)pnybiu%&$c+0s25=kf!&&=rv_l_(_34u"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -144,12 +139,12 @@ LOGIN_REDIRECT_URL = 'unauthorized_access'
 LOGIN_URL = 'unauthorized_access'
 
 # EMAIL
-EMAIL_BACKEND = config('EMAIL_BACKEND')
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT')
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'agrinetgap@gmail.com'
+EMAIL_HOST_PASSWORD = 'jihfxdvdbeqrcary'
+EMAIL_USE_TLS = True
 
 
 EMAIL_TEMPLATE_DIR = 'users/templates/registration/'
@@ -158,6 +153,5 @@ PASSWORD_RESET_EMAIL_SUBJECT_TEMPLATE = f'{EMAIL_TEMPLATE_DIR}password_reset_ema
 PASSWORD_RESET_EMAIL_BODY_TEMPLATE = f'{EMAIL_TEMPLATE_DIR}password_reset_email_body.txt'
 
 #Stripe
-STRIPE_PRIVATE_KEY = config('STRIPE_PRIVATE_KEY')
-STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY')
-
+STRIPE_PRIVATE_KEY = 'sk_test_51OZ0sXDEBFNd0XHLDQ0XPfIKhfJLEaeCHeFmXTAGvESZ446ZbSjmA5KAjv6BAfTZ0cc3D09ElbNFgm0LMeNmI8jW00bZhAozGE'
+STRIPE_PUBLIC_KEY = 'pk_test_51OZ0sXDEBFNd0XHLiJMuvoqgynIMP4MEIkzfhMEsgncOnMiikpH4uWdGqjFQoucCOP9yjB2CFf090tmPtX5Q1WGG00ApctURS8'

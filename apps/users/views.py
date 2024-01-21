@@ -10,7 +10,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
 
 from datetime import timedelta
-from decouple import config
 import geocoder
 import json
 
@@ -29,7 +28,7 @@ from apps.sales.models import (
     ShippingMethod,
 )
 from apps.products.models import Product, ProductCategory
-from apps.producer_application.models import ApplicationForm
+
 
 def is_userproducer(user):
     return hasattr(user, 'userproducer')
@@ -64,6 +63,7 @@ def user_producer_registration(request):
             messages.success(request, 'Productor registrado exitosamente.')
             return redirect("admin_dashboard")
     return render(request, 'producer_register_form.html', {'form': UserProducerForm})
+
 
 class CustomLoginView(LoginView):
     template_name = "login.html"
@@ -112,7 +112,7 @@ def custom_logout(request):
 
 
 def get_address(producer_pk):
-    API_KEY = config('API_KEY')
+    API_KEY = "AijDOUDckvHD3EUNqfj8YgwZAnt45YJPRdW6ykjnma1PUNVtRDzrfC5SlJcakPWy"
     producer = UserProducer.objects.get(pk = producer_pk)
     address = producer.address
     location = geocoder.bing(address, key=API_KEY)
