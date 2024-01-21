@@ -10,7 +10,7 @@ $(document).ready(function (){
     $("#id_saveproduct_button").attr('disabled', true);
 });
 
-$("#id_name").keyup(function (){
+$("#id_name").change(function (){
     const prodNameLength = $("#id_name").val().length
 
     if(prodNameLength < 3 || prodNameLength > 255){
