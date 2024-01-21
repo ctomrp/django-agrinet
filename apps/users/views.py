@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
 
 from datetime import timedelta
+from decouple import config
 import geocoder
 import json
 
@@ -113,7 +114,7 @@ def custom_logout(request):
 
 
 def get_address(producer_pk):
-    API_KEY = "AijDOUDckvHD3EUNqfj8YgwZAnt45YJPRdW6ykjnma1PUNVtRDzrfC5SlJcakPWy"
+    API_KEY = config('API_KEY')
     producer = UserProducer.objects.get(pk = producer_pk)
     address = producer.address
     location = geocoder.bing(address, key=API_KEY)

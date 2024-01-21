@@ -1,0 +1,4 @@
+.card-img{
+    filter: saturate(0.3) blur(3px);
+    opacity: 0.6;
+}

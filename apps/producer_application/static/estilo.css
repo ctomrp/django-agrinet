@@ -54,3 +54,7 @@ form input {
     display: inline-block;
     margin-right: 10px; /* Ajusta el margen según tus necesidades */
 }
+
+.select-h{
+    height: 42px;
+}

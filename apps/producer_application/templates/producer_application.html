@@ -10,7 +10,7 @@
 {% block main %}
 
           <form method="POST" class="w-75 container justify-content-center validate-form">
-              <center><h1 class="registerFormTitle"><b>Formulario de Postulación</b></h1></center>
+              <h1 class="registerFormTitle text-center">Formulario de Postulación</h1>
               {% csrf_token %}
               <div class="rowGrid">
                     <div class="form-group">
@@ -38,7 +38,7 @@
                         {{form.dni}}
                         <p id="id_dni_alert" style="font-size: 12px;"></p>
                     </div>
-                    <select name="regions" id="id_regions">
+                    <select name="regions" id="id_regions" class="select-h">
                         <option disabled selected>--- Seleccione su región ---</option>
                         {% for region in regions %}
                             <option value="{{region.name}}">{{region.name}}</option>
@@ -49,7 +49,7 @@
                         {{form.bussiness_name}}
                         <p id="id_razon_alert" style="font-size: 12px;"></p>
                     </div>
-                    <select name="communes" id="id_communes">
+                    <select name="communes" id="id_communes" class="select-h">
                         <option data-comuna="">--- Seleccione su comuna ---</option>
                         {% for commune in communes %}
                             <option value="{{commune.name}}" data-comuna="{{commune.region.name}}">{{commune.name}}</option>
@@ -66,11 +66,13 @@
                         <p id="id_address_alert" style="font-size: 12px;"></p>
                     </div>
               </div>
-              <div class="d-flex justify-content-center mt-5">
-                <button id="id_register_button" type="submit" class="btn btn-success w-25 fw-bold rounded-4"><b>Postular</b></button>
-              </div>
-            <div class="row d-flex flex-row justify-content-center gap-5 mt-5">
-                <a href="{% url 'login'  %}" class="btn btn-secondary w-25 fw-bold rounded-4">Ir al inicio</a> 
+              <div class="d-flex w-100 justify-content-evenly mx-auto">
+                  <div class="row d-flex flex-row justify-content-center gap-2 mt-5">
+                  <a href="{% url 'login'  %}" class="btn btn-secondary w-100 fw-bold rounded-4">Ir al inicio</a> 
+                </div>
+                <div class="d-flex justify-content-center mt-5">
+                    <button id="id_register_button" type="submit" class="btn btn-success w-100 fw-bold rounded-4"><b>Postular</b></button>
+                  </div>
               </div>
             </form>
           
@@ -81,6 +83,6 @@
 
 {% endblock %}
 {% block extra_js %}
-<script src="{% static 'validaciones.js' %}"></script>
+<script type="module" src="{% static 'validaciones.mjs' %}"></script>
 <script src="{% static 'communes.js' %}"></script>
 {% endblock %}
