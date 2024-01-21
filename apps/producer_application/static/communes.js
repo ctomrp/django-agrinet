@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    var originalCommunesOptions = $("#id_communes option").clone();
+    let originalCommunesOptions = $("#id_communes option").clone();
 
     $("#id_communes option").prop("disabled", true);
 
     $("#id_regions").change(function () {
-        var selectedRegion = $(this).val();
+        let selectedRegion = $(this).val();
 
         $("#id_communes").html(originalCommunesOptions);
 
