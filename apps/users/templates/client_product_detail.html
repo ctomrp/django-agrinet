@@ -18,7 +18,9 @@
             </div>
 
             <div class="row mt-3">
-                <img src="{{ product.picture.url }}" alt="{{ product.name }}" class="img-thumbnail col-4">
+                <div class="img-container">
+                  <img src="{{ product.picture.url }}" alt="{{ product.name }}" class="img-thumbnail col-4">  
+                </div>
                 <div class="col row mx-3">
                     <p class="text-capitalize"><b>Descripción:</b>&nbsp;{{ product.description }}</p>
                     <p><b>Tipo de producto:</b>&nbsp;{{ product.category }}</p>

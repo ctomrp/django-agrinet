@@ -54,9 +54,11 @@ class UserProducerForm(forms.ModelForm):
 
 class UserClientForm(forms.ModelForm):
     first_name = forms.CharField(
+        label = 'Nombre',
         widget = forms.TextInput(attrs={'placeholder': 'John'})
     )
     last_name = forms.CharField(
+        label = 'Apellido',
         widget = forms.TextInput(attrs={'placeholder': 'Doe'})
     )    
     password = forms.CharField(
