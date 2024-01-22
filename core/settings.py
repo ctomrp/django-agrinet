@@ -152,6 +152,8 @@ EMAIL_TEMPLATE_DIR = 'users/templates/registration/'
 PASSWORD_RESET_EMAIL_SUBJECT_TEMPLATE = f'{EMAIL_TEMPLATE_DIR}password_reset_email_subject.txt'
 PASSWORD_RESET_EMAIL_BODY_TEMPLATE = f'{EMAIL_TEMPLATE_DIR}password_reset_email_body.txt'
 
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 #Stripe
 STRIPE_PRIVATE_KEY = 'sk_test_51OZ0sXDEBFNd0XHLDQ0XPfIKhfJLEaeCHeFmXTAGvESZ446ZbSjmA5KAjv6BAfTZ0cc3D09ElbNFgm0LMeNmI8jW00bZhAozGE'
 STRIPE_PUBLIC_KEY = 'pk_test_51OZ0sXDEBFNd0XHLiJMuvoqgynIMP4MEIkzfhMEsgncOnMiikpH4uWdGqjFQoucCOP9yjB2CFf090tmPtX5Q1WGG00ApctURS8'

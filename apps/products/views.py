@@ -1,6 +1,7 @@
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 
 from apps.users.models import UserProducer
 from apps.users.views import is_userproducer
@@ -45,11 +46,8 @@ def delete_product(request, product_id):
 @login_required
 @user_passes_test(is_userproducer)
 def create_product(request):
-
     if request.method == 'GET':
-            return render(request, 'create_product.html',{
-                'form': CreatePrd
-            }) 
+        return render(request, 'create_product.html', {'form': CreatePrd}) 
     else:
         try:
             form = CreatePrd(request.POST, request.FILES)
@@ -57,12 +55,13 @@ def create_product(request):
             user_id = request.user.id
             new_product.producer = UserProducer.objects.get(id=user_id)
             new_product.save()
-            return redirect('my_products')
+            
+            # Devuelve una respuesta JSON para mostrar el modal de éxito
+            return JsonResponse({'success': True})
         except Exception as e:
-             print(form.errors)
-             print(e)
-             return render(request, 'create_product.html',{
+            print(form.errors)
+            print(e)
+            return render(request, 'create_product.html', {
                 'form': CreatePrd,
                 'error': e
-
-                })
+            })
