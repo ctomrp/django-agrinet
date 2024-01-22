@@ -12,7 +12,7 @@
 
   
       <div class="row d-flex justify-content-between">
-        <h2 class="fs-1 col">Comprobante de ventas</h2>
+        <h2 class="fs-1 col">Tipo de recibo: {{ receipt_type }}</h2>
         <div class="col-2 d-flex justify-content-end">
             <img src="{% static 'assets/logo-white.png' %}" alt="" class="w-50">
         </div>
@@ -24,7 +24,8 @@
             <div class="text-capitalize fs-5 col">Agrinet S.A.</div>
             <div class="fs-5 col">www.agrinet.cl</div>
             <div class="text-capitalize fs-5 col">RUT:&nbsp;78.987.987-8</div>
-            <div class="text-capitalize fs-5 col">Fecha de venta:&nbsp;{{ sale.date_sale }}15-02-2024</div>
+            <div class="text-capitalize fs-5 col">Fecha de venta: {{ current_date|date:"l, j F Y" }}</div>
+
         </div>
 
       </div>
@@ -35,29 +36,24 @@
               <tr>
                 <th scope="col">Producto</th>
                 <th scope="col" class="text-center align-self-center">Kilos (cantidad)</th>
-                <th scope="col" class="text-end align-self-end">Precio x kilo</th>
+                <th scope="col" class="text-center align-self-center">Precio unitario</th>
+                <th scope="col" class="text-end align-self-end">Total</th>
               </tr>
             </thead>
             <tbody>
-
                 <!-- esto ira dentro de un for y se obtienen los valores del elemento -->
-                <tr>
-                  <td>Papas</td>
-                  <td class="text-center align-self-center">2</td>
-                  <td class="text-end align-self-end">$2900</td>
-                </tr>
-                <tr>
-                  <td>Tomates</td>
-                  <td class="text-center align-self-center">1</td>
-                  <td class="text-end align-self-end">$800</td>
-                </tr>
-                <tr>
-                  <td>Manzanas</td>
-                  <td class="text-center align-self-center">1</td>
-                  <td class="text-end align-self-end">$750</td>
-                </tr>
-                <!-- aca terminará el for -->
+                {% for sale_product in sale_products_list %}
+                    <tr>
+                        <td>{{ sale_product.name }}</td>
+                        <td class="text-center align-self-center">{{ sale_product.quantity }}</td>
+                        <td class="text-center align-self-center"> ${{ sale_product.price }}</td>
+                        <td class="text-end align-self-end"> ${{ sale_product.total }}</td>
+                        
+                    </tr>
+                {% endfor %}
 
+              
+                <!-- aca terminará el for -->
             </tbody>
           </table>
         </div>
@@ -66,20 +62,21 @@
           <div class="col">
             <img src="{% static 'assets/timbre.png' %}" alt="" class="w-75">
           </div>
-          <div class="col fs-5 text-end">
+          <div class="col fs-5 text-end" id="totalGeneral">
               Precio total<br>
-              <b>$7350{{ valor_total }}</b>
+              <b>$ {{ total_general }}</b>
           </div>
         </div>
-
+       
       </div>
       <div class="container d-flex justify-content-start mt-5">
 
-        <a href="{% url 'client_dashboard' %}" class="btn btn-dark w-25 fw-bold rounded-4">Vovler</a>
+        <a href="{% url 'client_dashboard' %}" class="btn btn-dark w-25 fw-bold rounded-4" >Volver</a>
+     
+        <a href="{% url 'generate_pdf' %}" class="btn btn-dark w-25 fw-bold rounded-4" >Descargar comprobante</a>
+
         </div>
 
-      
-  
 
 {% endblock main %}
 
