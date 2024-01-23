@@ -86,3 +86,14 @@ def update_application_form(request, application_id):
             return redirect('application_status')
 
     return HttpResponseBadRequest("Invalid request")
+
+
+def generate_random_password():
+    import secrets
+    import string
+
+    password_length = 12
+    characters = string.ascii_letters + string.digits + string.punctuation
+    generated_password = ''.join(secrets.choice(characters) for _ in range(password_length))
+
+    return generated_password
