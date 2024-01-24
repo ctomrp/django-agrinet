@@ -8,78 +8,131 @@
 {% block main %}
 
 <div class="container d-flex flex-column justify-content-center mt-5 border border-dark rounded-5 p-5">
-
-
-  
-      <div class="row d-flex justify-content-between">
+    <div class="row d-flex justify-content-between">
         <h2 class="fs-1 col">Tipo de recibo: {{ receipt_type }}</h2>
         <div class="col-2 d-flex justify-content-end">
             <img src="{% static 'assets/logo-white.png' %}" alt="" class="w-50">
         </div>
-      </div>
-  
-      <div class="row mt-0">
-        <div class="col">
+    </div>
 
+    <div class="row mt-0">
+        <div class="col">
             <div class="text-capitalize fs-5 col">Agrinet S.A.</div>
             <div class="fs-5 col">www.agrinet.cl</div>
             <div class="text-capitalize fs-5 col">RUT:&nbsp;78.987.987-8</div>
             <div class="text-capitalize fs-5 col">Fecha de venta: {{ current_date|date:"l, j F Y" }}</div>
-
         </div>
-
-      </div>
-
-      <div class="detail mt-5 d-flex justify-content-center">
-        <table class="table table-striped w-75">
-            <thead>
-              <tr>
+    </div>
+    <div class="detail mt-5 d-flex justify-content-center">
+      <table class="table table-striped w-75">
+        <thead>
+            <tr>
                 <th scope="col">Producto</th>
                 <th scope="col" class="text-center align-self-center">Kilos (cantidad)</th>
                 <th scope="col" class="text-center align-self-center">Precio unitario</th>
                 <th scope="col" class="text-end align-self-end">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-                <!-- esto ira dentro de un for y se obtienen los valores del elemento -->
-                {% for sale_product in sale_products_list %}
-                    <tr>
-                        <td>{{ sale_product.name }}</td>
-                        <td class="text-center align-self-center">{{ sale_product.quantity }}</td>
-                        <td class="text-center align-self-center"> ${{ sale_product.price }}</td>
-                        <td class="text-end align-self-end"> ${{ sale_product.total }}</td>
-                        
-                    </tr>
-                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Esto irá dentro de un bucle para obtener los valores de los elementos -->
+            {% for sale_product in sale_products_list %}
+                <tr>
+                    <td>{{ sale_product.name }}</td>
+                    <td class="text-center align-self-center">{{ sale_product.quantity }}</td>
+                    <td class="text-center align-self-center"> ${{ sale_product.price }}</td>
+                    <td class="text-end align-self-end"> ${{ sale_product.total }}</td>
+                </tr>
+            {% endfor %}
+            <!-- Aca terminará el bucle -->
+        </tbody>
+    </table>
 
-              
-                <!-- aca terminará el for -->
-            </tbody>
-          </table>
-        </div>
+    
+  </div>
 
-        <div class="row w-75 align-self-center mt-5">
-          <div class="col">
-            <img src="{% static 'assets/timbre.png' %}" alt="" class="w-75">
-          </div>
-          <div class="col fs-5 text-end" id="totalGeneral">
-              Precio total<br>
-              <b>$ {{ total_general }}</b>
-          </div>
-        </div>
-       
-      </div>
-      <div class="container d-flex justify-content-start mt-5">
+  <div class="total row w-75 align-self-center mt-5">
+    <div class="col">
+        <img src="{% static 'assets/timbre.png' %}" alt="" class="w-75">
+    </div>
+    <div class="col fs-5 text-end" id="totalGeneral">
+        Precio total<br>
+        <b>$ {{ total_general }}</b>
+    </div>
+  </div>
 
-        <a href="{% url 'client_dashboard' %}" class="btn btn-dark w-25 fw-bold rounded-4" >Volver</a>
-     
-        <a href="{% url 'generate_pdf' %}" class="btn btn-dark w-25 fw-bold rounded-4" >Descargar comprobante</a>
 
-        </div>
+</div>
+
+<div class="container d-flex justify-content-start mt-5">
+  <a href="{% url 'client_dashboard' %}" class="btn btn-dark w-25 fw-bold rounded-4">Volver</a>
+  <button class="btn btn-dark w-25 fw-bold rounded-4"   onclick="generateAndDownloadPDF()">Descargar comprobante</button>
+</div>
+
+<!-- Agrega la biblioteca html2pdf.js antes del script -->
+<script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+
+<!-- Agrega el script para generar el PDF -->
+<script>
+   function generateAndDownloadPDF() {
+    // Hacer clic en pantalla completa
+    const element = document.documentElement;
+
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) { /* Firefox */
+      element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+      element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) { /* IE/Edge */
+      element.msRequestFullscreen();
+    }
+
+    // Esperar un breve momento antes de generar el PDF
+    setTimeout(function() {
+      const containerElement = document.querySelector('.container');
+      const totalElement = document.querySelector('.total');
+
+      // Clonar el contenedor principal para evitar afectar la interfaz de usuario
+      const clonedContainer = containerElement.cloneNode(true);
+
+      // Agregar el contenido de .total al contenedor clonado
+      if (totalElement) {
+        const clonedTotal = totalElement.cloneNode(true);
+        clonedContainer.appendChild(clonedTotal);
+      }
+
+      // Configuración para la generación del PDF
+      const options = {
+        margin: 0,
+        filename: 'comprobante_de_ventas.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 3, letterRendering:true,},
+        jsPDF: { unit: 'in', format: 'a3', orientation: 'portrait' }
+      };
+
+      // Generar el PDF utilizando el contenedor clonado
+      html2pdf(clonedContainer, options);
+
+      // Salir de pantalla completa después de generar el PDF
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+
+    }, 1000); // Esperar 1 segundo antes de generar el PDF
+  }
+</script>
+</script>
+
 
 
 {% endblock main %}
 
 {% block extra_js %}
-  
+
 {% endblock extra_js %}

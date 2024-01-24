@@ -2,79 +2,145 @@
 {% load static %}
 
 {% block extra_css %}
-
+    
 {% endblock extra_css %}
 
 {% block main %}
 
+<!-- Agrega esto en la sección head de tu HTML -->
+<script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+
 <div class="container d-flex flex-column justify-content-center mt-5 border border-dark rounded-5 p-5">
-
-
-  
-      <div class="row d-flex justify-content-between">
+    <div class="row d-flex justify-content-between">
         <h2 class="fs-1 col">Reporte de ventas</h2>
         <div class="col-2 d-flex justify-content-end">
             <img src="{% static 'assets/logo-white.png' %}" alt="" class="w-50">
         </div>
-      </div>
-  
-      <div class="row mt-0">
+    </div>
+
+    <div class="row mt-0">
         <div class="col">
-
-          <div class="text-capitalize fs-5 col fw-bold">{{ request.user.first_name }}&nbsp;{{ request.user.last_name }}</div>
-          <div class="text-capitalize fs-5 col">RUT:&nbsp;{{ producer.dni }}</div>
-          <div class="fs-5 col">Fecha de reporte:&nbsp;{{ current_date }}</div>
+            <div class="text-capitalize fs-5 col fw-bold">{{ request.user.first_name }}&nbsp;{{ request.user.last_name }}</div>
+            <div class="text-capitalize fs-5 col">RUT:&nbsp;{{ producer.dni }}</div>
+            <div class="fs-5 col">Fecha de reporte:&nbsp;{{ current_date }}</div>
         </div>
-        
-      </div>
+    </div>
 
-      <div class="fs-5 text-center mt-5">
+    <div class="fs-5 text-center mt-5">
         Ventas entre&nbsp;<b>{{ report_starts_str }}</b>&nbsp;y&nbsp;<b>{{ report_ends_str }}</b>
-      </div>
-      <div class="detail mt-5 d-flex justify-content-center">
-        
-        <table class="table table-striped w-75">
+    </div>
+
+    <!-- Detalle de ventas -->
+    <div class="detail mt-5 d-flex justify-content-center">
+        <!-- Agregado estilo para centrar la tabla -->
+        <table class="table table-striped w-75 mx-auto">
             <thead>
-              <tr>
-                <th scope="col">Producto</th>
-                <th scope="col" class="text-center align-self-center">Categoría</th>
-                <th scope="col" class="text-center align-self-center">Cantidad (kilos)</th>
-                <th scope="col" class="text-end align-self-end">Total de venta por producto</th>
-              </tr>
+                <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col" class="text-center align-self-center">Categoría</th>
+                    <th scope="col" class="text-center align-self-center">Cantidad (kilos)</th>
+                    <th scope="col" class="text-end align-self-end">Total de venta por producto</th>
+                </tr>
             </thead>
             <tbody>
-
-              {% for sale in sales %}
-              <tr>
-                <td>{{ sale.0 }}</td>
-                <td class="text-center align-self-center">{{ sale.1 }}</td>
-                <td class="text-center align-self-center">{{ sale.2 }}</td>
-                <td class="text-end align-self-end">${{ sale.3 }}</td>
-              </tr>
-              {% endfor %}
-
+                {% for sale in sales %}
+                <tr>
+                    <td>{{ sale.0 }}</td>
+                    <td class="text-center align-self-center">{{ sale.1 }}</td>
+                    <td class="text-center align-self-center">{{ sale.2 }}</td>
+                    <td class="text-end align-self-end">${{ sale.3 }}</td>
+                </tr>
+                {% endfor %}
+                
             </tbody>
-          </table>
-        </div>
+            
+        </table>
+    </div>
 
-        <div class="row w-75 align-self-center mt-5">
-          <div class="col fs-5 fw-bold text-start">
-              Total de ventas
-          </div>
-          <div class="col fs-5 fw-bold text-end">${{ total }}</div>
-        </div>
-
+    <!-- Total de ventas -->
+    <div class="total row w-75 align-self-center mt-5">
+      <div class="col fs-5 fw-bold text-start">
+          Total de ventas
       </div>
-      <div class="container d-flex justify-content-start mt-5">
+      <div class=" total col fs-5 fw-bold text-end">${{ total }}</div>
+    </div> 
+</div>
 
-        <a href="{% url 'generate_report' %}" class="btn btn-dark w-25 fw-bold rounded-4">Volver</a>
-        </div>
+<div class="container d-flex justify-content-start mt-5">
+  <a href="{% url 'generate_report' %}" class="btn btn-dark w-25 fw-bold rounded-4">Volver</a>
+  <!-- Agrega esto donde tengas tu botón de "Descargar PDF" -->
+  <button id="downloadButton" class="btn btn-dark w-25 fw-bold rounded-4" onclick="generateAndDownloadPDF()">Descargar PDF</button>
+</div>
 
-      
-  
+<!-- Agrega el script para generar el PDF -->
+<!-- Script para generar el PDF -->
+<script>
+  function generateAndDownloadPDF() {
+    // Hacer clic en pantalla completa
+    const element = document.documentElement;
+
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) { /* Firefox */
+      element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+      element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) { /* IE/Edge */
+      element.msRequestFullscreen();
+    }
+
+    // Escuchar cambios en el estado de pantalla completa
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+
+    function handleFullscreenChange() {
+      // Verificar si estamos en pantalla completa
+      if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+        // Esperar un breve momento antes de generar el PDF
+        setTimeout(generatePDF, 1000); // Esperar 1 segundo antes de generar el PDF
+      }
+    }
+
+    function generatePDF() {
+      const containerElement = document.querySelector('.container');
+      const totalElement = document.querySelector('.total');
+
+      // Clonar el contenedor principal para evitar afectar la interfaz de usuario
+      const clonedContainer = containerElement.cloneNode(true);
+
+      // Agregar el contenido de .total al contenedor clonado
+      if (totalElement) {
+        const clonedTotal = totalElement.cloneNode(true);
+        clonedContainer.appendChild(clonedTotal);
+      }
+
+      // Configuración para la generación del PDF
+      const options = {
+        margin: 0,
+        filename: 'Reporte_de_ventas.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 2, letterRendering: true },
+        jsPDF: { unit: 'in', format: 'a3', orientation: 'portrait' }
+      };
+
+      // Generar el PDF utilizando el contenedor clonado
+      html2pdf(clonedContainer, options);
+
+      // Salir de pantalla completa después de generar el PDF
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+
+      // Quitar el escucha del evento después de completar la operación
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    }
+  }
+</script>
+
 
 {% endblock main %}
-
-{% block extra_js %}
-  
-{% endblock extra_js %}
