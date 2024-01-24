@@ -1,6 +1,6 @@
 projectKey=agrinet
-serverUrl=http://127.0.0.1:9000
+serverUrl=http://localhost:9000
 serverVersion=10.3.0.82913
-dashboardUrl=http://127.0.0.1:9000/dashboard?id=agrinet
-ceTaskId=AY0NCb_l_tE_M5wjcgd4
-ceTaskUrl=http://127.0.0.1:9000/api/ce/task?id=AY0NCb_l_tE_M5wjcgd4
+dashboardUrl=http://localhost:9000/dashboard?id=agrinet
+ceTaskId=AY0t723qWAd3YBKQjves
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AY0t723qWAd3YBKQjves

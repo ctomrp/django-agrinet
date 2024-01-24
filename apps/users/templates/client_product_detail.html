@@ -18,7 +18,9 @@
             </div>
 
             <div class="row mt-3">
-                <img src="{{ product.picture.url }}" alt="{{ product.name }}" class="img-thumbnail col-4">
+                <div class="img-container">
+                  <img src="{{ product.picture.url }}" alt="{{ product.name }}" class="img-thumbnail col-4">  
+                </div>
                 <div class="col row mx-3">
                     <p class="text-capitalize"><b>Descripción:</b>&nbsp;{{ product.description }}</p>
                     <p><b>Tipo de producto:</b>&nbsp;{{ product.category }}</p>
@@ -30,8 +32,8 @@
                         <div class="fw-bold">${{ product.price }}</div>
                     </h6>
                 </div>
-                <p class="mt-5"><b>Proveedor:</b>&nbsp;<div class="text-capitalize">{{ product.producer.first_name }}</div></p>
-                <p><b>Dirección:</b>&nbsp;<div class="text-capitalize">{{ product.producer.address }}</div></p>
+                <p class="mt-5 text-capitalize"><b>Proveedor:</b>&nbsp;{{ product.producer.first_name }}</p>
+                <p class="text-capitalize"><b>Dirección:</b>&nbsp;{{ product.producer.address }}</p>
                 <p id="user-latitude" data-user-latitude="{{ latitude }}"></p>
                 <p id="user-longitude" data-user-longitude="{{ longitude }}"></p>
                 <!-- mapa -->
@@ -62,7 +64,7 @@
     <div class="modal-dialog modal-dialog-centered bg-modal">
       <div class="modal-content border-modal bg-modal-inside">
         <div class="modal-header d-flex flex-column border-modal-top">
-          <img src="{% static 'assets/logo3.png' %}" class="mt-5" width="40%" />
+          <img src="{% static 'assets/logo3.png' %}" alt="foto producto" class="mt-5" width="40%" />
           <div class="text-light fs-5 mt-3 mb-3">
             El producto fue agregado al carrito con exito!
           </div>

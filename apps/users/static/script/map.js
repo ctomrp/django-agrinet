@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let longitude = parseFloat(longitudeString.replace(",", "."));
 
   console.log(latitude, longitude);
-  var map = L.map("map").setView([latitude, longitude], 16);
+  let map = L.map("map").setView([latitude, longitude], 16);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
     attribution:
