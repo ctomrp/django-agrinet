@@ -170,7 +170,8 @@ class SearchResultsView(ListView):
         if query:
             print(query)
             queryset = Product.objects.filter(
-            Q(description__icontains=query)
+            Q(description__icontains=query) |
+            Q(name__icontains=query)
             ) 
             return queryset
         else:
