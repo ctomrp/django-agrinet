@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.mail import send_mail
 from django.http import HttpResponseBadRequest
@@ -134,6 +135,7 @@ def update_application_form(request, application_id):
                 userproducer.save()
                 producer_application_instance.save()
                 application_accepted(first_name=first_name, last_name=last_name, email=email, password=generated_password)
+                messages.success(request, 'Productor registrado exitosamente.')
             elif selected_state.id == 30:
                 application_rejected(first_name, last_name, email, feedback)
 
