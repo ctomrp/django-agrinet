@@ -21,8 +21,8 @@
       {% for product in products %}
         <div class="products-info">
 
-          <div class="p-3 img-container">
-            <img src="{{product.picture.url}}" alt="foto del producto" class="img-thumbnail">
+          <div class="p-3">
+            <img src="{{product.picture.url}}" alt="" class="img-thumbnail">
           </div>
           
           <div class="dataDiv">
@@ -50,7 +50,7 @@
   <div class="modal" id="deleteModal">
     <div class="modal-content border-modal bg-modal-inside">
         <div class="modal-header d-flex flex-column border-modal-top">
-            <img src="{% static 'assets/logo3.png' %}" alt="logo" class="mt-5" width="40%" />
+            <img src="{% static 'assets/logo3.png' %}" class="mt-5" width="40%" />
             <div class="text-light text-center fs-5 mt-3 mb-3">
                 ¿Estás seguro de que quieres eliminar este producto?
             </div>

@@ -17,7 +17,7 @@ class CreatePrd(forms.ModelForm):
         }
         labels = {
             'name': 'Nombre',
-            'price': 'Precio x Kilo',
+            'price': 'Precio',
             'stock': 'Cantidad en inventario',
             'description': 'Descripción',
             'category': 'Categoría',

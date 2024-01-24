@@ -13,30 +13,13 @@
         <h1>Agregar producto</h1>
         {% csrf_token %}
         {{error}}
-        {{form.name.label_tag}}
-        {{form.name}}
-        <p id="id_productname_alert" style="font-size: 12px;"></p>
-        {{form.price.label_tag}}
-        {{form.price}}
-        <p id="id_productprice_alert" style="font-size: 12px;"></p>
-        {{form.stock.label_tag}}
-        {{form.stock}}
-        <p id="id_productstock_alert" style="font-size: 12px;"></p>
-        {{form.description.label_tag}}
-        {{form.description}}
-        <p id="id_productdescription_alert" style="font-size: 12px;"></p>
-        {{form.category.label_tag}}
-        {{form.category}}
-        <p id="id_productcategory_alert" style="font-size: 12px;"></p>
-        {{form.picture.label_tag}}
-        {{form.picture}}
-        <p id="id_productpicture_alert" style="font-size: 12px;"></p>
+        {{form}}
         
         <div class="d-flex justify-content-between">
           <a href="{% url 'my_products' %}" class="btn btn-dark w-25 fw-bold rounded-4 mt-5 align-self-center">
             Cancelar
           </a>
-          <button type="submit" id="id_saveproduct_button" class="btn btn-success w-25 fw-bold rounded-4 mt-5 align-self-center">
+          <button type="submit" class="btn btn-success w-25 fw-bold rounded-4 mt-5 align-self-center">
             Guardar
           </button>
         </div>
@@ -110,8 +93,3 @@
 
 
 {% endblock main %}
-
-
-{% block extra_js %}
-  <script type="module" src="{% static 'script/create_product_form.js' %}"></script>
-{% endblock %}
