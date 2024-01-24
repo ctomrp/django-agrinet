@@ -43,11 +43,71 @@
      </form>
     </div>
   </div>
-  
 
-{% endblock main %}
+
+
+  
+  <div
+  class="modal fade bg-modal"
+  id="createProd-modal"
+  tabindex="-1"
+  aria-labelledby="passwordModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered bg-modal">
+    <div class="modal-content border-modal bg-modal-inside ">
+      <div class="modal-header d-flex flex-column border-modal-top">
+        <img src="{% static 'assets/logo3.png' %}" class="mt-5" width="40%" />
+        <div class="text-light fs-5 mt-3 mb-3">
+          Su Producto se ha creado con éxito.
+        </div>
+        <div class="fs-5 mb-5">
+          <a href="{% url 'my_products' %}" class="btn btn-success fw-bold rounded-4 w-100">Volver al inicio</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+      
+
 
 
 {% block extra_js %}
   <script type="module" src="{% static 'script/create_product_form.js' %}"></script>
-{% endblock %}
+  <script>
+
+    function showSuccessModal() {
+      $('#createProd-modal').modal('show');
+    }
+
+    $(document).ready(function () {
+      $('form').submit(function (event) {
+        event.preventDefault();
+
+        var formData = new FormData(this);
+
+        $.ajax({
+          type: 'POST',
+          url: '/products/create_products/',
+          data: formData,
+          processData: false,  // Indica a jQuery que no procese los datos
+          contentType: false,  // Indica a jQuery que no configure el tipo de contenido
+          success: function (data) {
+            if (data.success) {
+              showSuccessModal();
+            } else {
+              console.error('Error al procesar la solicitud:', data.error);
+            }
+          },
+          error: function (error) {
+            console.error('Error al procesar la solicitud:', error);
+          }
+        });
+      });
+    });
+  </script>
+{% endblock extra_js %}
+
+
+{% endblock main %}
